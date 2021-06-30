@@ -1,0 +1,1 @@
+export const defaulColor = '#0089DA';

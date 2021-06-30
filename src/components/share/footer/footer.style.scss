@@ -1,0 +1,29 @@
+footer{
+    display: flex;
+    justify-content: space-between;
+    background: #00173F;
+    padding: 0px 120px;
+    height: auto;
+    color: white;
+    .powed-by{
+     margin: auto 20px;
+     font-family: 'Gilroy-Light', sans-serif;
+     font-size: small;
+
+    }
+    ul{
+       margin: auto 20px;
+       list-style: none;
+       display: flex;
+       li{
+        &:not(:first-of-type) {
+           border-left: 1px solid white;
+           padding-left: 20px;
+         }
+          margin: auto 0px auto 15px;
+          p{
+             margin-top: 20px;
+          }
+       }
+    }
+ }

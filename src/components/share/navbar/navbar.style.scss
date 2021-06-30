@@ -1,0 +1,122 @@
+$primary-color:#0089DA;
+$white-color:#FFFFFF;
+.nav-content{
+   content:'';
+   position:relative;
+    width:100%;
+    height:auto;
+    box-shadow:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
+   
+}
+.navbar{
+   height: auto;
+   width: 100%;
+   color: white;
+   flex-wrap: wrap;
+   justify-content: center;
+   padding-left: 0px auto;
+   width: 90%;
+   margin: 0px auto;
+   
+
+   .logo{
+      min-width: 15%;
+   }
+   
+
+  div{
+      ul{
+      display: flex;
+      justify-content: space-between;
+      margin: auto;
+      position: relative;
+      clear: both;
+
+      li{
+         a{
+            text-transform: uppercase;
+            :first-of-type{
+               position: relative;
+               font-family: 'Gilroy-Heavy', sans-serif;
+                  a{
+                     color: $primary-color !important;
+                  }
+                  a::after{
+                     content: "";
+                     position: absolute;
+                     width: 80%;
+                     height: 3px;
+                     background-color: #BC412B;
+                     bottom: 1px;
+                     left: 0px;
+                  
+               }
+            }
+         }
+
+         
+
+         .active-link{
+            position: relative;
+            font-family: 'Gilroy-Heavy', sans-serif;
+            color: $primary-color !important;
+            &::after{
+               content: "";
+               position: absolute;
+               width: 80%;
+               height: 3px;
+               background-color: #BC412B;
+               bottom: 1px;
+               left: 0px;
+         }
+      }
+         
+  
+         position: relative;
+         &:hover{
+            font-family: 'Gilroy-Heavy', sans-serif;
+            a{
+               color: $primary-color !important;
+            }
+            a::after{
+               content: "";
+               width: 80%;
+               height: 3px;
+               background-color: #BC412B;
+               position: absolute;
+               bottom: 1px;
+               left: 0px;
+            
+         }
+         }
+      }
+   }
+  }
+
+   .auth-buttons{
+      display: flex;
+      gap: 5px;
+
+      .auth-btn{  
+         height: 46px;
+         width: 200px;
+         font-size: 17px;
+         font-family: 'Gilroy-Bold', sans-serif;
+
+      }
+      .sign-up{
+         border: 4px solid #3378E1;
+         background-color: $white-color;
+         color: $primary-color;
+         animation: fromLetToRight 1s ease-out;
+
+      }
+      .sign-in{
+         border: none;
+         background-color: #3378E1;
+         color: $white-color;
+         animation: fromRightoLeft 1s ease-out;
+
+      }
+   }
+}

@@ -1,0 +1,117 @@
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .body-content{
+
+      h2{
+         font-size: 1.2em;
+      }
+ 
+       .header-content{
+          width: 100vw;
+          display: block;
+          text-align: center;
+         .title{
+            float: right;
+            min-width: 25%;
+         }
+ 
+         .rs{
+            display: inline-block;
+            margin-top: 10px;
+         }
+ 
+       }
+       margin-right: auto;
+       display: flex;
+       flex-direction: column;
+       justify-content: center;
+       overflow: hidden;
+ 
+       .navbar{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          justify-items: center;
+          .auth-buttons{
+             display: flex;
+             flex-direction: column;
+          }
+       }
+       .section-1{
+          width: 100vw;
+          overflow: hidden;
+          .section-1-left{
+             .info{
+                background: linear-gradient(to bottom right, rgba(41, 98, 255, 0.7), rgba(41, 98, 255, 0.7)), 
+                url('/assets/images/section-1-image.svg');
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+ 
+                p{
+                   margin-top: 20px;
+                }
+             }
+             &:hover{
+               
+                   transform: scale(1.05);
+                   transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+                
+             }
+             width: 100%;
+             .section-1-left-text{
+                font-size: small;
+                margin: -20px 10px;
+                
+             }
+          }
+          img{
+             display: none;
+          }
+ 
+          /* .section-1-left-text{
+             height: auto;
+          } */
+       }
+ 
+       .dimension-financement-right{
+          position: static;
+          display: none;
+       }
+ 
+       .section-dimension-financement{
+         flex-direction: column;
+          .dimension-financement{
+             height: auto;
+             margin-bottom: 30px;
+             
+             &-right{
+                img{
+                   display: none;
+                }
+             }
+             &-left{
+                .dimension{
+                   height: auto;
+                }
+             }
+          }
+       }
+ 
+       iframe{
+          height: 45vh !important;
+          margin: 5px 20px !important;
+       }
+ 
+       .slide{
+          min-width: 300px;
+       }
+ 
+       footer{
+          padding: 0px;
+       }
+    }
+    
+    
+  }

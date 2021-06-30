@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22.367" height="22.367" viewBox="0 0 22.367 22.367">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="share_" data-name="share " d="M17.894,6.57A4.445,4.445,0,0,0,14.5,8.16L8.9,4.926A4.461,4.461,0,1,0,4.473,8.947,4.461,4.461,0,0,0,8.116,7.056l5.393,3.114a4.4,4.4,0,0,0,.01,1.8L7.986,15.155a4.466,4.466,0,1,0,.892,2.067l5.654-3.253a4.466,4.466,0,1,0,3.361-7.4" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Groupe_19" data-name="Groupe 19" opacity="0.5" clip-path="url(#clip-path)">
+    <g id="_Tint_Backgroud" data-name="↳Tint/Backgroud" transform="translate(-1.398 -1.398)">
+      <rect id="_Tint_Backgroud_background" data-name="↳Tint/Backgroud background" width="25" height="25" transform="translate(0.397 0.398)" fill="rgba(0,0,0,0)"/>
+      <rect id="Color" width="25" height="25" transform="translate(0.397 0.398)" fill="#262628"/>
+    </g>
+  </g>
+</svg>
