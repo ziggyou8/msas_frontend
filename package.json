@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "chart.js": "^3.4.0",
     "firebase": "^8.6.8",
+    "gh-pages": "^3.2.1",
     "install": "^0.13.0",
     "node-sass": "^6.0.0",
     "react": "^17.0.2",
@@ -48,8 +49,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^3.2.3"
   }
 }
