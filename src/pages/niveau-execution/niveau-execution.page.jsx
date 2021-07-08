@@ -5,7 +5,7 @@ function NiveauExecution(){
     return(
         <div className="niveau-execution">
                   
-                <h3><h2>NIVEAU D'EXECUTION</h2> CONTENUT A PRECISER</h3>
+                <h3><h2>NIVEAU D'EXECUTION</h2> CONTENU A PRECISER</h3>
         </div>
     )
 };

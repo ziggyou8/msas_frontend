@@ -4,7 +4,7 @@ function PointVigilance(){
 
     return(
         <div className="point-vigilance">
-                <h3><h2>POINT DE VIGILANCE</h2> CONTENUT A PRECISER</h3>
+                <h3><h2>POINT DE VIGILANCE</h2> CONTENU A PRECISER</h3>
         </div>
     )
 };

@@ -20,13 +20,7 @@ import slide4 from '../../assets/images/slide-4.svg';
 import { Link } from 'react-router-dom';
 
 function HomePage(){
-    
-/* const [isLoaded, setIsLoaded] = useState(false);
-    
-    useEffect(()=>{
-        setIsLoaded(true);
-    },[]);
-    console.log(isLoaded); */
+ 
     return(
         <div>
                 <section>
@@ -197,7 +191,7 @@ function HomePage(){
 
             <section>
                 <div class="actualite">
-                    <h2>Actualite</h2>
+                    <h2>ActualiteS</h2>
                     <div id="container">
                         <img src={GoBackIcon} /* onClick={slideRight} */ id="slide-to-left" className="slide-to-left " alt="Revenir en arrière" />
                         <div id="slider-container">

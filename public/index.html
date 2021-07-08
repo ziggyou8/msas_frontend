@@ -17,7 +17,6 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -40,6 +39,7 @@
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/style.css">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="%PUBLIC_URL%/assets/images/favicon.ico" />
+    
 
     <title>MSAS</title>
   </head>
@@ -57,29 +57,30 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
      
   </body>
      
-  <script src="%PUBLIC_URL%/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="%PUBLIC_URL%/assets/vendors/js/vendor.bundle.base.js" ></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
-  <script src="%PUBLIC_URL%/assets/vendors/chart.js/Chart.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/vendors/chart.js/Chart.min.js" ></script>
   <!-- End plugin js for this page -->
   <!-- inject:js -->
-  <script src="%PUBLIC_URL%/assets/js/off-canvas.js"></script>
-  <script src="%PUBLIC_URL%/assets/js/hoverable-collapse.js"></script>
-  <script src="%PUBLIC_URL%/assets/js/misc.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/off-canvas.js" ></script>
+  <script src="%PUBLIC_URL%/assets/js/hoverable-collapse.js" ></script>
+  <script src="%PUBLIC_URL%/assets/js/misc.js" ></script>
   <!-- endinject -->
   <!-- Custom js for this page -->
-  <script src="%PUBLIC_URL%/assets/js/dashboard.js"></script>
-  <script src="%PUBLIC_URL%/assets/js/todolist.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/dashboard.js" ></script>
+  <script src="%PUBLIC_URL%/assets/js/todolist.js" ></script>
 </html>
 
 
 
-<!-- <script>
+<script>
     window.onload = function(){
         const container = document.getElementById('container')
         const slider = document.getElementById('slider');
@@ -173,4 +174,4 @@
             };
 
 };
-</script> -->
+</script>

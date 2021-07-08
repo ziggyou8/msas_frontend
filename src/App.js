@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import Dashboard from './admin/dashboard/dashboard.page';
-import User from './admin/components/users/user.component';
+import Structure from './admin/Pages/structure/structure.component';
 import AuthPage from './admin/Pages/auth/auth.page';
 import Financement from './pages/financement/financement.page';
 import NiveauExecution from './pages/niveau-execution/niveau-execution.page';
@@ -18,34 +18,14 @@ import MiseEnCommun from './pages/mise-en-commun/mise-en-commun.page';
 import HomePage from './pages/home/home.page';
 import PublicLayout from './public-layout';
 import AdminLayout from './admin/admin-layout';
+import SourceFinancement from './admin/Pages/source-financement/source_financement.component';
 
 const SignUp = lazy(()=> import('./components/sign-up/sign-up.component'));
 const SignIn = lazy(()=> import('./components/sign-in/sign-in.component'));
 const NotFound = lazy(()=> import('./pages/not-found/not-found-page'));
 
 function App({currentUser, setCurrentUser}) {
-  useEffect(()=>{
-  let unsubscribeFromAuth = null;
-    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot(snapShot => {
-            setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-        });
-        });
-    }
-
-      setCurrentUser(userAuth);
-    });
-
-    return ()=>{
-        unsubscribeFromAuth();
-    }
-}, [])
-
+ 
 const PublicRouteDispatcher = ({component: Component, ...rest}) => {  
   return (  
     <Route {...rest} render={matchProps => (  
@@ -66,6 +46,7 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
   )  
 };
   return  (
+    
       <Switch>
         {/* <Route exact path="/" render={()=> currentUser ? <Redirect  to="admin/dashboard"/> : <PublicRoute /> } /> */}
         <PublicRouteDispatcher exact  path="/"  component={HomePage}/>
@@ -78,7 +59,8 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
         <PublicRouteDispatcher exact path="/financement" component={Financement}/>
 
         <AdminRouteDispatcher exact path="/admin/dashboard" component={Dashboard}/>
-        <AdminRouteDispatcher   exact path="/admin/users" component={User}/>
+        <AdminRouteDispatcher exact path="/admin/structures" component={Structure}/>
+        <AdminRouteDispatcher exact path="/admin/source_financement" component={SourceFinancement}/>
         
         <Suspense fallback={<div class="loader">Loading...</div>}>
           <Route  exact path="/sign-up" component={SignUp}/>
@@ -87,10 +69,10 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
       </Switch>
       );
 }
-const mapStateToProps = state => ({
+/* const mapStateToProps = state => ({
   currentUser: state.user.currentUser
 });
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user))
-});
-export default connect(mapStateToProps, mapDispatchToProps) (App);
+}); */
+export default App;

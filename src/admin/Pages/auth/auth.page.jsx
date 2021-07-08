@@ -38,8 +38,8 @@ class AuthPage extends React.Component {
             (
                 <div className="sign-in-container">
                 <div className='sign-in-form'>
-                  <h2>CONNECTION</h2>
-                  <span>Se Connecter avec mon compte</span>
+                  <h2>CONNEXION</h2>
+                  <span>Se connecter avec mon compte</span>
           
                   <form onSubmit={this.handleSubmit}>
                     <FormInput

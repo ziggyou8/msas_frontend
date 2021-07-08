@@ -9,7 +9,7 @@ function Navbar (){
   
     return(
       <div class="nav-content">
-        <nav class="navbar navbar-expand-lg   navbar-light">
+        <nav class="navbar navbar-public navbar-expand-lg   navbar-light">
             <Link /* class="m-5" */  to="/" className="navbar-brand"><Logo/></Link>
             <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@ function Navbar (){
                 </li>
               </ul>
               <div class="auth-buttons my-2 my-lg-0">
-                <Link to="/sign-up">
+                <Link /* to="/sign-up" */>
                   <button class="auth-btn sign-up">
                       S'INSCRIRE
                   </button>

@@ -1,42 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './dashboard.style.scss';
+import  MobilisationIcon from '../../assets/icons/mobilisation.svg'
+import  AchatServiceIcon from '../../assets/icons/achat-service-light.svg'
+import MiseEnCommun from '../../assets/icons/mise-en-commun.svg';
+import { useState } from 'react';
+/* import '../../assets/js/Chart.min.js'
+import '../../assets/js/dashboard.js';
+import'../../assets/js/todolist.js'; */
+import { Helmet } from 'react-helmet';
 
 
 
 
 
 function Dashboard(){
+       const [key, setKey] = useState(true);
+
+       useEffect(()=>{
+         setKey(false)
+       })
+  
     return(
         <div>
-        <div class="row" id="proBanner">
-          <div class="col-12">
-            <span class="d-flex align-items-center purchase-popup">
-              <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
-              <a href="https://www.bootstrapdash.com/product/purple-bootstrap-admin-template?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
-              <i class="mdi mdi-close" id="bannerClose"></i>
-            </span>
-          </div>
-        </div>
+
+          <Helmet>
+            <script src="/assets/js/dashboard.js" />
+          </Helmet>
         <div class="page-header">
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
               <i class="mdi mdi-home"></i>
             </span> Tableau de bord
           </h3>
-          <nav aria-label="breadcrumb">
-            <ul class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page">
-                <span></span>Statistiques <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-              </li>
-            </ul>
-          </nav>
         </div>
         <div class="row">
           <div class="col-md-4 stretch-card grid-margin">
             <div class="card bg-gradient-danger card-img-holder text-white">
               <div class="card-body">
                 <img src="/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">MOBILISATION<i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3">MOBILISATION<i class="mdi  float-right"><img src={MobilisationIcon} alt="" /></i>
                 </h4>
                 <h2 class="mb-5">15 000 000 CFA</h2>
                 <h6 class="card-text">Voir plus </h6>
@@ -47,7 +49,7 @@ function Dashboard(){
             <div class="card bg-gradient-info card-img-holder text-white">
               <div class="card-body">
                 <img src="/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">MISE EN COMMUN <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3">MISE EN COMMUN <i class="mdi float-right"><img style={{ height: "70px" }} src={MiseEnCommun} alt="" /></i>
                 </h4>
                 <h2 class="mb-5">45 633 004 CFA</h2>
                 <h6 class="card-text">Voir plus</h6>
@@ -58,7 +60,7 @@ function Dashboard(){
             <div class="card bg-gradient-success card-img-holder text-white">
               <div class="card-body">
                 <img src="/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                <h4 class="font-weight-normal mb-3">ACHAT DE SERVICES <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                <h4 class="font-weight-normal mb-3">ACHAT DE SERVICES <i class="mdi  float-right"><img style={{ height: "70px" }} src={AchatServiceIcon} alt="" /></i>
                 </h4>
                 <h2 class="mb-5">95 574 001 CFA</h2>
                 <h6 class="card-text">Voir plus</h6>
@@ -71,7 +73,7 @@ function Dashboard(){
             <div class="card">
               <div class="card-body">
                 <div class="clearfix">
-                  <h4 class="card-title float-left">Statiqtiques par moi</h4>
+                  <h4 class="card-title float-left">Statistiques mensuelles</h4>
                   <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
                 </div>
                 <canvas id="visit-sale-chart" class="mt-4"></canvas>
@@ -81,7 +83,7 @@ function Dashboard(){
           <div class="col-md-5 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Trafique des Financements</h4>
+                <h4 class="card-title">Répartition des Financements</h4>
                 <canvas id="traffic-chart"></canvas>
                 <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
               </div>
@@ -339,5 +341,7 @@ function Dashboard(){
       
     )
 };
-
-export default Dashboard;
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser
+});
+export default   Dashboard;

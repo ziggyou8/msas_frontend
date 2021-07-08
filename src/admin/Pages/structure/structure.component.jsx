@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import StructureForm from './form';
+import firebase, { getData } from '../../../firebase/firebase.utils';
+import './structure.style.scss'
+import { getStructureData } from '../../../redux/structure/structure.action';
+import { connect } from 'react-redux';
 
 
-function User (){
+function Structure ({initStructureData, structures}){
+
+  useEffect(async()=>{
+    initStructureData(await getData('structures'))
+  },[]);
+
     return(
         <div>
-        <div class="row" id="proBanner">
-          <div class="col-12">
-            <span class="d-flex align-items-center purchase-popup">
-              <p>Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!</p>
-              <a href="https://www.bootstrapdash.com/product/purple-bootstrap-admin-template?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class="btn download-button purchase-button ml-auto">Upgrade To Pro</a>
-              <i class="mdi mdi-close" id="bannerClose"></i>
-            </span>
-          </div>
-        </div>
+         <StructureForm />
         <div class="page-header">
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
               <i class="mdi mdi-account"></i>
-            </span> Utilisateurs
+            </span> Structures
           </h3>
           <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
-              <li class="breadcrumb-item active" aria-current="page">
+              {/* <li class="breadcrumb-item active" aria-current="page">
                 <span></span>Statistiques <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-              </li>
+              </li> */}
+              <button class="btn btn-primary text-white display1" data-toggle="modal" data-target="#exampleModal"><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Structures</button>
             </ul>
           </nav>
         </div>
@@ -31,31 +35,41 @@ function User (){
           <div class="col-12 grid-margin">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Recent Tickets</h4>
+                <h4 class="card-title">Liste des structures</h4>
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th> Libelle </th>
-                        <th> Domaine </th>
-                        <th> Dimension </th>
-                        <th> Statut </th>
+                        <th> Denomination </th>
+                        <th> Addresse siège </th>
+                        <th> Source d'investissement </th>
+                        <th> Type d'acteur </th>
+                        <th> Téléphone </th>
                         <th> Action </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      {structures && structures.map(Structure =>(
+                        <tr>
                         <td>
-                          <img src="/assets/images/faces/face1.jpg" class="mr-2" alt="image" /> David Grey
+                          {Structure.denomination}
                         </td>
-                        <td> Fund is not recieved </td>
+                        <td> {Structure.addresse_siege} </td>
                         <td>
-                          <label class="badge badge-gradient-success">DONE</label>
+                        {Structure.source_investissement}
                         </td>
-                        <td> Dec 5, 2017 </td>
-                        <td> WD-12345 </td>
+                        <td> {Structure.type_acteur} </td>
+                        <td> {Structure.telephone}</td>
+                        <td> 
+                            <div className="row">
+                            <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
+                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2"></i>
+                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2"></i>
+                            </div> 
+                          </td>
                       </tr>
-                      <tr>
+                      ))}
+                      {/* <tr>
                         <td>
                           <img src="/assets/images/faces/face2.jpg" class="mr-2" alt="image"/> Stella Johnson
                         </td>
@@ -87,7 +101,7 @@ function User (){
                         </td>
                         <td> Dec 3, 2017 </td>
                         <td> WD-12348 </td>
-                      </tr>
+                      </tr> */}
                     </tbody>
                   </table>
                 </div>
@@ -99,4 +113,11 @@ function User (){
     )
 };
 
-export default User;
+const mapDispatchToProps = dispatch =>({
+  initStructureData: data => dispatch(getStructureData(data))
+})
+
+const mapStateToProps = state => ({
+  structures: state.structure.structure
+});
+export default connect(mapStateToProps, mapDispatchToProps) (Structure);

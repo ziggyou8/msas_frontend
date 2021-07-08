@@ -37,6 +37,13 @@ const config = {
     return userRef;
 }
 
+export const getData = async(table)=>{
+  const snapshot = await firebase.firestore().collection(table).get();
+  const data = [];
+  snapshot.docs.map(doc => data.push(doc.data()));
+   return data;
+}
+
 //exposer ces variable  ailleur
   export const  auth = firebase.auth();
   export const firestore = firebase.firestore();

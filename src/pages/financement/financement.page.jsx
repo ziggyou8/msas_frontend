@@ -4,7 +4,7 @@ function Financement(){
 
     return(
         <div className="financement">
-                <h3><h2>FINANCEMENT</h2> CONTENUT A PRECISER</h3>
+                <h3><h2>FINANCEMENT</h2> CONTENU A PRECISER</h3>
         </div>
     )
 };

@@ -3,7 +3,7 @@
   $(function() {
 
     // Remove pro banner on close
-   /*  document.querySelector('#bannerClose').addEventListener('click',function() {
+    /* document.querySelector('#bannerClose').addEventListener('click',function() {
       document.querySelector('#proBanner').classList.add('d-none');
     }); */
     
@@ -226,7 +226,7 @@
             labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG'],
             datasets: [
               {
-                label: "CHN",
+                label: "MISE EN COMMUN",
                 borderColor: gradientStrokeViolet,
                 backgroundColor: gradientStrokeViolet,
                 hoverBackgroundColor: gradientStrokeViolet,
@@ -238,7 +238,7 @@
                 data: [20, 40, 15, 35, 25, 50, 30, 20]
               },
               {
-                label: "USA",
+                label: "MOBILISATION",
                 borderColor: gradientStrokeRed,
                 backgroundColor: gradientStrokeRed,
                 hoverBackgroundColor: gradientStrokeRed,
@@ -250,7 +250,7 @@
                 data: [40, 30, 20, 10, 50, 15, 35, 40]
               },
               {
-                label: "UK",
+                label: "ACHAT DE SERVICES",
                 borderColor: gradientStrokeBlue,
                 backgroundColor: gradientStrokeBlue,
                 hoverBackgroundColor: gradientStrokeBlue,
@@ -482,9 +482,9 @@
     
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: [
-          'Search Engines',
-          'Direct Click',
-          'Bookmarks Click',
+          'Mise en commun',
+          'Achat de services',
+          'Mobilisation',
         ]
       };
       var trafficChartOptions = {
