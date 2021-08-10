@@ -4,7 +4,7 @@ import AdminNavbar from './components/navbar/navbar.component';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
-import { setCurrentUser } from '../redux/user/user.actions';
+import { setCurrentUser, fetchCurrentUserStratAsync } from '../redux/user/user.actions';
 import axios from 'axios';
 
 
@@ -12,15 +12,16 @@ import axios from 'axios';
 function AdminLayout ({setCurrentUser, currentUser, children})  {
    
   useEffect(()=>{
-    /* const config ={
-        headers:{
-          Authorization: 'Bearer ' + localStorage.getItem('token')
-        }
-    } */
-
-    axios.get('user').then(res=>setCurrentUser(res.data))
     
-}, [currentUser])
+   //await axios.get('user').then(res=>setCurrentUser(res.data))
+    setCurrentUser()
+    //initCurrentUser();
+    
+}, [])
+
+/* const initCurrentUser = async()=>{
+  await axios.get('user').then(res=>setCurrentUser(res.data))
+} */
 
     return(
         <div class="container-scroller">
@@ -49,7 +50,8 @@ const mapStateToProps = state => ({
     currentUser: state.user.currentUser
   });
   const mapDispatchToProps = dispatch => ({
-    setCurrentUser: user => dispatch(setCurrentUser(user))
+    //setCurrentUser: user => dispatch(setCurrentUser(user)),
+    setCurrentUser: () => dispatch(fetchCurrentUserStratAsync())
   });
   
 export default connect(mapStateToProps, mapDispatchToProps) (AdminLayout);

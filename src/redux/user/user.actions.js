@@ -31,11 +31,27 @@ export const fetchUserFail = errorMessage =>({
   payload:errorMessage
 });
 
+export const fetchCurrentUserSuccess = user =>({
+  type:userTypeActuions.FETCH_CURRENT_USER,
+  payload:user
+});
+
 export const fetchUsersStratAsync = ()=>{
   return dispatch => {
     dispatch(fetchUserStart())
      axios.get('users').then(res=>{
        dispatch(fetchUserSuccess(res.data.data))
+      }).catch(err=>{
+        dispatch(fetchUserFail(err.message))
+      })
+  }
+}
+
+export const fetchCurrentUserStratAsync = ()=>{
+  return dispatch => {
+    dispatch(fetchUserStart())
+     axios.get('user').then(res=>{
+       dispatch(fetchCurrentUserSuccess(res.data))
       }).catch(err=>{
         dispatch(fetchUserFail(err.message))
       })

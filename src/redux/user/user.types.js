@@ -6,5 +6,7 @@ const userTypeActuions = {
     FETCH_USER_START: 'FETCH_USER_START',
     FETCH_USER_SUCCESS: 'FETCH_USER_SUCCESS',
     FETCH_USER_FAILLURE: 'FETCH_USER_FAILLURE',
+
+    FETCH_CURRENT_USER: 'FETCH_CURRENT_USER',
 }
 export default userTypeActuions;

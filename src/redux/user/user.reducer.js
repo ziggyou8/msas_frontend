@@ -27,6 +27,11 @@ const INITIAL_STATE = {
           isFetching:false,
           messageError: action.payload
         }
+        case userTypeActuions.FETCH_CURRENT_USER:
+        return{
+          ...state,
+          currentUser: action.payload
+        }
       /* case userTypeActuions.SET_CURRENT_USER:
         return {
           ...state,
