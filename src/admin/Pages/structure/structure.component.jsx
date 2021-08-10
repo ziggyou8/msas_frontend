@@ -1,17 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import StructureForm from './form';
-import firebase, { getData } from '../../../firebase/firebase.utils';
+import firebase, { firestore, getItem } from '../../../firebase/firebase.utils';
 import './structure.style.scss'
-import { getStructureData } from '../../../redux/structure/structure.action';
+import { getCurrentStructure, getStructureData } from '../../../redux/structure/structure.action';
 import { connect } from 'react-redux';
+import { deleteItem } from '../../../assets/lib/alert';
+import {selectStructureList } from '../../../redux/structure/structure.selector';
+import { createStructuredSelector } from 'reselect';
 
 
-function Structure ({initStructureData, structures}){
+function Structure (props){
+  const {initStructureData, structures, getCurrentStructure} =props;
 
-  useEffect(async()=>{
-    initStructureData(await getData('structures'))
+  useEffect(()=>{
+      const collectionRef = firestore.collection('structures');
+      collectionRef.onSnapshot(async snapshot=>{
+        const data =  snapshot.docs.map( doc => doc.data());
+        initStructureData(data)
+      }) 
+      
   },[]);
+
+  const deleteStructure =  (id, libelle)=>{
+         deleteItem(id, libelle);
+  }
+
+  const getStructure = async(id)=> {
+   getCurrentStructure (await getItem('structures', 'id', id))
+  }
+
+ 
 
     return(
         <div>
@@ -19,14 +38,11 @@ function Structure ({initStructureData, structures}){
         <div class="page-header">
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
-              <i class="mdi mdi-account"></i>
+              <i class="mdi mdi-houzz"></i>
             </span> Structures
           </h3>
           <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
-              {/* <li class="breadcrumb-item active" aria-current="page">
-                <span></span>Statistiques <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-              </li> */}
               <button class="btn btn-primary text-white display1" data-toggle="modal" data-target="#exampleModal"><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Structures</button>
             </ul>
           </nav>
@@ -62,46 +78,13 @@ function Structure ({initStructureData, structures}){
                         <td> {Structure.telephone}</td>
                         <td> 
                             <div className="row">
-                            <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
-                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2"></i>
-                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2"></i>
+                            <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
+                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getStructure(Structure.id)}></i>
+                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={() =>deleteStructure(Structure.id,Structure.denomination )}></i>
                             </div> 
                           </td>
                       </tr>
                       ))}
-                      {/* <tr>
-                        <td>
-                          <img src="/assets/images/faces/face2.jpg" class="mr-2" alt="image"/> Stella Johnson
-                        </td>
-                        <td> High loading time </td>
-                        <td>
-                          <label class="badge badge-gradient-warning">PROGRESS</label>
-                        </td>
-                        <td> Dec 12, 2017 </td>
-                        <td> WD-12346 </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img src="/assets/images/faces/face3.jpg" class="mr-2" alt="image" /> Marina Michel
-                        </td>
-                        <td> Website down for one week </td>
-                        <td>
-                          <label class="badge badge-gradient-info">ON HOLD</label>
-                        </td>
-                        <td> Dec 16, 2017 </td>
-                        <td> WD-12347 </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img src="/assets/images/faces/face4.jpg" class="mr-2" alt="image" /> John Doe
-                        </td>
-                        <td> Loosing control on server </td>
-                        <td>
-                          <label class="badge badge-gradient-danger">REJECTED</label>
-                        </td>
-                        <td> Dec 3, 2017 </td>
-                        <td> WD-12348 </td>
-                      </tr> */}
                     </tbody>
                   </table>
                 </div>
@@ -114,10 +97,11 @@ function Structure ({initStructureData, structures}){
 };
 
 const mapDispatchToProps = dispatch =>({
-  initStructureData: data => dispatch(getStructureData(data))
+  initStructureData: data => dispatch(getStructureData(data)),
+  getCurrentStructure : data => dispatch(getCurrentStructure(data))
 })
 
-const mapStateToProps = state => ({
-  structures: state.structure.structure
+const mapStateToProps = createStructuredSelector({
+  structures: selectStructureList,
 });
 export default connect(mapStateToProps, mapDispatchToProps) (Structure);

@@ -1,12 +1,18 @@
 $primary-color:#0089DA;
 $white-color:#FFFFFF;
 .nav-content{
+   text-align: center;
+
    content:'';
    position:relative;
     width:100%;
     height:auto;
     box-shadow:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
    
+}
+#colaps-nav-button{
+   margin-top: 75px;
+   margin: 0px auto;
 }
 .navbar-public{
    height: auto;
@@ -98,14 +104,14 @@ $white-color:#FFFFFF;
       gap: 5px;
 
       .auth-btn{  
-         height: 46px;
-         width: 200px;
+         height: 40px;
+         width: 170px;
          font-size: 17px;
          font-family: 'Gilroy-Bold', sans-serif;
 
       }
       .sign-up{
-         border: 4px solid #3378E1;
+         border: 3px solid #3378E1;
          background-color: $white-color;
          color: $primary-color;
          animation: fromLetToRight 1s ease-out;

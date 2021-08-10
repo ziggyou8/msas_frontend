@@ -1,7 +1,8 @@
 import structureActionTypes from './structure.type';
 const INITIAL_STATE ={
-    structure: [],
-    typeActeur: null
+    structures: [],
+    typeActeur: null,
+    currentStructure: null
 }
 
 
@@ -10,12 +11,17 @@ const structureReducer = (state = INITIAL_STATE, action) => {
       case structureActionTypes.GET_STRUCTURE_DATA:
         return {
           ...state,
-         structure: action.payload
+         structures: action.payload
         };
       case structureActionTypes.GET_TYPE_ACTEUR:
       return {
         ...state,
         typeActeur: action.payload
+      };
+      case structureActionTypes.GET_CURRENT_STRUCTURE:
+      return {
+        ...state,
+        currentStructure: action.payload
       };
       default:
         return state;

@@ -52,7 +52,7 @@ function SourceFinancementForm({initSourceFinancementList, acteurFields, removeA
                     </div>
 
                     <div className=" bg-white py-3">
-                                <h6 className="px-4">Type d'addField</h6>
+                                <h6 className="px-4">Types d'acteur</h6>
                              <div className=" bg-white mx-1  py-3">
                                  {acteurFields.map(acteur => (
                                     <div class="form-group mx-5">
@@ -62,11 +62,12 @@ function SourceFinancementForm({initSourceFinancementList, acteurFields, removeA
                                   </div>
                                  ))}
                                  <hr />
-                                 <i class="mdi mdi-plus mdi-18px text-danger  float-right mx-2" onClick={()=>addveActeurField()} ></i>
-                                 <i class="mdi mdi-delete mdi-18px text-danger  float-right mx-2" onClick={()=>removeActeurField()} ></i>
+                                    <button type="button" className="btn btn-sm float-right " disabled = {`${acteurFields.length === 1 ? 'disabled': ''}`} onClick={()=>removeActeurField()} ><i class="mdi mdi-delete mdi-18px text-danger "></i></button>
+                                    <button type="button" className="btn btn-sm float-right" onClick={()=>addveActeurField()} ><i class="mdi mdi-plus mdi-18px text-danger "></i></button>                                 
                              </div>
+                             <br />
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer row">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>
                             <button type="submit" class="btn btn-primary" /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */><i class="mdi mdi-check mdi-18px text-white align-left"></i> Enregistrer</button>
                         </div>

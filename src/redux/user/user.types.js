@@ -1,0 +1,10 @@
+const userTypeActuions = {
+    SET_CURRENT_USER:'SET_CURRENT_USER',
+    GET_USERS: 'GET_USERS',
+    GET_USER: 'GET_USER',
+    
+    FETCH_USER_START: 'FETCH_USER_START',
+    FETCH_USER_SUCCESS: 'FETCH_USER_SUCCESS',
+    FETCH_USER_FAILLURE: 'FETCH_USER_FAILLURE',
+}
+export default userTypeActuions;

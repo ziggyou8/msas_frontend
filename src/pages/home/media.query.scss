@@ -2,6 +2,18 @@
     /* For mobile phones: */
     .body-content{
 
+      .navbar-collapse{
+         .nav-link{
+            width: auto;
+         }
+      }
+
+      /* #togle-nav-button{
+         float: left;
+      } */
+   .auth-buttons{
+      margin: 15px;
+   }
       h2{
          font-size: 1.2em;
       }

@@ -2,12 +2,15 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { auth } from '../../../firebase/firebase.utils';
 import Logo from '../../../assets/images/logo.svg'
+import {Link} from 'react-router-dom'
+import axios from 'axios';
 
 
 function AdminNavbar ({currentUser, history}){
     const handleLogOut =()=>{
-        auth.signOut();
-        history.push('/');
+        axios.post('logout').then(()=> {
+        localStorage.removeItem('token')});
+        history.push('/')
     }
     return(
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -37,12 +40,13 @@ function AdminNavbar ({currentUser, history}){
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">{currentUser && currentUser.displayName}</p>
+                  <p class="mb-1 text-black">{currentUser && currentUser.nom_complet}</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="mdi mdi-settings mr-2 text-success"></i> Paramètres </a>
+                <Link to="/admin/utilisateurs/profile" class="dropdown-item">
+                  <i class="mdi mdi-settings mr-2 text-success"></i> Paramètres 
+                </Link>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" onClick={handleLogOut}>
                   <i class="mdi mdi-logout mr-2 text-primary"></i> Deconnexion </a>

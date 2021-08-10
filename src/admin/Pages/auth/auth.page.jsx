@@ -3,6 +3,8 @@ import './sign-in.style.scss'
 import { auth } from '../../../firebase/firebase.utils';
 import FormInput from '../../../components/share/form-input/form-input';
 import CustomButton from '../../../components/share/custom-button/custom-button';
+import axios from 'axios';
+import { swal } from 'sweetalert';
 
 
 class AuthPage extends React.Component {
@@ -18,14 +20,16 @@ class AuthPage extends React.Component {
     handleSubmit = async event => {
       event.preventDefault();
       const { email, password } = this.state;
-       
-      try {
-        await auth.signInWithEmailAndPassword(email, password);
-        this.setState({ email: '', password: '' });
-        this.props.history.push("admin/dashboard")
-      } catch (error) {
-        console.log(error);
-      }
+     
+      axios.post('login', this.state).
+       then(res=>{
+         localStorage.setItem('token', res.data.data.token)
+         this.props.history.push("admin/dashboard")
+       }).catch(err=>{
+         if (err) {
+           document.getElementById('error').style.display="block"
+         }
+       })
     };
   
     handleChange = event => {
@@ -40,6 +44,8 @@ class AuthPage extends React.Component {
                 <div className='sign-in-form'>
                   <h2>CONNEXION</h2>
                   <span>Se connecter avec mon compte</span>
+                    <p id="error" style={{ color:'red', marginTop:'10px', display:'none' }}>Email ou mot de passe incorrect</p>
+                  
           
                   <form onSubmit={this.handleSubmit}>
                     <FormInput

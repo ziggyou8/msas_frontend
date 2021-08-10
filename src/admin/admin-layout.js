@@ -5,32 +5,22 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import { auth, createUserProfileDocument } from '../firebase/firebase.utils';
 import { setCurrentUser } from '../redux/user/user.actions';
+import axios from 'axios';
 
 
 
 function AdminLayout ({setCurrentUser, currentUser, children})  {
    
   useEffect(()=>{
-  let unsubscribeFromAuth = null;
-    unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+    /* const config ={
+        headers:{
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+    } */
 
-        userRef.onSnapshot(snapShot => {
-            setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-        });
-        });
-    }
-
-      setCurrentUser(userAuth);
-    });
-
-    return ()=>{
-        unsubscribeFromAuth();
-    }
-}, [])
+    axios.get('user').then(res=>setCurrentUser(res.data))
+    
+}, [currentUser])
 
     return(
         <div class="container-scroller">

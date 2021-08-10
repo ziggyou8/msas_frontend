@@ -10,10 +10,12 @@ function Navbar (){
     return(
       <div class="nav-content">
         <nav class="navbar navbar-public navbar-expand-lg   navbar-light">
-            <Link /* class="m-5" */  to="/" className="navbar-brand"><Logo/></Link>
-            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+          <div className="row">
+            <Link /* class="m-5" */  to="/" className="navbar-brand"><Logo style={{maxWidth: '190px'}}/></Link>
+            <button class="navbar-toggler ml-2" id="colaps-nav-button" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
-            </button>          
+            </button>
+          </div>          
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
               <ul class="navbar-nav  mt-2 mt-lg-0 custom-nav">
                 <li class="nav-item ">

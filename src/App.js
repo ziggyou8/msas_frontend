@@ -19,6 +19,8 @@ import HomePage from './pages/home/home.page';
 import PublicLayout from './public-layout';
 import AdminLayout from './admin/admin-layout';
 import SourceFinancement from './admin/Pages/source-financement/source_financement.component';
+import User from './admin/Pages/utilisateur/user.component';
+import UserProfile from './admin/Pages/user-profile/user-profile';
 
 const SignUp = lazy(()=> import('./components/sign-up/sign-up.component'));
 const SignIn = lazy(()=> import('./components/sign-in/sign-in.component'));
@@ -61,6 +63,8 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
         <AdminRouteDispatcher exact path="/admin/dashboard" component={Dashboard}/>
         <AdminRouteDispatcher exact path="/admin/structures" component={Structure}/>
         <AdminRouteDispatcher exact path="/admin/source_financement" component={SourceFinancement}/>
+        <AdminRouteDispatcher exact path="/admin/utilisateurs" component={User}/>
+        <AdminRouteDispatcher exact path="/admin/utilisateurs/profile" component={UserProfile}/>
         
         <Suspense fallback={<div class="loader">Loading...</div>}>
           <Route  exact path="/sign-up" component={SignUp}/>

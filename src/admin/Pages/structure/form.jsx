@@ -1,32 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import firebase, { getData } from '../../../firebase/firebase.utils';
-import { getStructureData, getTypeActeurData } from '../../../redux/structure/structure.action';
+import {
+    getStructureData,
+    getTypeActeurData,
+    getCurrentStructure
+} from '../../../redux/structure/structure.action';
 import { connect } from 'react-redux';
 import {
     getSourceFinancementData
 } from '../../../redux/source-financement/source-financement.action';
+import { v4 as uuidv4 } from 'uuid';
+import { selectCurrentStructure, selectTypeActeur } from '../../../redux/structure/structure.selector';
+import { createStructuredSelector } from 'reselect';
+import { selectSourceFinancementList } from '../../../redux/source-financement/source-financement.Selector';
 
 
-function StructureForm({initStructureData, sourceFinancements, initSourceFiancementList, getTypeActeur, typeActeur}) {
-
-    useEffect(async()=>{
-        initSourceFiancementList(await getData('source_financement'));
+function StructureForm(props) {
+    const {initStructureData, sourceFinancements, 
+           initSourceFiancementList, getTypeActeur, typeActeur, 
+           currentStructure } = props;
+    useEffect(()=>{
+        initData()
+        
     },[])
 
-    /* const [typeActeur, setTypeActeur] =useState(); */
+    const initData = async ()=>{
+        initSourceFiancementList(await getData('source_financement'));
+    }
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const onSubmit = async(data, e) => {
-        const createdAt = new Date();
-        firebase
-        .firestore()
-        .collection('structures')
-        .add({createdAt, ...data});
+       if(!currentStructure){
+            const id = uuidv4();
+            const createdAt = new Date();
+            firebase
+            .firestore()
+            .collection('structures')
+            .add({id, createdAt, ...data});
+       }else{
+        firebase.firestore()
+            .collection('structures').where('id', '==', currentStructure.id).get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                     firebase.firestore().collection('structures').doc(doc.id).update(data)
+                });
+              });
+
+              console.log(data)
+       }
             e.target.reset();
-            initStructureData(await getData('structures'))
             closeModal();
+
     }
 
     
@@ -34,9 +60,11 @@ function StructureForm({initStructureData, sourceFinancements, initSourceFiancem
     const $ = window.$;
     const closeModal = ()=> $('#exampleModal').modal('hide');
 
+   
+      /* typeActeur === null &&   getTypeActeur(sourceFinancements?.filter(source => source.source_financement ===  e.target.value)) */
+
     $('#source_investissement').change(function(e) {
-        /* console.log(e.target.find('option:eq(0)')) */
-        e.target.value && getTypeActeur(e.target.value);
+        e.target.value && getTypeActeur(sourceFinancements?.filter(source => source.source_financement ===  e.target.value));
         e.target && $('#type_acteur').find('option:eq(0)').prop('selected', true)
 
       });
@@ -65,47 +93,39 @@ function StructureForm({initStructureData, sourceFinancements, initSourceFiancem
                 <div className="row">
                         <div class="form-group col-md-6">
                             <label for="denomination">Denomination</label>
-                            <input type="text"  class="form-control" {...register("denomination", { required: true })} id="denomination" placeholder="la Dénomination" />
+                            <input type="text"  class="form-control" {...register("denomination", { required: true })} defaultValue={currentStructure ? currentStructure.denomination: ''} id="denomination" placeholder="la Dénomination" />
                             {errors.denomination && errors.denomination.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
                         <div class="form-group col-md-6">
                             <label for="address">Adress du siège</label>
-                            <input type="text" class="form-control" {...register("addresse_siege")} id="addresse_siege" placeholder="Address du siège"/>
+                            <input type="text" class="form-control" {...register("addresse_siege")} defaultValue={currentStructure ? currentStructure.addresse_siege: ''}  id="addresse_siege" placeholder="Address du siège"/>
                         </div>
-                        {/* <div class="form-group col-md-6">
-                            <label for="source_investissement">Source d'investissement</label>
-                            <input type="text" class="form-control"  {...register("source_investissement", { required: true })}  id="source_investissement" placeholder="Source d'investissement" />
-                            {errors.source_investissement && errors.source_investissement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
-                        </div> */}
 
                         <div class="form-group col-md-6">
                             <label for="source_investissement">Source d'investissement</label>
-                            <select   class="form-control" {...register("source_investissement", { required: true })} id="source_investissement">
+                            <select   class="form-control" {...register("source_investissement", { required: true })} value={currentStructure && currentStructure.source_investissement} id="source_investissement">
                             <option  value="">Choisir....</option>
                                 {sourceFinancements && sourceFinancements.map(finance =>(
-                                    <option value={finance.source_financement}>{finance.source_financement}</option>
+                                    <option  value={finance.source_financement}>{finance.source_financement}</option>
                                 ))}
                             </select>
                             {errors.source_investissement && errors.source_investissement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
-                        {/* <div class="form-group col-md-6">
-                            <label for="type_acteur">Type d'acteur</label>
-                            <input type="text" class="form-control" {...register("type_acteur")} id="type_acteur" placeholder="Type d'acteur"/>
-                        </div> */}
+                       
                         <div class="form-group col-md-6">
                             <label for="source_investissement">Type d'acteur</label>
-                            <select class="form-control" {...register("type_acteur", { required: true })} id="type_acteur">
-                                {typeActeur ?  sourceFinancements.filter(source => source.source_financement === typeActeur).map(finance =>(
+                            <select class="form-control" {...register("type_acteur", { required: true })} value={currentStructure && currentStructure.type_acteur} id="type_acteur">
+                                {typeActeur?.map(finance =>(
                                     ["",...finance.type_acteur].map(type=>(
                                         <option value={type ? type : ''}>{type ? type : 'choisir...'}</option>
                                     ))
-                                )): <option value="">Veuillez choisir d'abord le source d'investissement</option>}
+                                ))/* : <option value="">Veuillez choisir d'abord le source d'investissement</option> */}
                             </select>
                             {errors.type_acteur && errors.type_acteur.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
                         <div class="form-group col-md-6">
                             <label for="telephone">Téléphone</label>
-                            <input type="number" class="form-control" {...register("telephone")} id="telephone" placeholder="Téléphone"/>
+                            <input type="number" class="form-control" defaultValue={currentStructure ? currentStructure.telephone: ''} {...register("telephone")} id="telephone" placeholder="Téléphone"/>
                         </div>
                     </div>
 
@@ -113,20 +133,20 @@ function StructureForm({initStructureData, sourceFinancements, initSourceFiancem
                                 <h6 className="px-4">Personne responsable</h6>
                              <div className="row bg-white mx-1  py-3">
                                 <div class="form-group col-md-6">
-                                    <label for="personne_responsable">Prénom</label>
-                                    <input type="text" class="form-control" {...register("prenom")} id="prenom" placeholder="Prénom"/>
+                                    <label for="prenom">Prénom</label>
+                                    <input type="text" class="form-control" defaultValue={currentStructure ? currentStructure.prenom: ''} {...register("prenom")} id="prenom" placeholder="Prénom"/>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="nom">Nom</label>
-                                    <input type="text" class="form-control" {...register("nom")} id="nom" placeholder="Nom"/>
+                                    <input type="text" class="form-control" defaultValue={currentStructure ? currentStructure.nom: ''}  {...register("nom")} id="nom" placeholder="Nom"/>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="email_responsable">email</label>
-                                    <input type="email" class="form-control" {...register("email_responsable")} id="email_responsable" placeholder="Addresse email"/>
+                                    <input type="email" class="form-control" defaultValue={currentStructure ? currentStructure.email_responsable: ''} {...register("email_responsable")} id="email_responsable" placeholder="Addresse email"/>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="telephone_responsable">Contact</label>
-                                    <input type="number" class="form-control" {...register("telephone_responsable")} id="telephone_responsable" placeholder="Contact"/>
+                                    <input type="number" class="form-control" defaultValue={currentStructure ? currentStructure.telephone_responsable: ''} {...register("telephone_responsable")} id="telephone_responsable" placeholder="Contact"/>
                                 </div>
                              </div>
                         </div>
@@ -138,9 +158,6 @@ function StructureForm({initStructureData, sourceFinancements, initSourceFiancem
             </div>
       </div>
     </div>
-    {/* <Helmet>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
-    </Helmet> */}
   </div>
     )
 };
@@ -148,12 +165,17 @@ function StructureForm({initStructureData, sourceFinancements, initSourceFiancem
 const mapDispatchToProps = dispatch => ({
     initStructureData : data => dispatch(getStructureData(data)),
     initSourceFiancementList : data => dispatch(getSourceFinancementData(data)),
-    getTypeActeur : data => dispatch(getTypeActeurData(data))
+    getTypeActeur : data => dispatch(getTypeActeurData(data)),
 })
 
-const mapStateToProps = state =>({
-    sourceFinancements : state.sourceFinancements.sourceFinancements,
-    typeActeur : state.structure.typeActeur
+const mapStateToProps = createStructuredSelector({
+    sourceFinancements : selectSourceFinancementList,
+    typeActeur : selectTypeActeur,
+    currentStructure : selectCurrentStructure
+
+    /* sourceFinancements : selectSourceFinancementList,
+    typeActeur : selectCurrentStructure,
+    currentStructure : selectCurrentStructure */
 })
 export default connect(mapStateToProps, mapDispatchToProps) (StructureForm);
 

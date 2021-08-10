@@ -1,7 +1,7 @@
 import sourceFinancementActionTypes from './source-financement.type';
 const INITIAL_STATE ={
   sourceFinancements: [],
-  acteurtField : [1,2]
+  acteurtField : [1]
 }
 
 
