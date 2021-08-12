@@ -1,26 +1,30 @@
 import sourceFinancementActionTypes from './source-financement.type';
 const INITIAL_STATE ={
   sourceFinancements: [],
-  acteurtField : [1]
+  acteurtField : [1],
+  isFetching:false,
+  messageError:undefined
 }
 
 
 const sourceFinancementReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-      case sourceFinancementActionTypes.GET_SOURCE_FINANCEMENT_DATA:
+      case sourceFinancementActionTypes.FETCH_SOURCE_FINANCEMENT_START:
         return {
           ...state,
-          sourceFinancements: action.payload
+         isFetching:true
         };
-      case sourceFinancementActionTypes.ADD_ACCTEUR_FIELD:
+      case sourceFinancementActionTypes.FETCH_SOURCE_FINANCEMENT_SUCCESS:
       return {
         ...state,
-        acteurtField: [...state.acteurtField, state.acteurtField.length + 1]
+          isFetching:false,
+          sourceFinancements: action.payload
       };
-      case sourceFinancementActionTypes.REMOVE_ACCTEUR_FIELD:
+      case sourceFinancementActionTypes.FETCH_SOURCE_FINANCEMENT_FAILLURE:
       return {
         ...state,
-        acteurtField: state.acteurtField.pop() && [...state.acteurtField]
+          isFetching:false,
+          messageError: action.payload
       };
       default:
         return state;

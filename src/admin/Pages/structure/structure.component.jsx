@@ -3,7 +3,11 @@ import { useEffect } from 'react';
 import StructureForm from './form';
 import firebase, { firestore, getItem } from '../../../firebase/firebase.utils';
 import './structure.style.scss'
-import { getCurrentStructure, getStructureData } from '../../../redux/structure/structure.action';
+import {
+    getCurrentStructure,
+    getStructureData,
+    fetchStructureStratAsync
+} from '../../../redux/structure/structure.action';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../../assets/lib/alert';
 import {selectStructureList } from '../../../redux/structure/structure.selector';
@@ -14,11 +18,12 @@ function Structure (props){
   const {initStructureData, structures, getCurrentStructure} =props;
 
   useEffect(()=>{
-      const collectionRef = firestore.collection('structures');
+      /* const collectionRef = firestore.collection('structures');
       collectionRef.onSnapshot(async snapshot=>{
         const data =  snapshot.docs.map( doc => doc.data());
         initStructureData(data)
-      }) 
+      }) */ 
+      initStructureData();
       
   },[]);
 
@@ -72,7 +77,7 @@ function Structure (props){
                         </td>
                         <td> {Structure.addresse_siege} </td>
                         <td>
-                        {Structure.source_investissement}
+                        {Structure.source_financement[0].denomination}
                         </td>
                         <td> {Structure.type_acteur} </td>
                         <td> {Structure.telephone}</td>
@@ -97,7 +102,8 @@ function Structure (props){
 };
 
 const mapDispatchToProps = dispatch =>({
-  initStructureData: data => dispatch(getStructureData(data)),
+  //initStructureData: data => dispatch(getStructureData(data)),
+  initStructureData: () => dispatch(fetchStructureStratAsync()),
   getCurrentStructure : data => dispatch(getCurrentStructure(data))
 })
 

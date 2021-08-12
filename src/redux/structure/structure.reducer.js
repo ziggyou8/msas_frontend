@@ -2,26 +2,30 @@ import structureActionTypes from './structure.type';
 const INITIAL_STATE ={
     structures: [],
     typeActeur: null,
-    currentStructure: null
+    currentStructure: null,
+    isFetching:false,
+    messageError:undefined
 }
 
 
 const structureReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-      case structureActionTypes.GET_STRUCTURE_DATA:
+      case structureActionTypes.FETCH_STRUCTURE_START:
         return {
           ...state,
-         structures: action.payload
+         isFetching:true
         };
-      case structureActionTypes.GET_TYPE_ACTEUR:
+      case structureActionTypes.FETCH_STRUCTURE_SUCCESS:
       return {
         ...state,
-        typeActeur: action.payload
+          isFetching:false,
+          structures: action.payload
       };
-      case structureActionTypes.GET_CURRENT_STRUCTURE:
+      case structureActionTypes.FETCH_STRUCTURE_FAILLURE:
       return {
         ...state,
-        currentStructure: action.payload
+          isFetching:false,
+          messageError: action.payload
       };
       default:
         return state;

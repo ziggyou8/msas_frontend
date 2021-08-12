@@ -8,7 +8,8 @@ import {
 } from '../../../redux/structure/structure.action';
 import { connect } from 'react-redux';
 import {
-    getSourceFinancementData
+    getSourceFinancementData,
+    fetchSourceFinancementStratAsync
 } from '../../../redux/source-financement/source-financement.action';
 import { v4 as uuidv4 } from 'uuid';
 import { selectCurrentStructure, selectTypeActeur } from '../../../redux/structure/structure.selector';
@@ -21,13 +22,16 @@ function StructureForm(props) {
            initSourceFiancementList, getTypeActeur, typeActeur, 
            currentStructure } = props;
     useEffect(()=>{
-        initData()
+       // initData();
+        initSourceFiancementList()
         
     },[])
 
-    const initData = async ()=>{
+    /* const initData = async ()=>{
         initSourceFiancementList(await getData('source_financement'));
-    }
+    } */
+
+    const [acteur, setActeur] = useState();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -64,7 +68,8 @@ function StructureForm(props) {
       /* typeActeur === null &&   getTypeActeur(sourceFinancements?.filter(source => source.source_financement ===  e.target.value)) */
 
     $('#source_investissement').change(function(e) {
-        e.target.value && getTypeActeur(sourceFinancements?.filter(source => source.source_financement ===  e.target.value));
+        e.target.value && setActeur(sourceFinancements?.filter(source => source.acteurs.id ===  e.target.value));
+        console.log('🎖', acteur)
         e.target && $('#type_acteur').find('option:eq(0)').prop('selected', true)
 
       });
@@ -106,7 +111,7 @@ function StructureForm(props) {
                             <select   class="form-control" {...register("source_investissement", { required: true })} value={currentStructure && currentStructure.source_investissement} id="source_investissement">
                             <option  value="">Choisir....</option>
                                 {sourceFinancements && sourceFinancements.map(finance =>(
-                                    <option  value={finance.source_financement}>{finance.source_financement}</option>
+                                    <option  value={finance.id}>{finance.denomination}</option>
                                 ))}
                             </select>
                             {errors.source_investissement && errors.source_investissement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
@@ -116,7 +121,7 @@ function StructureForm(props) {
                             <label for="source_investissement">Type d'acteur</label>
                             <select class="form-control" {...register("type_acteur", { required: true })} value={currentStructure && currentStructure.type_acteur} id="type_acteur">
                                 {typeActeur?.map(finance =>(
-                                    ["",...finance.type_acteur].map(type=>(
+                                    ["",...finance.acteurs].map(type=>(
                                         <option value={type ? type : ''}>{type ? type : 'choisir...'}</option>
                                     ))
                                 ))/* : <option value="">Veuillez choisir d'abord le source d'investissement</option> */}
@@ -164,7 +169,7 @@ function StructureForm(props) {
 
 const mapDispatchToProps = dispatch => ({
     initStructureData : data => dispatch(getStructureData(data)),
-    initSourceFiancementList : data => dispatch(getSourceFinancementData(data)),
+    initSourceFiancementList : () => dispatch(fetchSourceFinancementStratAsync()),
     getTypeActeur : data => dispatch(getTypeActeurData(data)),
 })
 
