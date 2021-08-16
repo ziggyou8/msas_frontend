@@ -1,5 +1,6 @@
 import swal from 'sweetalert';
 import { removeItem } from '../../utilities/request.utility';
+import axios from 'axios';
 
 export const deleteItem = (url, id, libelle) => {
    return swal({
@@ -15,6 +16,7 @@ export const deleteItem = (url, id, libelle) => {
                 icon: "success",
             });
             return removeItem(url, id);
+           // return axios.delete(`${url}/${id}`)
         } else {
             swal("Suppression Annulée!");
             return;

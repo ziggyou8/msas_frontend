@@ -4,14 +4,19 @@ import { auth } from '../../../firebase/firebase.utils';
 import Logo from '../../../assets/images/logo.svg'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchCurrentUserAsync } from '../../../redux/user/user.thunk';
 
 
 function AdminNavbar ({currentUser, history}){
     const handleLogOut =()=>{
+      localStorage.removeItem('token')
         axios.post('logout').then(()=> {
-        localStorage.removeItem('token')});
+         // console.log(localStorage.getItem('token'))
+      });
         history.push('/')
     }
+  
     return(
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -36,7 +41,7 @@ function AdminNavbar ({currentUser, history}){
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img src="/id-lamine.png" alt="image" />
+                  <img   src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="image" />
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
@@ -171,5 +176,9 @@ function AdminNavbar ({currentUser, history}){
 /* const mapStateToProps = state => ({
     currentUser: state.user.currentUser
   }); */
+
+  const mapDispatchToProps = dispatch => ({
+    setCurrentUser: () => dispatch(fetchCurrentUserAsync())
+  });
   
-export default withRouter(AdminNavbar);
+export default withRouter(connect(null, mapDispatchToProps) (AdminNavbar));

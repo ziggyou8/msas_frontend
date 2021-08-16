@@ -18,13 +18,7 @@ function Structure (props){
   const {initStructureData, structures, getCurrentStructure} =props;
 
   useEffect(()=>{
-      /* const collectionRef = firestore.collection('structures');
-      collectionRef.onSnapshot(async snapshot=>{
-        const data =  snapshot.docs.map( doc => doc.data());
-        initStructureData(data)
-      }) */ 
       initStructureData();
-      
   },[]);
 
   const deleteStructure =  (id, libelle)=>{
@@ -77,7 +71,8 @@ function Structure (props){
                         </td>
                         <td> {Structure.addresse_siege} </td>
                         <td>
-                        {Structure.source_financement[0].denomination}
+                        {/* {Structure.source_financement[0].denomination} */}
+                        <p>Denomination</p>
                         </td>
                         <td> {Structure.type_acteur} </td>
                         <td> {Structure.telephone}</td>

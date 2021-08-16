@@ -27,26 +27,49 @@ const INITIAL_STATE = {
           isFetching:false,
           messageError: action.payload
         }
-        case userTypeActuions.FETCH_CURRENT_USER:
+        case userTypeActuions.FETCH_CURRENT_USER_SUCCESS:
         return{
           ...state,
+          isFetching:false,
           currentUser: action.payload
         }
-      /* case userTypeActuions.SET_CURRENT_USER:
-        return {
+        case userTypeActuions.STORE_USER_SUCCESS:
+        return{
           ...state,
-          currentUser: action.payload
+          isFetching:false,
+          listUsers: [...state.listUsers, action.payload]
         };
-        case userTypeActuions.GET_USERS:
-        return {
+        case userTypeActuions.UPDATE_USER_SUCCESS:
+         return{
           ...state,
-          listUsers: action.payload
+          isFetching:false,
+          //listUsers: [...state.listUsers.map(users =>(users.id !== action.payload.id)), action.payload]
         };
-        case userTypeActuions.GET_USER:
-        return {
+        case userTypeActuions.UPDATE_CURRENT_USER_SUCCESS:
+         return{
           ...state,
+          isFetching:false,
+          currentUser:  action.payload
+        };
+        case userTypeActuions.REMOVE_USER_SUCCESS:
+          
+        return{
+         ...state,
+         isFetching:false,
+         listUsers: [...state.listUsers.filter(user =>(user.id !== action.payload))]
+       };
+        case userTypeActuions.FETCH_USER_BY_ID:
+         return {
+          ...state,
+          isFetching:false,
           userById: action.payload
-        }; */
+        };
+       case userTypeActuions.RESET_EDITED_USER:
+        return {
+          ...state,
+          isFetching:false,
+          userById: null
+        };
       default:
         return state;
     }

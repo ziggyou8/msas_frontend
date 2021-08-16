@@ -1,10 +1,8 @@
 import React from 'react';
-import './sign-in.style.scss'
-import { auth } from '../../../firebase/firebase.utils';
+import './sign-in.style.scss';
 import FormInput from '../../../components/share/form-input/form-input';
 import CustomButton from '../../../components/share/custom-button/custom-button';
 import axios from 'axios';
-import { swal } from 'sweetalert';
 
 
 class AuthPage extends React.Component {

@@ -10,7 +10,7 @@ function AdminSideBar ({currentUser}){
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="nav-profile-image">
-                <img src="/id-lamine.png" alt="profile" />
+                <img src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="profile" />
                 <span class="login-status online"></span>
                 {/* <!--change to offline or busy as needed--> */}
               </div>

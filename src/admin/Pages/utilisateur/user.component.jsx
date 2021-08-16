@@ -1,35 +1,29 @@
 import React from 'react';
 import './user.style.scss';
 import UserForm from './form';
-import { getUsersList, getUserById, fetchUsersStratAsync } from '../../../redux/user/user.actions';
+import {
+    restEditedUser
+} from '../../../redux/user/user.actions';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
-import { getData } from '../../../firebase/firebase.utils';
 import { createStructuredSelector } from 'reselect';
-import { selectCurrentUser, selectListUser, selectListUserWithoutAdmin, selectUserById } from '../../../redux/user/user.selector';
-import axios from 'axios';
-import { deleteItem } from '../../../assets/lib/alert';
-import { getItem } from '../../../utilities/request.utility';
+import { selectListUser, selectUserById } from '../../../redux/user/user.selector';
+import { fetchUsersAsync, fetchUserByIdAsync, storeUserAsync, updateUserAsync, removeUserAsync } from '../../../redux/user/user.thunk';
 
-const User = ({initUsersList, usersList, currentUser, userById,getUserById})=>{
+const User = (props)=>{
+    const { usersList ,getUserById, removeUser, ...otherProps} = props;
 
     useEffect(()=>{
-        initUsersList();
+        props.initUsersList();
     },[]);
 
-    /* const init = async()=>{
-     await axios.get('users').then(res=>initUsersList(res.data.data));
-      } */
-
       const deleteUser = (id, libelle)=>{
-         deleteItem('users', id, libelle).then(()=>initUsersList())
+         removeUser(id, libelle);
       }
-      const getUser = (id)=>{
-        axios.get(`users/${id}`).then(res=>getUserById(res.data.data))
-      }
+
     return(
     <div>
-        <UserForm initUsers={initUsersList} editedUser={userById} currentUser={currentUser} getUserById={getUserById}/>
+        <UserForm {...otherProps}/>
         <div class="page-header">
             <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -51,6 +45,7 @@ const User = ({initUsersList, usersList, currentUser, userById,getUserById})=>{
                     <table class="table">
                     <thead>
                         <tr>
+                            <th> photo</th>
                             <th> Nom complet</th>
                             <th> Téléphone</th>
                             <th> Email</th>
@@ -61,13 +56,16 @@ const User = ({initUsersList, usersList, currentUser, userById,getUserById})=>{
         
                        {usersList.map(user=>(
                             <tr>
+                            <td>
+                            <img style={{ border:'1px solid black' }} src={user.photo ? `${user.photo}` : '/assets/images/faces/avatar.png'} /* src="/assets/images/faces/face4.jpg" */ class="mr-2" alt="image" />
+                            </td>
                             <td>{user.nom_complet}</td>
                             <td>{user.telephone}</td>
                             <td>{user.email}</td>
                             <td> 
                                 <div className="row">
                                 <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getUser(user.id)}></i>
+                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getUserById(user.id)}></i>
                                 <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteUser(user.id, user.nom_complet)} ></i>
                                 </div> 
                                 </td>
@@ -115,15 +113,18 @@ const User = ({initUsersList, usersList, currentUser, userById,getUserById})=>{
         </div>
    </div>
 )};
+
 const mapDispatchToProps = dispatch =>({
-    //initUsersList : data => dispatch(getUsersList(data)),
-    getUserById : data => dispatch(getUserById(data)),
-    initUsersList:()=>dispatch(fetchUsersStratAsync())
+    resetUser : ()=>dispatch(restEditedUser()),
+    getUserById : id => dispatch(fetchUserByIdAsync(id)),
+    initUsersList:()=>dispatch(fetchUsersAsync()),
+    storeUser: data => dispatch(storeUserAsync(data)),
+    updateUser: (id, data) => dispatch(updateUserAsync(id, data)),
+    removeUser: (id, libelle) => dispatch(removeUserAsync(id, libelle))
 })
 
 const mapStateToProps = createStructuredSelector({
     usersList : selectListUser,
-    currentUser : selectCurrentUser,
-    userById : selectUserById
+    editedUser : selectUserById
 })
 export default connect(mapStateToProps,mapDispatchToProps) (User);

@@ -1,17 +1,41 @@
-import axios from "axios";
+import swal from 'sweetalert';
+import http from "./axio.config";
 
-export const removeItem = async (url,id)=>{
-  await axios.delete(`${url}/${id}`);
+
+export const removeItem = (url,id, libelle)=>{
+    return swal({
+        title: `Etes vous de voulour supprimer "${libelle}"?`,
+        text: "La suppression sera définitive!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then((willDelete) => {
+        if (willDelete) {
+            swal("Poof! Your imaginary file has been deleted!", {
+                icon: "success",
+            });
+            //return removeItem(url, id);
+            return http.delete(`${url}/${id}`)
+        } else {
+            swal("Suppression Annulée!");
+            return;
+        }
+      });
 }
 
-export const getItem = async(url, id)=>{
-    await axios.get(`${url}/${id}`);
+export const getItems =(url)=>{
+   return http.get(url);
 }
 
-export const storeItem =async(url, data)=>{
-    axios.post( url, data)
+export const getItem = (url, id)=>{
+   return http.get(`${url}/${id}`);
 }
 
-export const updateItem =async(url,id, data)=>{
-    axios.post(`${url}/${id}?_method=PUT`, data)
+export const storeItem =(url, data)=>{
+  return http.post( url, data)
+}
+
+export const updateItem =(url,id, data)=>{
+   return http.post(`${url}/${id}?_method=PUT`, data)
 }

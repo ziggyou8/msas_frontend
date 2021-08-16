@@ -1,10 +1,6 @@
 import './App.css';
-/* import './main.scss'; */
 import {Route, Switch} from 'react-router-dom';
-import { lazy, useEffect, Suspense } from 'react';
-import { connect } from 'react-redux';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.actions';
+import { lazy, Suspense } from 'react';
 import Dashboard from './admin/dashboard/dashboard.page';
 import Structure from './admin/Pages/structure/structure.component';
 import AuthPage from './admin/Pages/auth/auth.page';
@@ -26,7 +22,7 @@ const SignUp = lazy(()=> import('./components/sign-up/sign-up.component'));
 const SignIn = lazy(()=> import('./components/sign-in/sign-in.component'));
 const NotFound = lazy(()=> import('./pages/not-found/not-found-page'));
 
-function App({currentUser, setCurrentUser}) {
+function App() {
  
 const PublicRouteDispatcher = ({component: Component, ...rest}) => {  
   return (  
@@ -73,10 +69,4 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
       </Switch>
       );
 }
-/* const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
-});
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-}); */
 export default App;

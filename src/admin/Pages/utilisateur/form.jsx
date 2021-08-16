@@ -1,61 +1,72 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import firebase, { auth, getData, firestore, secondaryApp } from '../../../firebase/firebase.utils';
-import { getStructureData, getTypeActeurData } from '../../../redux/structure/structure.action';
-import { connect } from 'react-redux';
-import {
-    getSourceFinancementData
-} from '../../../redux/source-financement/source-financement.action';
-import { getUsersList } from '../../../redux/user/user.actions';
-import axios from 'axios';
-import { storeItem, updateItem } from '../../../utilities/request.utility';
 
 
-function UserForm({initUsers, currentUser, editedUser, getUserById}) {
+function UserForm(props) {
+    
+    const {initUsersList, editedUser, resetUser, storeUser,updateUser} = props;
+    const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm();
+    const [encodedImage, setencodedImage] = useState()
+
     
 
-    const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm();
-
     useEffect(()=>{
-        /* initSourceFiancementList(await getData('source_financement')); */
-      reset({ prenom: editedUser?.nom_complet.split(' ')[0],
+         reset({ prenom: editedUser?.nom_complet.split(' ')[0],
              nom: editedUser?.nom_complet.split(' ')[1],
              email: editedUser?.email,
              telephone: editedUser?.telephone,
             });
+
+        const $ = window.$;
+        $('#photo').on('change', traiteFile);
+
     },[editedUser]);
 
     const resetForm =()=>{
         reset();
-        getUserById();
+        resetUser();
     }
 
-
+    async function traiteFile() {
+        let base64; //in this variable i need the base64
+        const selectedFile = document.getElementById("photo").files;
+        const fileToLoad = selectedFile[0];
+        await getBase64(fileToLoad).then(
+          data => {
+            base64 = data;
+          }
+        );
+        document.getElementById('avatar').src = base64;
+        setencodedImage(base64)
+        console.log(base64);
+      }
+      
+      //This is my function for get base64, but not return the string base64
+      function getBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+          return Promise.resolve(reader.result)
+        });
+      }
 
     const onSubmit = async(data, e) => {
         const {nom, prenom, email, telephone, roles} = data;
-        const userData = {nom_complet:`${prenom} ${nom}` ,email, telephone}
+        const userData = {nom_complet:`${prenom} ${nom}` ,email, telephone, photo:encodedImage}
          if (editedUser) {
-            await updateItem('users', editedUser.id, userData)
-            .then(()=>{
-                getUserById(null);
-            })
-            .catch(err=>alert(err.message))
+            updateUser(editedUser.id, userData);
          }else{
-            await storeItem('users', userData)
-            .then(()=>{
-                getUserById(null);
-            })
-            .catch(err=>alert(err.message))
+            storeUser(userData);
          }
-         
          closeModal();
-         initUsers();
-
-         
+         initUsersList();
+         resetForm();
+         console.log(userData);
     }
-    const closeModal = ()=> window.$('#exampleModal').modal('hide');
 
+    const closeModal = ()=> window.$('#exampleModal').modal('hide');
     
   return(
         <div class="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,7 +74,7 @@ function UserForm({initUsers, currentUser, editedUser, getUserById}) {
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UN UTILISATEUR</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={()=>resetForm()}>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -71,6 +82,12 @@ function UserForm({initUsers, currentUser, editedUser, getUserById}) {
                 
                 <form  onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
+                        <div class="form-group col-md-6">
+                            <label for="prenom">Photo</label>
+                            <input type="file" id="photo"  class="form-control" {...register("photo")}  id="photo" placeholder="Prénom" />
+                            <img style={{height: "50px"}} id="avatar" /* src="" *//>
+                            {errors.photo && errors.photo.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                        </div>
                         <div class="form-group col-md-6">
                             <label for="prenom">Prénom</label>
                             <input type="text"  class="form-control" {...register("prenom", { required: true })}  id="prenom" placeholder="Prénom" />
@@ -124,13 +141,5 @@ function UserForm({initUsers, currentUser, editedUser, getUserById}) {
     )
 };
 
-/* const mapDispatchToProps = dispatch => ({
-    initUsersList : data => dispatch(getUsersList(data))
-}) */
-
-/* const mapStateToProps = state =>({
-    sourceFinancements : state.sourceFinancements.sourceFinancements,
-    typeActeur : state.structure.typeActeur
-}) */
 export default UserForm;
 

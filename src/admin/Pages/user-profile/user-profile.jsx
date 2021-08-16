@@ -4,15 +4,11 @@ import './user-profile.scss'
 import { selectCurrentUser } from '../../../redux/user/user.selector';
 import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import firebase, { firestore } from '../../../firebase/firebase.utils';
 import { useEffect } from 'react';
-import swal from 'sweetalert';
-import { storeItem, updateItem } from '../../../utilities/request.utility';
-import { setCurrentUser } from '../../../redux/user/user.actions';
-import axios from 'axios';
+import { fetchCurrentUserAsync, updateCurrentUserAsync } from '../../../redux/user/user.thunk';
 
 
-function UserProfile ({currentUser, setCurrentUser}){
+function UserProfile ({currentUser, setCurrentUser, updateCurrentUser}){
 
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
     useEffect(()=>{
@@ -24,16 +20,19 @@ function UserProfile ({currentUser, setCurrentUser}){
     },[currentUser])
     
     const onSubmit = async(data, e) => {
-       const {old_password, new_password, confirm_password, prenom, nom, email, telephone} = data;
-        const userDta = {
+        e.preventDefault();
+        const {old_password, new_password, confirm_password, prenom, nom, email, telephone} = data;
+        const isValid = old_password !== "" && new_password === confirm_password;
+        const userData = {
                 nom_complet:`${prenom} ${nom}`,
                 email,
                 telephone,
                 password: new_password
         }
-        updateItem('users',currentUser?.id, userDta )
-         .then(()=>setCurrentUser({id: currentUser?.id,...userDta}));
-              
+        if(!isValid){
+            console.log('Mot de pass ne correspondent pas')
+        }
+        updateCurrentUser(currentUser?.id, userData);
 
      }
     return(
@@ -62,49 +61,27 @@ function UserProfile ({currentUser, setCurrentUser}){
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="account-general">
                     <div class="card-body media align-items-center">
-                        <img src="/id-lamine.png" alt="" class="d-block ui-w-80" />
-                        {/* <div class="media-body ml-4">
-                        <label class="btn btn-outline-primary">
-                            Uploader une nouvelle photo
-                            <input type="file" class="account-settings-fileinput" />
-                        </label> &nbsp;
-                        <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-
-                        <div class="text-light small mt-1">Autorisé JPG, GIF or PNG. Max size of 800K</div>
-                        </div> */}
+                        <img src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="Profile" class="d-block ui-w-80" />
                     </div>
                     <hr class="border-light m-0" />
-
                     <div class="card-body">
                         <div class="form-group">
-                        <label class="form-label">Prenom</label>
-                        <input type="text" class="form-control mb-1" {...register("prenom", { required: true })}  />
+                            <label class="form-label">Prenom</label>
+                            <input type="text" class="form-control mb-1" {...register("prenom", { required: true })}  />
                           {/* {errors.prenom && errors.prenom.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>} */}
                         </div>
                         <div class="form-group">
-                        <label class="form-label">Nom</label>
-                        <input type="text" class="form-control" {...register("nom", { required: true })}  />
+                            <label class="form-label">Nom</label>
+                            <input type="text" class="form-control" {...register("nom", { required: true })}  />
                         </div>
                         <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="text"  class="form-control mb-1" {...register("email", { required: true })}  />
-                        {/* <div class="alert alert-warning mt-3">
-                            Your email is not confirmed. Please check your inbox.<br />
-                            <a href="javascript:void(0)">Resend confirmation</a>
-                        </div> */}
+                            <label class="form-label">Email</label>
+                            <input type="text"  class="form-control mb-1" {...register("email", { required: true })}  />
                         </div>
                         <div class="form-group">
-                        <label class="form-label">Téléphone</label>
-                        <input type="tel" class="form-control" {...register("telephone", { required: true })} />
+                            <label class="form-label">Téléphone</label>
+                            <input type="tel" class="form-control" {...register("telephone", { required: true })} />
                         </div>
-                        {/* <div class="form-group">
-                        <label class="form-label">Date création</label>
-                        <input type="text" class="form-control" disabled {...register("createdAt", { required: true })}  value="24/10/2021" />
-                        </div> */}
-                        {/* <div class="form-group">
-                        <label class="form-label">Rôle</label>
-                        <input type="text" class="form-control" disabled  {...register("roles", { required: true })}  value={currentUser?.roles} />
-                        </div> */}
                     </div>
 
                     </div>
@@ -310,7 +287,8 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-    setCurrentUser: user => dispatch(setCurrentUser(user))
+    setCurrentUser: () => dispatch(fetchCurrentUserAsync()),
+    updateCurrentUser: (id, data) => dispatch(updateCurrentUserAsync(id, data))
   });
 
 export default connect(mapStateToProps, mapDispatchToProps) (UserProfile);
