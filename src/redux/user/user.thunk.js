@@ -81,7 +81,7 @@ export const fetchCurrentUserAsync = ()=>{
     return dispatch => {
       dispatch(fetchUserStart())
        updateItem('users', id, data).then(res=>{
-         dispatch(updateCurrentUserSuccess(res.data.data))
+         dispatch(updateCurrentUserSuccess(res.data))
         }).catch(err=>{
           dispatch(fetchUserFail(err.message))
         })

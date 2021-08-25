@@ -71,10 +71,10 @@ function Structure (props){
                         </td>
                         <td> {Structure.addresse_siege} </td>
                         <td>
-                        {/* {Structure.source_financement[0].denomination} */}
-                        <p>Denomination</p>
+                        {Structure?.source_financement[0]?.denomination}
+                        {/* <p>Denomination</p> */}
                         </td>
-                        <td> {Structure.type_acteur} </td>
+                        <td> {Structure?.source_financement[0]?.acteurs[0].libelle} </td>
                         <td> {Structure.telephone}</td>
                         <td> 
                             <div className="row">

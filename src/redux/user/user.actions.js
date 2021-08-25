@@ -5,9 +5,10 @@ export const fetchUserByIdSuccess = id => ({
   payload:  id
 });
 
-export const restEditedUser = () => ({
+export const resetEditedUser = () => ({
   type: userTypeActuions.RESET_EDITED_USER,
 });
+
 
 export const fetchUserStart = ()=>({
   type:userTypeActuions.FETCH_USER_START

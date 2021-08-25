@@ -10,12 +10,12 @@ function AdminSideBar ({currentUser}){
           <li class="nav-item nav-profile">
             <a href="#" class="nav-link">
               <div class="nav-profile-image">
-                <img src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="profile" />
+                <img src={currentUser && currentUser?.data?.photo ? `${currentUser?.data?.photo}` : '/assets/images/faces/avatar.png'} alt="profile" />
                 <span class="login-status online"></span>
                 {/* <!--change to offline or busy as needed--> */}
               </div>
               <div class="nav-profile-text d-flex flex-column">
-                <span class="font-weight-bold mb-2">{currentUser && currentUser.displayName}</span>
+                <span class="font-weight-bold mb-2">{currentUser && `${currentUser?.data?.prenom} ${currentUser?.data?.nom}`}</span>
                 <span class="text-secondary text-small">ADMINISTRATEUR</span>
               </div>
               <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>

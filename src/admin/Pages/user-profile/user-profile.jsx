@@ -12,19 +12,23 @@ function UserProfile ({currentUser, setCurrentUser, updateCurrentUser}){
 
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
     useEffect(()=>{
-        reset({ prenom: currentUser?.nom_complet.split(' ')[0],
-        nom: currentUser?.nom_complet.split(' ')[1],
-        email: currentUser?.email,
-        telephone: currentUser?.telephone,
+        reset({ 
+        prenom: currentUser?.data?.prenom,
+        nom: currentUser?.data?.nom,
+        email: currentUser?.data?.email,
+        telephone: currentUser?.data?.telephone,
        });
-    },[currentUser])
+    },[currentUser?.data])
+
+    console.log('✅✅', currentUser?.data)
     
     const onSubmit = async(data, e) => {
         e.preventDefault();
         const {old_password, new_password, confirm_password, prenom, nom, email, telephone} = data;
         const isValid = old_password !== "" && new_password === confirm_password;
         const userData = {
-                nom_complet:`${prenom} ${nom}`,
+                prenom,
+                nom,
                 email,
                 telephone,
                 password: new_password
@@ -32,7 +36,7 @@ function UserProfile ({currentUser, setCurrentUser, updateCurrentUser}){
         if(!isValid){
             console.log('Mot de pass ne correspondent pas')
         }
-        updateCurrentUser(currentUser?.id, userData);
+        updateCurrentUser(currentUser?.data.id, userData);
 
      }
     return(
@@ -61,7 +65,7 @@ function UserProfile ({currentUser, setCurrentUser, updateCurrentUser}){
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="account-general">
                     <div class="card-body media align-items-center">
-                        <img src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="Profile" class="d-block ui-w-80" />
+                        <img src={ currentUser && currentUser?.data?.photo ? `${currentUser?.data?.photo}` : '/assets/images/faces/avatar.png'} alt="Profile" class="d-block ui-w-80" />
                     </div>
                     <hr class="border-light m-0" />
                     <div class="card-body">

@@ -41,11 +41,11 @@ function AdminNavbar ({currentUser, history}){
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img   src={ currentUser && currentUser.photo ? `${currentUser.photo}` : '/assets/images/faces/avatar.png'} alt="image" />
+                  <img   src={ currentUser && currentUser?.data?.photo ? `${currentUser?.data?.photo}` : '/assets/images/faces/avatar.png'} alt="image" />
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">{currentUser && currentUser.nom_complet}</p>
+                  <p class="mb-1 text-black">{currentUser && `${currentUser?.data?.prenom} ${currentUser?.data?.nom}`}</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">

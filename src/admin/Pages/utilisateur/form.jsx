@@ -4,15 +4,15 @@ import { useForm } from 'react-hook-form';
 
 function UserForm(props) {
     
-    const {initUsersList, editedUser, resetUser, storeUser,updateUser} = props;
+    const {initUsersList, editedUser, resetUser, storeUser,updateUser, rolesList} = props;
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm();
     const [encodedImage, setencodedImage] = useState()
 
     
 
     useEffect(()=>{
-         reset({ prenom: editedUser?.nom_complet.split(' ')[0],
-             nom: editedUser?.nom_complet.split(' ')[1],
+         reset({ prenom: editedUser?.prenom,
+             nom: editedUser?.nom,
              email: editedUser?.email,
              telephone: editedUser?.telephone,
             });
@@ -38,7 +38,7 @@ function UserForm(props) {
         );
         document.getElementById('avatar').src = base64;
         setencodedImage(base64)
-        console.log(base64);
+        //console.log(base64);
       }
       
       //This is my function for get base64, but not return the string base64
@@ -54,11 +54,12 @@ function UserForm(props) {
 
     const onSubmit = async(data, e) => {
         const {nom, prenom, email, telephone, roles} = data;
-        const userData = {nom_complet:`${prenom} ${nom}` ,email, telephone, photo:encodedImage}
+        const userData = {prenom, nom,email, telephone, photo:encodedImage, roles}
          if (editedUser) {
             updateUser(editedUser.id, userData);
          }else{
             storeUser(userData);
+            console.log(data)
          }
          closeModal();
          initUsersList();
@@ -108,14 +109,15 @@ function UserForm(props) {
                             <input type="text" class="form-control" {...register("email")} id="email" placeholder="Email"/>
                         </div>
 
-                        {/* <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                             <label for="telephone">Rôles</label>
-                            <select class="form-control" {...register("roles")} id="roles">
+                            <select class="form-control" {...register("roles[]")} id="roles">
                                 <option value="">CHoisir...</option>
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="ADMIN">REDACTEUR</option>
+                                {rolesList.map(role=>(
+                                    <option value={role.name}>{role.name}</option>
+                                ))}
                             </select>
-                        </div> */}
+                        </div>
 
                         {/* <div class="form-group col-md-6">
                             <label for="source_investissement">Source d'investissement</label>
