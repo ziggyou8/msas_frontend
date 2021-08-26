@@ -11,14 +11,16 @@ function RoleForm(props) {
 
     useEffect(()=>{
          reset({ 
-             prenom: editedRole?.name,
-             roles: editedRole?.roles
+             name: editedRole?.name,
+             permission_id: editedRole?.permission_id
             });
             initPermissionList();
 /*         const $ = window.$;
         $('#photo').on('change', traiteFile); */
 
     },[editedRole]);
+
+    editedRole && console.log('✅✅✅',editedRole)
 
     const resetForm =()=>{
         reset();
@@ -28,19 +30,15 @@ function RoleForm(props) {
     const onSubmit = async(data, e) => {
         const { name, permission_id} = data;
         const roleData = {name, permission_id:[...permission_id]}
-         /* if (editedRole) {
-           updateRole(editedUser.id, roleData);
+         if (editedRole) {
+           updateRole(editedRole.id, roleData);
          }else{
            storeRole(roleData);
-           console.log('🔥🔥',roleData)
-         } */
-         storeRole(roleData);
-         console.log('🔥🔥',roleData)
+         }
 
          closeModal();
          initPermissionList();
-         resetForm();
-         console.log(roleData);
+         resetForm();;
     }
 
     const closeModal = ()=> window.$('#exampleModal').modal('hide');
@@ -60,12 +58,12 @@ function RoleForm(props) {
                 <form  onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
                         <div class="form-group col-md-6">
-                            <label for="prenom">name</label>
-                            <input type="text"  class="form-control" {...register("name", { required: true })}  id="prenom" placeholder="Prénom" />
+                            <label for="name">Libellé</label>
+                            <input type="text"  class="form-control" {...register("name", { required: true })}  id="libelle" placeholder="Libellé" />
                             {errors.nom && errors.nom.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="telephone">Rôles</label>
+                            <label for="permission_id">Rôles</label>
                             <select class="form-control" {...register("permission_id[]")} id="permission_id" multiple>
                                 <option>CHoisir...</option>
                                 {PermissionsList.map(permission=>(

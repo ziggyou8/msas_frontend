@@ -11,7 +11,8 @@ function UserForm(props) {
     
 
     useEffect(()=>{
-         reset({ prenom: editedUser?.prenom,
+         reset({ 
+             prenom: editedUser?.prenom,
              nom: editedUser?.nom,
              email: editedUser?.email,
              telephone: editedUser?.telephone,
@@ -59,12 +60,10 @@ function UserForm(props) {
             updateUser(editedUser.id, userData);
          }else{
             storeUser(userData);
-            console.log(data)
          }
          closeModal();
          initUsersList();
          resetForm();
-         console.log(userData);
     }
 
     const closeModal = ()=> window.$('#exampleModal').modal('hide');

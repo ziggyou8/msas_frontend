@@ -22,8 +22,8 @@ function AdminSideBar ({currentUser}){
             </a>
           </li>
           <li class="nav-item">
-          <Link class={`nav-link ${location.pathname === '/admin/dashboard' ? 'active' : ''}`} to="/admin/dashboard">
-              <span class="menu-title">Tableau de bord</span>
+          <Link class={`nav-link ${location.pathname === '/admin/roles' ? 'active' : ''}`} to="/admin/roles">
+              <span class="menu-title">Role</span>
               <i class="mdi mdi-home menu-icon"></i>
           </Link>
           </li>

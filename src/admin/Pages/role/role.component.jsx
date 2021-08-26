@@ -62,11 +62,14 @@ const Role = (props)=>{
                        {rolesList.map(role=>(
                             <tr>
                             <td>{role.name}</td>
-                            <td>rrrrrrrrrr</td>
+                            <td>{role.permissions.map(permission=>(
+                                <div className="badge badge-primary mx-1">{permission}</div>
+                                ))} 
+                            </td>
                             <td> 
                                 <div className="row">
                                 <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>{getRoleById(role.id);props.initPermissionList() }}></i>
+                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getRoleById(role.id)}></i>
                                 <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteRole(role.id, role.name)} ></i>
                                 </div> 
                                 </td>

@@ -42,13 +42,13 @@ const INITIAL_STATE = {
         return{
          ...state,
          isFetching:false,
-         roles: [...state.roles]
+         roles: [...state.roles.filter(role =>(role.id !== action.payload))]
        };
         case roleTypeActuions.FETCH_ROLE_BY_ID:
          return {
           ...state,
           isFetching:false,
-          userById: action.payload
+          roleById: action.payload
         };
         case roleTypeActuions.FETCH_PERMISSION_SUCCESS:
         return{
