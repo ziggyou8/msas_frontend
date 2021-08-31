@@ -4,9 +4,11 @@ import { useForm } from 'react-hook-form';
 
 function UserForm(props) {
     
-    const {initUsersList, editedUser, resetUser, storeUser,updateUser, rolesList} = props;
+    const {initUsersList, editedUser, resetUser, storeUser,updateUser, rolesList, initRoleList} = props;
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm();
-    const [encodedImage, setencodedImage] = useState()
+    const [encodedImage, setencodedImage] = useState();
+    const $ = window.$;
+
 
     
 
@@ -18,15 +20,20 @@ function UserForm(props) {
              telephone: editedUser?.telephone,
             });
 
+
+            initRoleList();
         const $ = window.$;
         $('#photo').on('change', traiteFile);
-
+        
     },[editedUser]);
 
     const resetForm =()=>{
         reset();
         resetUser();
+        editedUser && $('#roles option[data-id=' + editedUser.roles[0] + ']').attr('selected', false)
     }
+
+    editedUser && $('#roles option[data-id=' + editedUser.roles[0] + ']').attr('selected', true)
 
     async function traiteFile() {
         let base64; //in this variable i need the base64
@@ -69,7 +76,7 @@ function UserForm(props) {
     const closeModal = ()=> window.$('#exampleModal').modal('hide');
     
   return(
-        <div class="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -112,8 +119,8 @@ function UserForm(props) {
                             <label for="telephone">Rôles</label>
                             <select class="form-control" {...register("roles[]")} id="roles">
                                 <option value="">CHoisir...</option>
-                                {rolesList.map(role=>(
-                                    <option value={role.name}>{role.name}</option>
+                                {rolesList?.map(role=>(
+                                    <option data-id={role.name} value={role.name}>{role.name}</option>
                                 ))}
                             </select>
                         </div>

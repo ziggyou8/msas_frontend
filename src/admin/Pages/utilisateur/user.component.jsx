@@ -11,7 +11,7 @@ import { selectListRole } from '../../../redux/role/role.selector';
 import { resetEditedUser } from '../../../redux/user/user.actions';
 
 const User = (props)=>{
-    const { usersList ,getUserById, removeUser, initRoleList, ...otherProps} = props;
+    const { usersList ,getUserById, removeUser, ...otherProps} = props;
 
     useEffect(()=>{
         props.initUsersList();
@@ -23,8 +23,9 @@ const User = (props)=>{
 
       const resetFormAndInitListRole = ()=>{
         getUserById(null);
-        initRoleList();
+        props.initRoleList();
      }
+     
 
     return(
     <div>

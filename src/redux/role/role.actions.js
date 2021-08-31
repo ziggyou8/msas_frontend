@@ -41,6 +41,10 @@ export const fetchPermissionSuccess = users =>({
   payload:users
 });
 
+export const resetEditedRole = () => ({
+  type: roleTypeActuions.RESET_EDITED_ROLE,
+});
+
 
 
 

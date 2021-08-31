@@ -64,7 +64,7 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
         <AdminRouteDispatcher exact path="/admin/utilisateurs/profile" component={UserProfile}/>
         <AdminRouteDispatcher exact path="/admin/roles" component={Role}/>
         
-        <Suspense fallback={<div class="loader">Loading...</div>}>
+        <Suspense fallback={<div className="loader">Loading...</div>}>
           <Route  exact path="/sign-up" component={SignUp}/>
           <Route exact path="/sign-in" component={AuthPage}/>
          </Suspense>

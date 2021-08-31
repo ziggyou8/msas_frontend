@@ -56,6 +56,12 @@ const INITIAL_STATE = {
           isFetching:false,
           permissions: action.payload
         };
+        case roleTypeActuions.RESET_EDITED_ROLE:
+        return {
+          ...state,
+          isFetching:false,
+          roleById: null
+        };
       default:
         return state;
     }

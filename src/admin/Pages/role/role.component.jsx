@@ -11,9 +11,10 @@ import {
 } from '../../../redux/role/role.selector';
 import { resetEditedUser } from '../../../redux/user/user.actions';
 import RoleForm from './form';
+import { resetEditedRole } from '../../../redux/role/role.actions';
 
 const Role = (props)=>{
-    const { initRoleList ,rolesList ,getRoleById, removeRole, ...otherProps} = props;
+    const { rolesList ,getRoleById, removeRole, ...otherProps} = props;
 
     useEffect(()=>{
         props.initRoleList();
@@ -25,7 +26,7 @@ const Role = (props)=>{
 
       const resetFormAndInitListRole = ()=>{
         getRoleById(null);
-        initRoleList();
+        props.initRoleList();
      }
 
     return(
@@ -119,7 +120,7 @@ const Role = (props)=>{
 )};
 
 const mapDispatchToProps = dispatch =>({
-    //resetUser : ()=>dispatch(resetEditedUser()),
+    resetRole : ()=>dispatch(resetEditedRole()),
     getRoleById : id => dispatch(fetchRoleByIdAsync(id)),
     storeRole: data => dispatch(storeRoleAsync(data)),
     updateRole: (id, data) => dispatch(updateRoleAsync(id, data)),

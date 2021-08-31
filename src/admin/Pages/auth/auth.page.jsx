@@ -22,7 +22,7 @@ class AuthPage extends React.Component {
       axios.post('login', this.state).
        then(res=>{
          localStorage.setItem('token', res.data.data.token)
-         this.props.history.push("admin/dashboard")
+         this.props.history.push("admin/roles")
        }).catch(err=>{
          if (err) {
            document.getElementById('error').style.display="block"

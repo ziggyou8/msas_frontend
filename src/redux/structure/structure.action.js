@@ -1,19 +1,8 @@
-import axios from 'axios';
-import structureActionTypes from './structure.type';
+import structureActionTypes from "./structure.type";
 
-export const getStructureData = data => ({
-    type: structureActionTypes.GET_STRUCTURE_DATA,
-    payload:  data
-  });
-
-export const getTypeActeurData = data => ({
-  type: structureActionTypes.GET_TYPE_ACTEUR,
-  payload:  data
-});
-
-export const getCurrentStructure = data => ({
-  type: structureActionTypes.GET_CURRENT_STRUCTURE,
-  payload:  data
+export const fetchStructureByIdSuccess = id => ({
+  type: structureActionTypes.FETCH_STRUCTURE_BY_ID,
+  payload:  id
 });
 
 
@@ -21,9 +10,10 @@ export const fetchStructureStart = ()=>({
   type:structureActionTypes.FETCH_STRUCTURE_START
 });
 
-export const fetchStructureSuccess = users =>({
+
+export const fetchStructureSuccess = acteurs =>({
   type:structureActionTypes.FETCH_STRUCTURE_SUCCESS,
-  payload:users
+  payload:acteurs
 });
 
 export const fetchStructureFail = errorMessage =>({
@@ -32,13 +22,21 @@ export const fetchStructureFail = errorMessage =>({
 });
 
 
-export const fetchStructureStratAsync = ()=>{
-  return dispatch => {
-    dispatch(fetchStructureStart())
-     axios.get('structures').then(res=>{
-       dispatch(fetchStructureSuccess(res.data.data))
-      }).catch(err=>{
-        dispatch(fetchStructureFail(err.message))
-      })
-  }
-}
+export const storeStructureSuccess = structure =>({
+  type:structureActionTypes.STORE_STRUCTURE_SUCCESS,
+  payload:structure
+});
+
+export const updateStructureSuccess = structure =>({
+  type:structureActionTypes.UPDATE_STRUCTURE_SUCCESS,
+  payload:structure
+});
+
+export const removeStructureSuccess = id =>({
+  type:structureActionTypes.REMOVE_STRUCTURE_SUCCESS,
+  payload:id
+});
+
+export const resetEditedStructure= () => ({
+  type: structureActionTypes.RESET_EDITED_STRUCTURE,
+});

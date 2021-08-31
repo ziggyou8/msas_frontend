@@ -9,15 +9,15 @@ export const selectStructureList = createSelector(
 )
 
 
-export const selectCurrentStructure = createSelector(
+export const selectStructureById = createSelector(
     [selectStructure],
-    structure => structure.currentStructure
+    structure => structure.structureById
 )
 
-export const selectTypeActeur = createSelector(
+/* export const selectTypeActeur = createSelector(
     [selectStructure],
     structure=> structure.typeActeur
-)
+) */
 
 /* export const getcurrentStructure = id =>
 createSelector(

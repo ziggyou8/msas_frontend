@@ -1,39 +1,35 @@
 import React from 'react';
 import { useEffect } from 'react';
 import StructureForm from './form';
-import firebase, { firestore, getItem } from '../../../firebase/firebase.utils';
 import './structure.style.scss'
-import {
-    getCurrentStructure,
-    getStructureData,
-    fetchStructureStratAsync
-} from '../../../redux/structure/structure.action';
 import { connect } from 'react-redux';
 import { deleteItem } from '../../../assets/lib/alert';
-import {selectStructureList } from '../../../redux/structure/structure.selector';
+import {selectStructureById, selectStructureList } from '../../../redux/structure/structure.selector';
 import { createStructuredSelector } from 'reselect';
+import { selectActeurById } from '../../../redux/acteur/acteur.selector';
+import {
+    fetchStructureAsync,
+    removeStructureAsync,
+    storeStructureAsync,
+    updateStructureAsync,
+    fetchStructureByIdAsync
+} from '../../../redux/structure/structurethunk';
 
 
 function Structure (props){
-  const {initStructureData, structures, getCurrentStructure} =props;
+  const {structures, getCurrentStructure, ...otherProps} =props;
 
   useEffect(()=>{
-      initStructureData();
+      props.initStructureData();
   },[]);
 
   const deleteStructure =  (id, libelle)=>{
-         deleteItem(id, libelle);
+    props.removeStructure(id, libelle);
   }
-
-  const getStructure = async(id)=> {
-   getCurrentStructure (await getItem('structures', 'id', id))
-  }
-
  
-
     return(
         <div>
-         <StructureForm />
+         <StructureForm {...otherProps} />
         <div class="page-header">
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -57,30 +53,31 @@ function Structure (props){
                       <tr>
                         <th> Denomination </th>
                         <th> Addresse siège </th>
+                        <th> Type de fonds </th>
                         <th> Source d'investissement </th>
-                        <th> Type d'acteur </th>
+                        <th> Type d'acteurs </th>
                         <th> Téléphone </th>
                         <th> Action </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.map(Structure =>(
-                        <tr>
+                      {structures && structures.map(structure =>(
+                        <tr key={structure.id}>
                         <td>
-                          {Structure.denomination}
+                          {structure.denomination}
                         </td>
-                        <td> {Structure.addresse_siege} </td>
+                        <td> {structure.addresse_siege} </td>
+                        <td> {structure.type_fonds} </td>
                         <td>
-                        {Structure?.source_financement[0]?.denomination}
-                        {/* <p>Denomination</p> */}
+                        {structure?.source_financement?.denomination}
                         </td>
-                        <td> {Structure?.source_financement[0]?.acteurs[0].libelle} </td>
-                        <td> {Structure.telephone}</td>
+                        <td> {structure?.acteur} </td>
+                        <td> {structure.telephone}</td>
                         <td> 
                             <div className="row">
                             <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getStructure(Structure.id)}></i>
-                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={() =>deleteStructure(Structure.id,Structure.denomination )}></i>
+                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>props.getStructureById(structure.id)}></i>
+                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={() =>deleteStructure(structure.id, structure.denomination )}></i>
                             </div> 
                           </td>
                       </tr>
@@ -97,12 +94,17 @@ function Structure (props){
 };
 
 const mapDispatchToProps = dispatch =>({
-  //initStructureData: data => dispatch(getStructureData(data)),
-  initStructureData: () => dispatch(fetchStructureStratAsync()),
-  getCurrentStructure : data => dispatch(getCurrentStructure(data))
+  initStructureData: () => dispatch(fetchStructureAsync()),
+  getStructureById : id => dispatch(fetchStructureByIdAsync(id)),
+
+  storeStructure: data => dispatch(storeStructureAsync(data)),
+  updateStructure: (id, data) => dispatch(updateStructureAsync(id, data)),
+  removeStructure: (id, libelle) => dispatch(removeStructureAsync(id, libelle)),
+
 })
 
 const mapStateToProps = createStructuredSelector({
   structures: selectStructureList,
+  structureById: selectStructureById,
 });
 export default connect(mapStateToProps, mapDispatchToProps) (Structure);
