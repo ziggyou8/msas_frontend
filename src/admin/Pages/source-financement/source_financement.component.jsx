@@ -1,22 +1,32 @@
 import React from 'react';
 import { useEffect } from 'react';
-import firebase, { getData } from '../../../firebase/firebase.utils';
 import SourceFinancementForm from './form';
-import {
-    getSourceFinancementData
-} from '../../../redux/source-financement/source-financement.action';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import {
+    selectSourceFinancementList,
+    selectSourceFinancementById
+} from '../../../redux/source-financement/source-financement.Selector';
+import {
+    fetchSourceFinancementAsync,
+    fetchSourceFinancementByIdAsync,
+    removeSourceFinancementeAsync,
+    storeSourceFinancementAsync,
+    updateSourceFinancementAsync
+} from '../../../redux/source-financement/source-financement.thunk';
+import { resetEditedSourceFinancement } from '../../../redux/source-financement/source-financement.action';
 
 
-function SourceFinancement ({getSourceFinancementList, sourceFinancementList}){
+function SourceFinancement (props){
+  const {getSourceFinancementList, sourceFinancementList, ...otherProps} = props;
 
-  useEffect(async()=>{
-    getSourceFinancementList( await getData('source_financement'));
+  useEffect(()=>{
+    getSourceFinancementList();
   },[]);
 
     return(
         <div>
-         <SourceFinancementForm />
+         <SourceFinancementForm {...otherProps}/>
         <div class="page-header">
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
@@ -50,16 +60,16 @@ function SourceFinancement ({getSourceFinancementList, sourceFinancementList}){
                       {sourceFinancementList && sourceFinancementList.map(source =>(
                         <tr>
                         <td>
-                          {source.source_financement}
+                          {source.denomination}
                         </td>
-                        <td> {source.type_acteur.map(type=>(
-                          <div className="badge badge-primary mx-1">{type}</div>
+                        <td> {source.acteurs.map(acteur=>(
+                          <div className="badge badge-primary mx-1">{acteur.libelle}</div>
                         ))} </td>
                         <td> 
                             <div className="row">
-                            <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
-                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2"></i>
-                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2"></i>
+                            <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
+                            <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>props.getSourceFinancementById(source.id)}></i>
+                            <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>props.removeSourceFinancement(source.id, source.denomination)} ></i>
                             </div> 
                           </td>
                       </tr>
@@ -75,12 +85,19 @@ function SourceFinancement ({getSourceFinancementList, sourceFinancementList}){
     )
 };
 
-const mapStateToProps = state => ({
-  sourceFinancementList : state.sourceFinancements.sourceFinancements
+const mapStateToProps = createStructuredSelector({
+  sourceFinancementList : selectSourceFinancementList,
+  sourceFinancementById : selectSourceFinancementById,
+
 })
 
 const mapDispatchToProps = dispatch =>({
-  getSourceFinancementList : data => dispatch(getSourceFinancementData(data))
+  resetSourceFinancement : ()=>dispatch(resetEditedSourceFinancement()),
+  getSourceFinancementList : () => dispatch(fetchSourceFinancementAsync()),
+  getSourceFinancementById : id => dispatch(fetchSourceFinancementByIdAsync(id)),
+  storeSourceFinancement: data => dispatch(storeSourceFinancementAsync(data)),
+  updateSourceFinancement: (id, data) => dispatch(updateSourceFinancementAsync(id, data)),
+  removeSourceFinancement: (id, libelle) => dispatch(removeSourceFinancementeAsync(id, libelle)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (SourceFinancement);

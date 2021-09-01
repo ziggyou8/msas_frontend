@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import firebase, { firestore, getData } from '../../../firebase/firebase.utils';
 import { connect } from 'react-redux';
@@ -6,26 +6,67 @@ import {
     addActeurField,
     getSourceFinancementData, removeActeurField
 } from '../../../redux/source-financement/source-financement.action';
+import {
+    fetchSourceFinancementAsync
+} from '../../../redux/source-financement/source-financement.thunk';
 
 
  
 
 
-function SourceFinancementForm({initSourceFinancementList, acteurFields, removeActeurField, addveActeurField}) {
+function SourceFinancementForm(props) {
+     
+   const {initSourceFinancementList, storeSourceFinancement, resetSourceFinancement, sourceFinancementById, updateSourceFinancement, acteurFields} = props;
+    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
+    const [field, setField]=useState(0);
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-        const onSubmit = async(data, e) => {
-            const createdAt = new Date();
-            const typeActeur = data.type_acteur.splice(1)
-            firebase
-            .firestore()
-            .collection('source_financement')
-            .add({createdAt, source_financement: data.source_financement, type_acteur: typeActeur});
-             e.target.reset();
-             initSourceFinancementList(await getData('source_financement'));
-             closeModal();
-        }
+    useEffect(()=>{
+        reset({ 
+            denomination: sourceFinancementById?.denomination,
+            type_acteur: sourceFinancementById?.type_acteur
+           });
+           /* initPermissionList(); */
+   },[sourceFinancementById]);
+
+    const resetForm =()=>{
+        reset();
+        resetSourceFinancement();
+        /* resetRole();
+        editedRole?.permissions.forEach(permission =>{
+            $('#permission option[data-id=' + permission + ']').attr('selected', false)
+        }) */
+    }
+
+    const addField =()=>{
+        setField(prevCount => prevCount + 1);
+        props.addActeurField();
+    }
+
+    const removeField =()=>{
+        setField(prevCount => prevCount - 1);
+        removeActeurField();
+    }
+    const onSubmit = async(data, e) => {
+
+        const { denomination, type_acteur:[...type_acteur]} = data;
+        const financeData = {denomination, type_acteur:type_acteur.filter(type => type !== undefined)}
+         if (sourceFinancementById) {
+           updateSourceFinancement(sourceFinancementById.id, financeData);
+           console.log('++++UPDATE TESTE++++',financeData)
+         }else{
+           storeSourceFinancement(financeData);
+           console.log('++++STORE TESTE++++',financeData)
+         }
+         closeModal();
+         initSourceFinancementList();
+         resetForm();
+
+    }
+
+    /* sourceFinancementById?.acteurs.forEach(acteur =>{
+        $('#permission option[data-id=' + acteur + 1 + ']').attr('selected', true)
+    }) */
     
     const $ = window.$;
     const closeModal = ()=> $('#exampleModal').modal('hide');
@@ -36,7 +77,7 @@ function SourceFinancementForm({initSourceFinancementList, acteurFields, removeA
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UNE SOURCE DE FINANCEMENT</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" onClick={()=>resetForm()} class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -45,25 +86,31 @@ function SourceFinancementForm({initSourceFinancementList, acteurFields, removeA
                 <form  onSubmit={handleSubmit(onSubmit)}>
                 <div className="">
                         <div class="form-group">
-                            <label for="source_financement">Source de financement</label>
-                            <input type="text"  class="form-control" {...register("source_financement", { required: true })} id="source_financement" placeholder="la Dénomination" />
-                            {errors.source_financement && errors.source_financement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                            <label for="denomination">Source de financement</label>
+                            <input type="text"  class="form-control" {...register("denomination", { required: true })} id="denomination" placeholder="la Dénomination" />
+                            {errors.denomination && errors.denomination.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
                     </div>
 
                     <div className=" bg-white py-3">
                                 <h6 className="px-4">Types d'acteur</h6>
                              <div className=" bg-white mx-1  py-3">
-                                 {acteurFields.map(acteur => (
-                                    <div class="form-group mx-5">
-                                      <label for={`type_acteur${acteur}`}>Acteur {acteur}</label>
-                                      <input type="text" class="form-control" {...register(`type_acteur[${acteur}]`, { required: true })} id={`type_addField${acteur}`} placeholder={`Acteur ${acteur}`}/>
-                                      {errors[`type_acteur${acteur}`] && errors[`type_acteur${acteur}`].type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
-                                  </div>
-                                 ))}
+                                 {!sourceFinancementById? [...Array(acteurFields)].map((acteur, i) =>
+                                    <div class="form-group mx-5" key={i}>
+                                        <label for={`type_acteur${i+1}`}>Acteur {i+1}</label>
+                                        <input type="text" class="form-control" {...register(`type_acteur[${i+1}]`, { required: true })} id={`type_addField${i+1}`} placeholder={`Acteur ${i+1}`}/>
+                                        {errors[`type_acteur${i+1}`] && errors[`type_acteur${i+1}`].type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                                    </div>
+                                ): [...Array(sourceFinancementById.acteurs.length+field)].map((acteur, i) =>
+                                <div class="form-group mx-5" key={i}>
+                                    <label for={`type_acteur${i+1}`}>Acteur {i+1}</label>
+                                    <input type="text" defaultValue={sourceFinancementById?.acteurs[i]?.libelle} class="form-control" {...register(`type_acteur[${i+1}]`)} id={`type_addField${i+1}`} placeholder={`Acteur ${i+1}`}/>
+                                    {errors[`type_acteur${i+1}`] && errors[`type_acteur${i+1}`].type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                                </div>
+                            )}
                                  <hr />
-                                    <button type="button" className="btn btn-sm float-right " disabled = {`${acteurFields.length === 1 ? 'disabled': ''}`} onClick={()=>removeActeurField()} ><i class="mdi mdi-delete mdi-18px text-danger "></i></button>
-                                    <button type="button" className="btn btn-sm float-right" onClick={()=>addveActeurField()} ><i class="mdi mdi-plus mdi-18px text-danger "></i></button>                                 
+                                    <button type="button" className="btn btn-sm float-right " disabled = {`${acteurFields === 1  ? 'disabled': ''}`} onClick={()=>removeField()} ><i class="mdi mdi-delete mdi-18px text-danger "></i></button>
+                                    <button type="button" className="btn btn-sm float-right" onClick={()=>addField()} ><i class="mdi mdi-plus mdi-18px text-danger "></i></button>                                 
                              </div>
                              <br />
                         </div>
@@ -80,9 +127,9 @@ function SourceFinancementForm({initSourceFinancementList, acteurFields, removeA
 };
 
 const mapDispatchToProps = dispatch =>({
-    initSourceFinancementList : data => dispatch(getSourceFinancementData(data)),
+    initSourceFinancementList : () => dispatch(fetchSourceFinancementAsync()),
     removeActeurField : ()=>dispatch(removeActeurField()),
-    addveActeurField : ()=>dispatch(addActeurField())
+    addActeurField : ()=>dispatch(addActeurField())
 })
 
 const mapStateToProps = state => ({

@@ -12,9 +12,12 @@ import {
 import { resetEditedUser } from '../../../redux/user/user.actions';
 import RoleForm from './form';
 import { resetEditedRole } from '../../../redux/role/role.actions';
+import { Helmet } from 'react-helmet';
 
 const Role = (props)=>{
     const { rolesList ,getRoleById, removeRole, ...otherProps} = props;
+    const $ = window.$;
+
 
     useEffect(()=>{
         props.initRoleList();
@@ -36,7 +39,7 @@ const Role = (props)=>{
             <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-function"></i>
-            </span> Utilisateurs
+            </span> Rôles
             </h3>
             <nav aria-label="breadcrumb">
             <ul class="breadcrumb">

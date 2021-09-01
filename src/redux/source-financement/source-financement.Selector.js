@@ -7,4 +7,8 @@ export const selectSourceFinancementList = createSelector(
     [selectSourceFinancement],
     sourceFinancement => sourceFinancement.sourceFinancements
 )
+export const selectSourceFinancementById = createSelector(
+    [selectSourceFinancement],
+    sourceFinancement => sourceFinancement.sourceFinancementById
+)
 

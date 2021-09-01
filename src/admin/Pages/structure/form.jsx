@@ -14,6 +14,7 @@ import {
 } from '../../../redux/acteur/acteur.thunk';
 import { resetEditedUser } from '../../../redux/user/user.actions';
 import { resetEditedStructure } from '../../../redux/structure/structure.action';
+import { fetchSourceFinancementAsync } from '../../../redux/source-financement/source-financement.thunk';
 
 
 function StructureForm(props) {
@@ -188,7 +189,7 @@ function StructureForm(props) {
 };
 
 const mapDispatchToProps = dispatch => ({
-    initSourceFiancementList : () => dispatch(fetchSourceFinancementStratAsync()),
+    initSourceFiancementList : () => dispatch(fetchSourceFinancementAsync()),
     getActeurByFinancement : id => dispatch(fetchActeurByFinancementAsync(id)),
     resetStructure : ()=>dispatch(resetEditedStructure()),
     initListActeur : ()=>dispatch(fetchActeursAsync()),
