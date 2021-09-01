@@ -5,11 +5,11 @@ axios.interceptors.request.use(
     config.headers.Authorization = 'Bearer '+localStorage.getItem('token');
     // OR config.headers.common['Authorization'] = `Bearer ${your_token}`;
 
-    if(process.env.NODE_ENV ==="development"){
-        config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/';
-  }else{
-    config.baseURL = 'http://176.31.107.205/msas_backend/public/v1/';
-  }
+    /* 
+    config.baseURL = 'http://176.31.107.205/msas_backend/public/v1/'; */
+
+  config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/';
+
 
 
 
