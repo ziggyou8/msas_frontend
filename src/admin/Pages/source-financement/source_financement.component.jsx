@@ -31,14 +31,14 @@ function SourceFinancement (props){
           <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
               <i class="mdi mdi-chart-line"></i>
-            </span> Source de financement
+            </span> Types de structure
           </h3>
           <nav aria-label="breadcrumb">
             <ul class="breadcrumb">
               {/* <li class="breadcrumb-item active" aria-current="page">
                 <span></span>Statistiques <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
               </li> */}
-              <button class="btn btn-primary text-white display1" data-toggle="modal" data-target="#exampleModal"><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Source de financement</button>
+              <button class="btn btn-primary text-white display1" data-toggle="modal" data-target="#exampleModal"><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Type de structure</button>
             </ul>
           </nav>
         </div>
@@ -46,12 +46,12 @@ function SourceFinancement (props){
           <div class="col-12 grid-margin">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">Liste des Sources de financement</h4>
+                <h4 class="card-title">Liste des Type de structure</h4>
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
                       <tr>
-                        <th> Source de financement </th>
+                        <th> Dénomination </th>
                         <th> Types d'acteur</th>
                         <th> Action </th>
                       </tr>

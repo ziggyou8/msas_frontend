@@ -14,6 +14,11 @@ export const selectStructureById = createSelector(
     structure => structure.structureById
 )
 
+export const selectErrorMessage = createSelector(
+    [selectStructure],
+    structure => structure.messageError
+)
+
 /* export const selectTypeActeur = createSelector(
     [selectStructure],
     structure=> structure.typeActeur

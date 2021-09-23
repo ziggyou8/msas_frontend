@@ -18,9 +18,12 @@ import SourceFinancement from './admin/Pages/source-financement/source_financeme
 import User from './admin/Pages/utilisateur/user.component';
 import UserProfile from './admin/Pages/user-profile/user-profile';
 import Role from './admin/Pages/role/role.component';
+import districte from './admin/Pages/districte/districte.component';
+import DetailStructure from './admin/Pages/structure/details';
 
 const SignUp = lazy(()=> import('./components/sign-up/sign-up.component'));
 const SignIn = lazy(()=> import('./components/sign-in/sign-in.component'));
+const Accueil = lazy(()=> import('./vitrine/pages/accueil/accueil.page'));
 const NotFound = lazy(()=> import('./pages/not-found/not-found-page'));
 
 function App() {
@@ -63,10 +66,13 @@ const AdminRouteDispatcher = ({component: Component, ...rest}) => {
         <AdminRouteDispatcher exact path="/admin/utilisateurs" component={User}/>
         <AdminRouteDispatcher exact path="/admin/utilisateurs/profile" component={UserProfile}/>
         <AdminRouteDispatcher exact path="/admin/roles" component={Role}/>
+        <AdminRouteDispatcher exact path="/admin/districtes" component={districte}/>
+        <AdminRouteDispatcher exact path="/admin/structures/:1" component={DetailStructure}/>
         
         <Suspense fallback={<div className="loader">Loading...</div>}>
           <Route  exact path="/sign-up" component={SignUp}/>
           <Route exact path="/sign-in" component={AuthPage}/>
+          <Route exact path="/accueil" component={Accueil}/>
          </Suspense>
       </Switch>
       );

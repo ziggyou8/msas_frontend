@@ -54,7 +54,7 @@ function AdminSideBar ({currentUser}){
           </li>
           <li class="nav-item">
             <Link class={`nav-link ${location.pathname === "/admin/source_financement" ? 'active' : ''}`} to="/admin/source_financement">
-              <span class="menu-title">Sources de financement</span>
+              <span class="menu-title">Types de structure</span>
               <i class="mdi mdi-chart-line menu-icon"></i>
             </Link>
           </li>

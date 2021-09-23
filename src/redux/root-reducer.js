@@ -5,11 +5,17 @@ import structureReducer from './structure/structure.reducer';
 import sourceFinancementReducer from './source-financement/source-financement.reducer';
 import roleReducer from './role/role.reducer';
 import acteurReducer from './acteur/acteur.reducer.js';
+import districteReducer from './districte/districte.reducer.js';
+import collectiviteReducer from './collectivite/collectivite.reducer.js';
+import { reducer as reducerForm } from 'redux-form';
 
 export default combineReducers({
   user: userReducer,
   structure: structureReducer,
   role:roleReducer,
   acteur:acteurReducer,
-  sourceFinancements: sourceFinancementReducer
+  sourceFinancements: sourceFinancementReducer,
+  districte: districteReducer,
+  collectivite: collectiviteReducer,
+  form: reducerForm
 });

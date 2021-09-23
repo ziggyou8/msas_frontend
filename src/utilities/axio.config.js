@@ -9,7 +9,8 @@ axios.interceptors.request.use(
   }else{
     config.baseURL = 'http://176.31.107.205/msas_backend/public/v1/';
   } */
-  config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/';
+  /* config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/'; */
+  config.baseURL = 'http://localhost:8000/api/v1/';
 
 
 

@@ -71,9 +71,9 @@ const Role = (props)=>{
                                 ))} 
                             </td>
                             <td> 
-                                <div className="row">
+                                <div className="row" style={{ display:'inline-block' }}>
                                 <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getRoleById(role.id)}></i>
+                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" style={{ margin:'0px -15px' }} data-toggle="modal" data-target="#exampleModal" onClick={()=>getRoleById(role.id)}></i>
                                 <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteRole(role.id, role.name)} ></i>
                                 </div> 
                                 </td>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useForm } from 'react-hook-form';
+import { swal } from 'sweetalert';
 
 
 function RoleForm(props) {
@@ -86,18 +87,6 @@ function RoleForm(props) {
                                 ))}
                             </select>
                         </div>
-
-                        {/* <div class="form-group col-md-6">
-                            <label for="source_investissement">Source d'investissement</label>
-                            <select   class="form-control" {...register("source_investissement", { required: true })} id="source_investissement">
-                            <option  value="">Choisir....</option>
-                                {sourceFinancements && sourceFinancements.map(finance =>(
-                                    <option value={finance.source_financement}>{finance.source_financement}</option>
-                                ))}
-                            </select>
-                            {errors.source_investissement && errors.source_investissement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
-                        </div> */}
-                    
                     </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={()=>resetForm()}><i class="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>

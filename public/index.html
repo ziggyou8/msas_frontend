@@ -16,6 +16,10 @@
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -30,10 +34,17 @@
 
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/vendors/css/vendor.bundle.base.css">
+     <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
+
+     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <!-- Select Multiple css-->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"> -->
 
-
+ 
 
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -51,6 +62,8 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -65,13 +78,11 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-     
-  </body>
-     
-  <script src="%PUBLIC_URL%/assets/vendors/js/vendor.bundle.base.js" ></script>
+
+    <script src="%PUBLIC_URL%/assets/vendors/js/vendor.bundle.base.js" ></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
-  <script src="%PUBLIC_URL%/assets/vendors/chart.js/Chart.min.js" ></script>
+  <!-- <script src="%PUBLIC_URL%/assets/vendors/chart.js/Chart.min.js" ></script> -->
   <!-- End plugin js for this page -->
   <!-- inject:js -->
   <script src="%PUBLIC_URL%/assets/js/off-canvas.js" ></script>
@@ -82,109 +93,266 @@
   <script src="%PUBLIC_URL%/assets/js/dashboard.js" ></script>
   <script src="%PUBLIC_URL%/assets/js/todolist.js" ></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="%PUBLIC_URL%/assets/vitrine/circle.js"></script>
+  <script src="%PUBLIC_URL%/assets/vitrine/circle.min.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
+
+  <!-- chart integration assets (Dame) -->
+  <!-- <script src="%PUBLIC_URL%/assets/vitrine/circle.js"></script>
+  <script src="%PUBLIC_URL%/assets/vitrine/circle.min.js"></script> -->
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
  <!-- Select Multiple -->
 <!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js" defer></script> -->
+     
+    <script>
+/*           $(document).ready(function() {
+          $('select').select2();
+          }); */
+
+          /* $(document).ready(function () {
+            $('select').selectize({
+                sortField: 'text'
+            });
+        }); */
+  </script>
+  </body>
+     
+  
 </html>
 
-<script>
-    $(function () {
-          $('select').selectpicker();
-      });
-</script>
 
-<!-- <script>
-    window.onload = function(){
-        const container = document.getElementById('container')
-        const slider = document.getElementById('slider');
-        const slides = document.getElementsByClassName('slide').length;
-        const buttons = document.querySelectorAll('.slide-to-left, .slide-to-right');
-         
-            [...buttons].forEach(el=>{
-                el.addEventListener('click', function(e){
-                    if (e.target.classList.contains('slide-to-left')) {
-                        slideLeft();
-                    }else{
-                        slideRight();
-                    }
-                })
-            });
 
-            let currentPosition = 0;
-            let currentMargin = 0;
-            let slidesPerPage = 0;
-            let slidesCount = slides - slidesPerPage;
-            let containerWidth = container.offsetWidth;
-            let prevKeyActive = false;
-            let nextKeyActive = true;
+  <!-- <script>
 
-            window.addEventListener("resize", checkWidth);
-
-            function checkWidth() {
-                containerWidth = container.offsetWidth;
-                setParams(containerWidth);
-            }
-
-            function setParams(w) {
-                if (w < 551) {
-                    slidesPerPage = 1;
-                } else {
-                    if (w < 901) {
-                        slidesPerPage = 2;
-                    } else {
-                        if (w < 1101) {
-                            slidesPerPage = 3;
-                        } else {
-                            slidesPerPage = 4;
-                        }
-                    }
-                }
-                slidesCount = slides - slidesPerPage;
-                if (currentPosition > slidesCount) {
-                    currentPosition -= slidesPerPage;
-                };
-                currentMargin = - currentPosition * (100 / slidesPerPage);
-                slider.style.marginLeft = currentMargin + '%';
-                if (currentPosition > 0) {
-                    buttons[0].classList.remove('inactive');
-                }
-                if (currentPosition < slidesCount) {
-                    buttons[1].classList.remove('inactive');
-                }
-                if (currentPosition >= slidesCount) {
-                    buttons[1].classList.add('inactive');
-                }
-            }
-
-            setParams();
-
-            function slideRight() {
-                if (currentPosition != 0) {
-                    slider.style.marginLeft = currentMargin + (100 / slidesPerPage) + '%';
-                    currentMargin += (100 / slidesPerPage);
-                    currentPosition--;
-                };
-                if (currentPosition === 0) {
-                    buttons[0].classList.add('inactive');
-                }
-                if (currentPosition < slidesCount) {
-                    buttons[1].classList.remove('inactive');
-                }
-            };
-
-            function slideLeft() {
-                if (currentPosition != slidesCount) {
-                    slider.style.marginLeft = currentMargin - (100 / slidesPerPage) + '%';
-                    currentMargin -= (100 / slidesPerPage);
-                    currentPosition++;
-                };
-                if (currentPosition == slidesCount) {
-                    buttons[1].classList.add('inactive');
-                }
-                if (currentPosition > 0) {
-                    buttons[0].classList.remove('inactive');
-                }
-            };
-
+    // stat 1
+    // === include 'setup' then 'config' above ===
+    const labels = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+    ];
+    
+const data = {
+  labels: [
+    '50%',
+    '45%',
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [ 50, 45, 40],
+    backgroundColor: [
+    'rgb(255, 132, 75)',
+    'rgb(111, 150, 170)',
+      'rgb(225, 232, 238)',
+      
+      
+    ],
+    hoverOffset: 4
+  }]
 };
-</script> -->
+    const config = {
+      type: 'doughnut',
+      data: data,
+      options: {}
+    };
+    var myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+Circles.create({
+	id:           'task-complete',
+	radius:       75,
+	value:        60,
+	maxValue:     100,
+	width:        7,
+	text:         function(value){return value + '%';},
+	colors:       ['#eee', '#ff9100'],
+	duration:     400,
+	wrpClass:     'circles-wrp',
+	textClass:    'circles-text',
+	styleWrapper: true,
+	styleText:    true
+});
+
+
+Circles.create({
+	id:           'execution-mise-en-commun',
+	radius:       75,
+	value:        85,
+	maxValue:     100,
+	width:        7,
+	text:         function(value){return value + '%';},
+	colors:       ['#eee', 'green'],
+	duration:     400,
+	wrpClass:     'circles-wrp',
+	textClass:    'circles-text',
+	styleWrapper: true,
+	styleText:    true
+})
+
+Circles.create({
+	id:           'execution-achat-service',
+	radius:       75,
+	value:        10,
+	maxValue:     100,
+	width:        7,
+	text:         function(value){return value + '%';},
+	colors:       ['#eee', 'red'],
+	duration:     400,
+	wrpClass:     'circles-wrp',
+	textClass:    'circles-text',
+	styleWrapper: true,
+	styleText:    true
+})
+
+
+
+
+
+var barChart = document.getElementById('barChart').getContext('2d');
+
+var myBarChart = new Chart(barChart, {
+	type: 'bar',
+	data: {
+		labels: ["Etat", "Collectivités  territoriales", "Secteurs privés Sanitaires", "Secteurs privés non Sanitaires", "ONG et association", "PTF", "Société civile"],
+		datasets : [{
+			label: "Evolution Mobilisation Engagement pour le financement de la santé au senegal",
+			backgroundColor: 'rgb(23, 125, 255)',
+			 borderColor: 'rgb(23, 125, 255)',
+			data: [140, 175, 50, 100, 75, 150, 175],
+     
+		}],
+	},
+	options: {
+		responsive: true,
+		maintainAspectRatio: false,
+		scales: {
+			xAxes: [{
+        // maxBarThickness:80,
+				ticks: {
+         
+       
+         
+					beginAtZero:true
+				}
+			}]
+		},
+	}
+});
+
+// myBarChart.canvas.parentNode.style.width='280px'
+
+
+const DATA_COUNT = 7;
+const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+
+const labels2 = [
+      10,
+      30,
+      39,
+      20,
+      25,
+      34,
+      0,
+    ];
+// const labels2 = Utils.months({count: 7});
+const data2 = {
+  labels: labels2,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [10, 30, 39, 20, 25, 34, 0],
+      borderColor: 'rgb(255, 132, 75)',
+      backgroundColor: 'rgb(255, 132, 75)',
+    },
+    {
+      label: 'Dataset 2',
+      data: [18, 33, 22, 19, 11, 39, 30],
+      borderColor: 'rgb(111, 150, 170)',
+      backgroundColor: 'rgb(111, 150, 170)',
+    }
+  ]
+};
+
+const config2 = {
+  type: 'line',
+  data: data2,
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: ''
+      }
+    },
+    scales: {
+      y: {
+        // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
+        suggestedMin: 30,
+
+        // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
+        suggestedMax: 50,
+      }
+    }
+  },
+};
+
+var myChart2 = new Chart(
+      document.getElementById('myChart2'),
+      config2
+    );
+
+// statistique 3 : barchart
+var ctx = document.getElementById('myChart3').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: [ '', '', '', '', ''],
+        datasets: [{
+            label: '# of Votes',
+            data: [ 19, 5, 12, 23, 9],
+            backgroundColor: [
+                
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)'
+            ],
+            borderColor: [
+                
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)',
+                'rgb(255, 132, 75)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+ });
+</script>
+ -->
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->

@@ -9,6 +9,8 @@ import { fetchUsersAsync, fetchUserByIdAsync, storeUserAsync, updateUserAsync, r
 import { fetchRoleByIdAsync, fetchRolesAsync } from '../../../redux/role/role.thunk';
 import { selectListRole } from '../../../redux/role/role.selector';
 import { resetEditedUser } from '../../../redux/user/user.actions';
+import { fetchStructureAsync } from '../../../redux/structure/structurethunk';
+import { selectStructureList } from '../../../redux/structure/structure.selector';
 
 const User = (props)=>{
     const { usersList ,getUserById, removeUser, ...otherProps} = props;
@@ -69,9 +71,9 @@ const User = (props)=>{
                             <td>{user.telephone}</td>
                             <td>{user.email}</td>
                             <td> 
-                                <div className="row">
-                                <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getUserById(user.id)}></i>
+                                <div className="row" style={{ display:'inline-block' }}>
+                                <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
+                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" style={{ margin:'0px -15px' }} data-toggle="modal" data-target="#exampleModal" onClick={()=>getUserById(user.id)}></i>
                                 <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteUser(user.id, user.nom)} ></i>
                                 </div> 
                                 </td>
@@ -129,6 +131,8 @@ const mapDispatchToProps = dispatch =>({
     removeUser: (id, libelle) => dispatch(removeUserAsync(id, libelle)),
 
     initRoleList:()=>dispatch(fetchRolesAsync()),
+    initStructureData: () => dispatch(fetchStructureAsync()),
+
 
 })
 
@@ -137,6 +141,8 @@ const mapStateToProps = createStructuredSelector({
     editedUser : selectUserById,
     //roles
     rolesList : selectListRole,
+    //structure
+    structures: selectStructureList,
 
 })
 export default connect(mapStateToProps,mapDispatchToProps) (User);

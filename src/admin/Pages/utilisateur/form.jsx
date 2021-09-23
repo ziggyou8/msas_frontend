@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 function UserForm(props) {
     
-    const {initUsersList, editedUser, resetUser, storeUser,updateUser, rolesList, initRoleList} = props;
+    const {initUsersList, editedUser, resetUser, storeUser,updateUser, rolesList, initRoleList, initStructureData, structures} = props;
     const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm();
     const [encodedImage, setencodedImage] = useState();
     const $ = window.$;
@@ -22,6 +22,8 @@ function UserForm(props) {
 
 
             initRoleList();
+            initStructureData();
+
         const $ = window.$;
         $('#photo').on('change', traiteFile);
         
@@ -30,10 +32,22 @@ function UserForm(props) {
     const resetForm =()=>{
         reset();
         resetUser();
-        editedUser && $('#roles option[data-id=' + editedUser.roles[0] + ']').attr('selected', false)
+        if(editedUser){
+            $('#role option[data-id=' + editedUser.roles[0] + ']').attr('selected', false);
+            structures?.forEach(structure =>{
+                $('#structures option[data-id=' + structure.denomination + ']').attr('selected', false)
+            })
+        }
     }
 
-    editedUser && $('#roles option[data-id=' + editedUser.roles[0] + ']').attr('selected', true)
+
+    if(editedUser){
+        $('#role option[data-id=' + editedUser.roles[0] + ']').attr('selected', true);
+        editedUser?.structures?.forEach(structure =>{
+            $('#structures option[data-id=' + structure.denomination + ']').attr('selected', true)
+        })
+    }
+
 
     async function traiteFile() {
         let base64; //in this variable i need the base64
@@ -45,6 +59,7 @@ function UserForm(props) {
           }
         );
         document.getElementById('avatar').src = base64;
+        document.getElementById('avatar').style.display = 'block';
         setencodedImage(base64)
         //console.log(base64);
       }
@@ -61,8 +76,8 @@ function UserForm(props) {
       }
 
     const onSubmit = async(data, e) => {
-        const {nom, prenom, email, telephone, roles} = data;
-        const userData = {prenom, nom,email, telephone, photo:encodedImage, roles}
+        const {nom, prenom, email, telephone, role, structure_id} = data;
+        const userData = {prenom, nom,email, telephone,structure_id:[...structure_id], photo:encodedImage, role}
          if (editedUser) {
             updateUser(editedUser.id, userData);
          }else{
@@ -88,11 +103,11 @@ function UserForm(props) {
                 <div class="modal-body">
                 
                 <form  onSubmit={handleSubmit(onSubmit)}>
+                <img style={{height: "70px", width: "70px", display:'none', borderRadius:'50%'}} id="avatar" /* src="" *//>
                 <div className="row">
                         <div class="form-group col-md-6">
                             <label for="prenom">Photo</label>
                             <input type="file" id="photo"  class="form-control" {...register("photo")}  id="photo" placeholder="Prénom" />
-                            <img style={{height: "50px"}} id="avatar" /* src="" *//>
                             {errors.photo && errors.photo.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
                         <div class="form-group col-md-6">
@@ -117,10 +132,19 @@ function UserForm(props) {
 
                         <div class="form-group col-md-6">
                             <label for="telephone">Rôles</label>
-                            <select class="form-control" {...register("roles[]")} id="roles">
+                            <select class="form-control" {...register("role")} id="role">
                                 <option value="">CHoisir...</option>
                                 {rolesList?.map(role=>(
                                     <option data-id={role.name} value={role.name}>{role.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="telephone">Structures</label>
+                            <select class="form-control" multiple {...register("structure_id[]")} id="structures">
+                                <option value="">CHoisir...</option>
+                                {structures?.map(structure=>(
+                                    <option data-id={structure.denomination} value={structure.id}>{structure.denomination}</option>
                                 ))}
                             </select>
                         </div>

@@ -80,7 +80,7 @@ function UserProfile ({currentUser, setCurrentUser, updateCurrentUser}){
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email</label>
-                            <input type="text"  class="form-control mb-1" {...register("email", { required: true })}  />
+                            <input type="text" disabled  class="form-control mb-1" {...register("email", { required: true })}  />
                         </div>
                         <div class="form-group">
                             <label class="form-label">Téléphone</label>

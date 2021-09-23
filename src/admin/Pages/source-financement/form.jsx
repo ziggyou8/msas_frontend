@@ -76,7 +76,7 @@ function SourceFinancementForm(props) {
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UNE SOURCE DE FINANCEMENT</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UN TYPE DE STRUCTURE</h5>
                     <button type="button" onClick={()=>resetForm()} class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,7 +86,7 @@ function SourceFinancementForm(props) {
                 <form  onSubmit={handleSubmit(onSubmit)}>
                 <div className="">
                         <div class="form-group">
-                            <label for="denomination">Source de financement</label>
+                            <label for="denomination">Type de structure</label>
                             <input type="text"  class="form-control" {...register("denomination", { required: true })} id="denomination" placeholder="la Dénomination" />
                             {errors.denomination && errors.denomination.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
                         </div>
