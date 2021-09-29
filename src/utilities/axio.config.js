@@ -4,10 +4,10 @@ axios.interceptors.request.use(
   function (config) {
     config.headers.Authorization = 'Bearer '+localStorage.getItem('token');
     config.headers['Content-Type'] = 'application/json';
-    config.headers['X-Requested-With'] = 'XMLHttpRequest';
+    //config.headers['X-Requested-With'] = 'XMLHttpRequest';
  
-  //config.baseURL = 'http://localhost:8000/api/v1/';
-  config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/';
+  //config.baseURL = 'https://localhost:8000/api/v1/';
+  config.baseURL = 'https://176.31.107.205/msas_backend/public/api/v1/';
 
     return config;
   },
