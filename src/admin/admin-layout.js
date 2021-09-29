@@ -4,6 +4,7 @@ import AdminNavbar from './components/navbar/navbar.component';
 import { connect } from 'react-redux';
 import { fetchCurrentUserAsync } from '../redux/user/user.thunk';
 
+
 function AdminLayout ({setCurrentUser, currentUser,isLoading, children})  {
    
   useEffect(()=>{
@@ -12,6 +13,7 @@ function AdminLayout ({setCurrentUser, currentUser,isLoading, children})  {
 
     return(
      <div class="container-scroller">
+     
      <AdminNavbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <div class="container-fluid page-body-wrapper">
        <AdminSideBar currentUser={currentUser}/>

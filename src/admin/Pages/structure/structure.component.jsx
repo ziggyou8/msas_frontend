@@ -3,10 +3,8 @@ import { useEffect } from 'react';
 import StructureForm from './form';
 import './structure.style.scss'
 import { connect } from 'react-redux';
-import { deleteItem } from '../../../assets/lib/alert';
 import {selectStructureById, selectStructureList } from '../../../redux/structure/structure.selector';
 import { createStructuredSelector } from 'reselect';
-import { selectActeurById } from '../../../redux/acteur/acteur.selector';
 import {
     fetchStructureAsync,
     removeStructureAsync,
@@ -14,9 +12,8 @@ import {
     updateStructureAsync,
     fetchStructureByIdAsync
 } from '../../../redux/structure/structurethunk';
-import Form from './steps/form';
-import { selectListCollectivite, selectListRegion } from '../../../redux/collectivite/collectivite.selector';
-import { fetchCollectiviteAsync, fetchRegionAsync } from '../../../redux/collectivite/collectivite.thunk';
+import { selectListCollectivite } from '../../../redux/collectivite/collectivite.selector';
+import { fetchCollectiviteAsync } from '../../../redux/collectivite/collectivite.thunk';
 import { fetchAllContries } from '../../../Data/data';
 import axios from 'axios';
 

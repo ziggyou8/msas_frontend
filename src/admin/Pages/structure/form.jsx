@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import {
-    fetchSourceFinancementStratAsync
-} from '../../../redux/source-financement/source-financement.action';
 import { selectCurrentStructure, selectErrorMessage, selectTypeActeur } from '../../../redux/structure/structure.selector';
 import { createStructuredSelector } from 'reselect';
 import { selectSourceFinancementList } from '../../../redux/source-financement/source-financement.Selector';
@@ -43,14 +40,16 @@ function  StructureForm(props) {
     const [communes, setCommunes] =useState([])
     const [isAchatServiceCheck, setIsAchatServiceCheck] = useState(false)
     const [sousRecipiandaire, setSousRecipiandaire] =useState([[1,"1"]])
+    const [selectedFile, setSelectedFile] =useState()
     
-    
+    const firsStepIsInValide = watch().type_acteur || !watch().denomination;
     const [steps, setSteps]=useState([
         {title: 'Identification'},
         {title: 'Autres informations'},
         {title: 'Personne responsable'},
         {title: 'Recap'}]);
 
+console.log('********',watch().type_acteur);
     //Steps
     const completeFormStep = ()=> {
         setFormStep(cur => cur + 1)
@@ -86,9 +85,18 @@ function  StructureForm(props) {
       }
       
       const RemoveSousRecipainadaire = (id)=>{
+        const row = document.getElementById(`${id[0]}`).querySelectorAll('input');
+        row.forEach(element => {
+            element.remove()
+         console.log('✅✅✅',element)
+
+        });
+         //console.log('✅✅✅',row)
         setSousRecipiandaire(prevCount => prevCount.filter((sr) => sr !== id));
-      
       }
+
+       /*  console.log('✅✅✅',document.getElementById(1));
+        el.remove(); */
 
       //Boutons
       const submitButton =()=>{
@@ -99,7 +107,7 @@ function  StructureForm(props) {
      }
 
      const nextButton =()=>{
-        return <button onClick={completeFormStep} disabled={!isValid} type="button" className="btn btn-primary">
+        return <button onClick={completeFormStep} disabled={/* firsStepIsInValide */ !isValid} type="button" className="btn btn-primary">
                     Suivant
                     <i className="mdi mdi-arrow-right mdi-18px text-white align-left"></i>
                 </button>
@@ -118,13 +126,22 @@ function  StructureForm(props) {
         setActivStep(0);
         setFormStep(0);
     }
+
+   const onFileChange = event => { 
+      // Update the state 
+      setSelectedFile(event.target.files[0]); 
+    };
+    
     
       const submitForm = async(data, e) => {
-          props.storeStructure(data);
-         /*  e.preventDefault(); */
-         props.initStructureData()
-          closeModal();
-          resetForm();
+          delete data.projection_annee_n_plus1_par_pilier;
+          data.projection_annee_n_plus1_par_pilier=selectedFile;
+         props.storeStructure(data);
+          e.preventDefault();
+          console.log(data);
+         //props.initStructureData()
+         // closeModal();
+         // resetForm();
 
           //props.errorMessage && alert(props.errorMessage)
     }
@@ -146,14 +163,14 @@ function  StructureForm(props) {
                 <div className="modal-body">
                 <Stepper steps={ steps } activeStep={ ActivStep }/>
 
-                <form onSubmit={handleSubmit(submitForm)}>
+                <form onSubmit={handleSubmit(submitForm)} enctype="multipart/form-data">
                     {formStep >= 0 && (<section style={{display: formStep === 0 ? "block" : "none"  }}>
                     <div className=" bg-white">
                         <div className="row bg-white mx-1  py-3">
                         <div className="form-group col-md-3">
                             <label for="type_acteur" className="require-label" >Type d'acteur</label>
-                            <select  {...register("type_acteur"/* ,{ required: 
-                                {value: true , message:"Veuillez choisir le type d'acteur"}} */)} 
+                            <select  {...register("type_acteur",{ required: 
+                                {value: true , message:"Veuillez choisir le type d'acteur"}})} 
                                 className="form-control" 
                                 onChange={typeActeurHandler}>
                                 <option value="">Choisir...</option>
@@ -418,7 +435,7 @@ function  StructureForm(props) {
                             <div className="form-group col-md-3">
                                 <label for="projection_annee_n_plus1_par_pilier">Projection année N+1 par année</label>
                                 <input type="file" className="form-control" 
-                                /* {...register("projection_annee_n_plus1_par_pilier")} */ id="projection_annee_n_plus1_par_pilier"/>
+                                {...register("projection_annee_n_plus1_par_pilier")} onChange={onFileChange} id="projection_annee_n_plus1_par_pilier"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label for="projection_annee_n_plus2_par_pilier">Projection année N+2 par année</label>
@@ -538,16 +555,16 @@ function  StructureForm(props) {
                         <div style={{ marginTop:'-15px'}}>
                             <p style={{ marginBottom:'25px', marginLeft:"20px", fontWeight:"bold" }}>Sous récipiandaires</p>
 
-                                {sousRecipiandaire.map(acteur=><div className="row bg-white mx-1  py-3" style={{   marginTop:'-30px' }}>
+                                {sousRecipiandaire.map(acteur=><div id={acteur[1]} className="row bg-white mx-1  py-3" style={{   marginTop:'-30px' }}>
                                 <div className="form-group col-md-3">
                                     <label for="projet_sous_recipiandaire">Projet</label>
                                     <input type="text" className="form-control" 
-                                   /*  {...register(`projet_sous_recipiandaire[${acteur[1]}]`)} */ id="projet_sous_recipiandaire"/>
+                                    {...register(`projet_sous_recipiandaire[${acteur[1]}]`)} id="projet_sous_recipiandaire"/>
                                 </div>
                                 <div className="form-group col-md-3">
                                     <label for="montant_sous_recipiandaire">Montant </label>
                                     <input type="text" className="form-control" 
-                                    /* {...register(`montant_sous_recipiandaire[${acteur[1]}]`)} */ id="montant_sous_recipiandaire"/>
+                                    {...register(`montant_sous_recipiandaire[${acteur[1]}]`)} id="montant_sous_recipiandaire"/>
                                 </div>
                                 <div className="form-group col-md-3">
                                 <button style={{ marginTop:'25px', marginLeft:"-25px" }} type="button" className="btn btn-danger btn-sm float-left " /* disabled = {`${acteurFields === 1  ? 'disabled': ''}`}  */ onClick={()=>RemoveSousRecipainadaire(acteur)} ><i class="mdi mdi-delete mdi-18px text-white "></i></button>
@@ -831,8 +848,8 @@ function  StructureForm(props) {
                                     {getValues().agent_execution &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Agent d'exécution</span>: {getValues().agent_execution}</div>}
                                     {getValues().date_debut_intervention &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Période d'intervention</span>: Du {getValues().date_debut_intervention} au {getValues().date_fin_intervention}</div>}
                                     {getValues().mt_prevu_par_pilier_annee_en_cour &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Montant prévu par pilier année en cour</span>: {getValues().mt_prevu_par_pilier_annee_en_cour}</div>}
-                                    {getValues().projection_annee_n_plus1_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Projection année N+1 par palier</span>: {getValues().projection_annee_n_plus1_par_pilier}</div>}
-                                    {getValues().projection_annee_n_plus2_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Projection année N+2 par palier</span>: {getValues().projection_annee_n_plus2_par_pilier}</div>}
+                                    {/* {getValues().projection_annee_n_plus1_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Projection année N+1 par palier</span>: {getValues().projection_annee_n_plus1_par_pilier}</div>}
+                                    {getValues().projection_annee_n_plus2_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Projection année N+2 par palier</span>: {getValues().projection_annee_n_plus2_par_pilier}</div>} */}
                                     {getValues().mt_mobilise_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Montatnt mobilisé par pilier</span>: {getValues().mt_mobilise_par_pilier}</div>}
                                     {getValues().mt_mobilise_par_annee &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Montatnt mobilisé par année</span>: {getValues().mt_mobilise_par_annee}</div>}
                                     {getValues().mt_execute_par_pilier &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Montatnt exécuté par pilier</span>: {getValues().mt_execute_par_pilier}</div>}
@@ -857,7 +874,7 @@ function  StructureForm(props) {
                                     {getValues().prestation_prise_en_charge &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Prestation prise en charge</span>: {getValues().prestation_prise_en_charge}</div>}
                                     {getValues().projet_en_cours &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Projet en cours</span>: {getValues().projet_en_cours}</div>}
                                     {getValues().service_soins_achetes &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Services soins achetés</span>: {getValues().service_soins_achetes}</div>}
-                                    {getValues()?.projet_sous_recipiandaire &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Sous récipiandaires</span>: {getValues().projet_sous_recipiandaire?.map((projet, i)=><span>{projet} </span> )}</div>}
+                                    {getValues()?.projet_sous_recipiandaire &&<div class="py-1 mb-2 bg-light"><span class="text-muted recap mr-2" >Sous récipiandaires</span>: {getValues().projet_sous_recipiandaire?.map((projet, i)=><span class="badge badge-primary m-1">{projet} {getValues().montant_sous_recipiandaire[i]} </span> )}</div>}
                                 </div>
                                 <div class="d-flex justify-content-start flex-column col-md-4">
                                 <p className="mx-1 badge badge-primary">Etape 3</p>

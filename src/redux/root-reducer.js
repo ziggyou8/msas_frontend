@@ -7,7 +7,6 @@ import roleReducer from './role/role.reducer';
 import acteurReducer from './acteur/acteur.reducer.js';
 import districteReducer from './districte/districte.reducer.js';
 import collectiviteReducer from './collectivite/collectivite.reducer.js';
-import { reducer as reducerForm } from 'redux-form';
 
 export default combineReducers({
   user: userReducer,
@@ -16,6 +15,5 @@ export default combineReducers({
   acteur:acteurReducer,
   sourceFinancements: sourceFinancementReducer,
   districte: districteReducer,
-  collectivite: collectiviteReducer,
-  form: reducerForm
+  collectivite: collectiviteReducer
 });
