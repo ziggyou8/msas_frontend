@@ -3,18 +3,10 @@ import axios from 'axios';
 axios.interceptors.request.use(
   function (config) {
     config.headers.Authorization = 'Bearer '+localStorage.getItem('token');
-    // OR config.headers.common['Authorization'] = `Bearer ${your_token}`;
-  /* if(process.env.NODE_ENV ==="development"){
-      config.baseURL = 'http://localhost:8000/api/v1/';
-  }else{
-    config.baseURL = 'http://176.31.107.205/msas_backend/public/v1/';
-  } */
-  /* config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/'; */
+    config.headers['Content-Type'] = 'application/json';
+ 
   //config.baseURL = 'http://localhost:8000/api/v1/';
   config.baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/';
-
-
-
 
     return config;
   },
