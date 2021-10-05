@@ -17,7 +17,13 @@ const updateTokenUpload = () => {
     return headers;
 }
 
-const baseURL = 'http://localhost:8000/api/v1/';
+let baseURL = "";
+
+if(process.env.NODE_ENV ==="development"){
+    baseURL = 'http://localhost:8000/api/v1/';
+}else{
+    baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/'
+}
 
 /* axios.interceptors.request.use(
   function (config) {
