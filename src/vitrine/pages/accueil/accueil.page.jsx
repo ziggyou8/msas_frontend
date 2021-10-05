@@ -1,23 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './accueil.style.css';
-/* import section1Image from '../../assets/images/section-1-image.svg'
-import MobilisationIcon from '../../assets/icons/mobilisation.svg';
-import MiseEnCommunIcon from '../../assets/icons/mise-en-commun.svg';
-import AchatServiceIcon from '../../assets/icons/achat-service.svg';
-import DimentionRightFoto from '../../assets/images/dimension.svg';
-import {ReactComponent as LinkedInLightIcon}  from '../../assets/icons/linkein-2.svg';
-import {ReactComponent as TwiterLightIcon}  from '../../assets/icons/twiter-2.svg';
-import {ReactComponent as FaceBookLightIcon}  from '../../assets/icons/facebook-2.svg';
-import ForwordIcon  from '../../assets/icons/forword.svg';
-import GoBackIcon  from '../../assets/icons/go-back.svg';
-import ShareIcon  from '../../assets/icons/share.svg';
-import VoirPlusIcone  from '../../assets/icons/voir-plus.svg';
-import slide1 from '../../assets/images/slide-1.svg';
-import slide2 from '../../assets/images/slide-2.svg';
-import slide3 from '../../assets/images/slide-3.svg';
-import slide4 from '../../assets/images/slide-4.svg';
-import { Link } from 'react-router-dom'; */
-
 import {ReactComponent as LinkedInLightIcon} from '../../../assets/icons/linkedIn.svg';
 import {ReactComponent as TwiterLightIcon}  from '../../../assets/icons/twiter.svg';
 import {ReactComponent as FaceBookLightIcon}  from '../../../assets/icons/facebook.svg';
@@ -27,13 +9,10 @@ import source from '../../../assets/vitrine/Assets/icon/mobil ressource.svg';
 import sourceCommun from '../../../assets/vitrine/Assets/icon/ressource en commun.svg';
 import service from '../../../assets/vitrine/Assets/icon/services.svg';
 import { Link } from 'react-router-dom';
-
 import { Bar } from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2';
 import { Line } from 'react-chartjs-2';
-
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { easeQuadInOut } from 'd3-ease';
 import 'react-circular-progressbar/dist/styles.css';
 import ChangingProgressProvider from '../../../components/ChangingProgressProvider';
 
@@ -85,26 +64,6 @@ const doughnutData = {
     ],
     hoverOffset: 4,
   }]
-}
-
-const circle2Data = {
-  
-  datasets: [{
-    label: 'My First Dataset',
-    data: [ 125],
-    backgroundColor: [
-    'rgb(255, 132, 75)',
-      
-      
-    ],
-    hoverOffset: 4,
-  }]
-}
-
-
-const circleOptions = {
-    cutout: 135,
-    
 }
 
   const chartData2 ={
@@ -249,7 +208,7 @@ const labels2 = [
                 <h5 className="card-title text-white pt-5 col-md-9">Le Financemet de la santé, une priorité pour les acteurs...</h5>
                 <div className="divider"></div>
               </div>
-              <p className="card-text text-white pb-3">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus explicabo
+              <p className="card-text text-white pb-3" style={{ textAlign:'justify' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus explicabo
                 assumenda nisi nostrum natus suscipit vero quo quia sint ipsum aut, doloribus molestias quaerat atque
                 totam. Ratione quasi assumenda cumque!</p>
               <div className="pb-5">

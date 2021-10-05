@@ -3,6 +3,7 @@ import AdminSideBar from './components/sidbar/sidebar.component';
 import AdminNavbar from './components/navbar/navbar.component';
 import { connect } from 'react-redux';
 import { fetchCurrentUserAsync } from '../redux/user/user.thunk';
+/* import '../assets/style-admin.css'; */
 import {Helmet} from "react-helmet";
 
 
@@ -15,7 +16,7 @@ function AdminLayout ({setCurrentUser, currentUser,isLoading, children})  {
     return(
      <div className="container-scroller">
       <Helmet>
-        <link rel="stylesheet" href="/assets/css/style-admin.css" />
+        <link  rel="stylesheet" href="/assets/css/style-admin.css" />
       </Helmet>
      <AdminNavbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <div className="container-fluid page-body-wrapper">

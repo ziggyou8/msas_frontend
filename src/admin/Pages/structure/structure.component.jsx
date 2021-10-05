@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import StructureForm from './form';
-import './structure.style.scss'
+import './structure.style.scss';
 import { connect } from 'react-redux';
 import {selectStructureById, selectStructureList } from '../../../redux/structure/structure.selector';
 import { createStructuredSelector } from 'reselect';
@@ -15,7 +15,6 @@ import {
 } from '../../../redux/structure/structurethunk';
 import { selectListCollectivite } from '../../../redux/collectivite/collectivite.selector';
 import { fetchCollectiviteAsync } from '../../../redux/collectivite/collectivite.thunk';
-import swal from 'sweetalert';
 
 
 function Structure (props){
@@ -60,15 +59,8 @@ function Structure (props){
     $('#tab-'+tabID).addClass('active').siblings().removeClass('active');
   });
  
- /* const result = (values) => {
-    console.log('result is', values);
-    props.storeStructure(values);
-    }
-
-    result(); */
     return(
         <div>
-          {/* <Form onSubmit={result} {...otherProps} allContries={allContries}/> */}
          <StructureForm allContries={allContries}  {...otherProps} />
         <div className="page-header">
           <h3 className="page-title">
