@@ -56,41 +56,41 @@ function RoleForm(props) {
     const closeModal = ()=> window.$('#exampleModal').modal('hide');
     
   return(
-        <div class="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <Helmet>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css" />
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js" />
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js" />
             </Helmet>
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UN RÔLES</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={()=>resetForm()}>
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">AJOUT D'UN RÔLES</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>resetForm()}>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                 
                 <form id="form" onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                        <div class="form-group col-md-6">
-                            <label for="name">Libellé</label>
-                            <input type="text"  class="form-control" {...register("name", { required: true })}  id="name" placeholder="name" />
-                            {errors.name && errors.name.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                        <div className="form-group col-md-6">
+                            <label htmlFor="name">Libellé</label>
+                            <input type="text"  className="form-control" {...register("name", { required: true })}  id="name" placeholder="name" />
+                            {errors.name && errors.name.type === "required" && <span className="text-danger">Veuillez remplir ce champ</span>}
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="permission_id">Permission</label>
-                            <select class="form-control select2"  multiple data-actions-box="true" data-live-search="true" {...register("permission_id[]")} id="permission">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="permission_id">Permission</label>
+                            <select className="form-control select2"  multiple data-actions-box="true" data-live-search="true" {...register("permission_id[]")} id="permission">
                                 {PermissionsList.map(permission=>(
-                                    <option data-id={permission.name} value={permission.id}>{permission.name}</option>
+                                    <option key={permission.id} data-id={permission.name} value={permission.id}>{permission.name}</option>
                                 ))}
                             </select>
                         </div>
                     </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={()=>resetForm()}><i class="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>
-                            <button type="submit" class="btn btn-primary"  /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */><i class="mdi mdi-check mdi-18px text-white align-left"></i> Enregistrer</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>resetForm()}><i className="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>
+                            <button type="submit" className="btn btn-primary"  /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */><i className="mdi mdi-check mdi-18px text-white align-left"></i> Enregistrer</button>
                         </div>
                 </form>
             </div>

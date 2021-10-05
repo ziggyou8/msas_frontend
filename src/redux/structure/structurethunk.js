@@ -1,4 +1,5 @@
-import { getItem, getItems, removeItem, storeItem, updateItem } from '../../utilities/request.utility';
+import swal from 'sweetalert';
+import { getItem, getItems, removeItem, storeItem, updateItem, storeItemWithUplodingFile } from '../../utilities/request.utility';
 import {
     fetchStructureStart,
     fetchStructureByIdSuccess,
@@ -6,7 +7,8 @@ import {
     updateStructureSuccess,
     removeStructureSuccess,
     storeStructureSuccess,
-    fetchStructureSuccess
+    fetchStructureSuccess,
+    fetchStructureByTypeSuccess
 } from './structure.action';
 
 
@@ -26,7 +28,18 @@ import {
     return dispatch => {
       dispatch(fetchStructureStart())
       getItem('structures', id).then(res=>{
-         dispatch(fetchStructureByIdSuccess(res.data.data))
+         dispatch(fetchStructureByIdSuccess(res.data.data));
+        }).catch(err=>{
+          dispatch(fetchStructureFail(err.message))
+        })
+    }
+  }
+
+  export const fetchStructureByTypeAsync = type=>{
+    return dispatch => {
+      dispatch(fetchStructureStart())
+      getItem('structures/type_acteur', type).then(res=>{
+         dispatch(fetchStructureByTypeSuccess(res.data.data));
         }).catch(err=>{
           dispatch(fetchStructureFail(err.message))
         })
@@ -36,8 +49,14 @@ import {
   export const storeStructureAsync = (data)=>{
     return dispatch => {
       dispatch(fetchStructureStart())
-       storeItem('structures', data).then(res=>{
-         dispatch(storeStructureSuccess(res.data.data))
+       storeItemWithUplodingFile('structures', data).then(res=>{
+        swal({
+          title: "Ajout!",
+          text: "Enregistrement effectué avec succès",
+          icon: "success",
+          button: "Ok!"
+        });
+         dispatch(storeStructureSuccess(res.data.data));
         }).catch(err=>{
           dispatch(fetchStructureFail(err.message))
         })

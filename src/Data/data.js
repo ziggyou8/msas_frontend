@@ -161,7 +161,7 @@ export const districts =[
   
 
   export const fetchAllContries = function(fn){
-    return  fetch('https://restcountries.eu/rest/v2/all')
+    return  fetch('http://restcountries.eu/rest/v2/all')
       .then(response => response.json())
       .then(data => fn(data));
   }

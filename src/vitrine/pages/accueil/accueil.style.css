@@ -12,10 +12,14 @@ body{
     min-height: 30px;
 }
 .header-content{
-    padding-top: 10px;
-    font-size: 15px;
-    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
     
+}
+.reseaux-sociaux{
+  float: right;
 }
 .ligne{
     color: white;
@@ -73,7 +77,8 @@ font-weight: bold;
     background-color:#00173f ;
 }
 .bg-blue-img{
-    background-color:#3378e1 
+    background-color:#3378e1;
+    height: 70vh;
 }
 
 .bg-blue{
@@ -102,6 +107,7 @@ font-weight: bold;
     background-color: #f3f3f7;
     height: 100%;
     width: auto;
+    margin-top: -10px;
 }
 .text-blue{
     font-weight: 900;
@@ -132,6 +138,9 @@ font-weight: bold;
     font-size: 15px;
      font-weight: 600;
       color: #6f96aa;
+      width:auto;
+      height:auto;
+      background:white
 } 
 .mob-mise-en-commun-achat{
     font-weight: 600;
@@ -269,6 +278,3 @@ font-weight: bold;
 }
 
 
-.chart-container{
-    width: 100px;
-}

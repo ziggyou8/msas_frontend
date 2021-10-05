@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import firebase, { firestore, getData } from '../../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import {
     addActeurField,

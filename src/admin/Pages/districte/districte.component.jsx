@@ -21,8 +21,6 @@ import { resetCollectiviteByCodeParent } from '../../../redux/collectivite/colle
 
 const Districte = (props)=>{
     const { districtesList ,getDistricteById, removeDistricte, ...otherProps} = props;
-    const $ = window.$;
-
 
     useEffect(()=>{
         props.initDistricteList();
@@ -42,25 +40,25 @@ const Districte = (props)=>{
     return(
     <div>
         <DistricteForm {...otherProps}/>
-        <div class="page-header">
-            <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                <i class="mdi mdi-function"></i>
+        <div className="page-header">
+            <h3 className="page-title">
+            <span className="page-title-icon bg-gradient-primary text-white mr-2">
+                <i className="mdi mdi-function"></i>
             </span> Districtes
             </h3>
             <nav aria-label="breadcrumb">
-            <ul class="breadcrumb">
-                <button class="btn btn-primary text-white display1"  data-toggle="modal" data-target="#exampleModal" onClick={()=>resetFormAndInitListDistricte()}><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Districte</button>
+            <ul className="breadcrumb">
+                <button className="btn btn-primary text-white display1"  data-toggle="modal" data-target="#exampleModal" onClick={()=>resetFormAndInitListDistricte()}><i className="mdi mdi-plus mdi-18px text-white align-left"></i> Districte</button>
             </ul>
             </nav>
         </div>
-        <div class="row">
-            <div class="col-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-                <h4 class="card-title">Liste des districtes</h4>
-                <div class="table-responsive">
-                    <table class="table">
+        <div className="row">
+            <div className="col-12 grid-margin">
+            <div className="card">
+                <div className="card-body">
+                <h4 className="card-title">Liste des districtes</h4>
+                <div className="table-responsive">
+                    <table className="table">
                     <thead>
                         <tr>
                             <th> Nom</th>
@@ -76,42 +74,42 @@ const Districte = (props)=>{
                             <td>{districte.collectivite.nom}</td>
                             <td> 
                                 <div className="row">
-                                <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getDistricteById(districte.id)}></i>
-                                <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteDistricte(districte.id, districte.nom)} ></i>
+                                <i className="mdi mdi-eye mdi-18px text-primary align-left mx-2" ></i>
+                                <i className="mdi mdi-pencil mdi-18px text-primary align-left mx-2" data-toggle="modal" data-target="#exampleModal" onClick={()=>getDistricteById(districte.id)}></i>
+                                <i className="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteDistricte(districte.id, districte.nom)} ></i>
                                 </div> 
                                 </td>
                             </tr>
                        ))}
                         {/* <tr>
                         <td>
-                            <img src="/assets/images/faces/face2.jpg" class="mr-2" alt="image"/> Stella Johnson
+                            <img src="/assets/images/faces/face2.jpg" className="mr-2" alt="image"/> Stella Johnson
                         </td>
                         <td> High loading time </td>
                         <td>
-                            <label class="badge badge-gradient-warning">PROGRESS</label>
+                            <label className="badge badge-gradient-warning">PROGRESS</label>
                         </td>
                         <td> Dec 12, 2017 </td>
                         <td> WD-12346 </td>
                         </tr>
                         <tr>
                         <td>
-                            <img src="/assets/images/faces/face3.jpg" class="mr-2" alt="image" /> Marina Michel
+                            <img src="/assets/images/faces/face3.jpg" className="mr-2" alt="image" /> Marina Michel
                         </td>
                         <td> Website down for one week </td>
                         <td>
-                            <label class="badge badge-gradient-info">ON HOLD</label>
+                            <label className="badge badge-gradient-info">ON HOLD</label>
                         </td>
                         <td> Dec 16, 2017 </td>
                         <td> WD-12347 </td>
                         </tr>
                         <tr>
                         <td>
-                            <img src="/assets/images/faces/face4.jpg" class="mr-2" alt="image" /> John Doe
+                            <img src="/assets/images/faces/face4.jpg" className="mr-2" alt="image" /> John Doe
                         </td>
                         <td> Loosing control on server </td>
                         <td>
-                            <label class="badge badge-gradient-danger">REJECTED</label>
+                            <label className="badge badge-gradient-danger">REJECTED</label>
                         </td>
                         <td> Dec 3, 2017 </td>
                         <td> WD-12348 </td>

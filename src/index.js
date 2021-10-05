@@ -7,16 +7,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
-/* axios.defaults.baseURL= 'http://localhost:8000/api/';
-axios.defaults.headers.common['Authorization']= 'Bearer '+localStorage.getItem('token'); */
+
 ReactDOM.render(
   
     <Provider store={store}>
-      <React.StrictMode>
+      {/* <React.StrictMode> */}
         <BrowserRouter>
             <App/>
         </BrowserRouter>
-      </React.StrictMode>
+      {/* </React.StrictMode> */}
     </Provider>,
   document.getElementById('root')
 );

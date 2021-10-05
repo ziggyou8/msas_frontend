@@ -5,6 +5,11 @@ export const fetchStructureByIdSuccess = id => ({
   payload:  id
 });
 
+export const fetchStructureByTypeSuccess = type => ({
+  type: structureActionTypes.FETCH_STRUCTURE_BY_TYPE,
+  payload:type
+});
+
 
 export const fetchStructureStart = ()=>({
   type:structureActionTypes.FETCH_STRUCTURE_START
@@ -36,6 +41,8 @@ export const removeStructureSuccess = id =>({
   type:structureActionTypes.REMOVE_STRUCTURE_SUCCESS,
   payload:id
 });
+
+
 
 export const resetEditedStructure= () => ({
   type: structureActionTypes.RESET_EDITED_STRUCTURE,

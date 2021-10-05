@@ -8,40 +8,40 @@ function Navbar (){
   const location = useLocation();
   
     return(
-      <div class="nav-content">
-        <nav class="navbar navbar-public navbar-expand-lg   navbar-light">
+      <div className="nav-content">
+        <nav className="navbar navbar-public navbar-expand-lg   navbar-light">
           <div className="row">
-            <Link /* class="m-5" */  to="/" className="navbar-brand"><Logo style={{maxWidth: '190px'}}/></Link>
-            <button class="navbar-toggler ml-2" id="colaps-nav-button" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <Link /* className="m-5" */  to="/" className="navbar-brand"><Logo style={{maxWidth: '190px'}}/></Link>
+            <button className="navbar-toggler ml-2" id="colaps-nav-button" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
           </div>          
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-              <ul class="navbar-nav  mt-2 mt-lg-0 custom-nav">
-                <li class="nav-item ">
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
+              <ul className="navbar-nav  mt-2 mt-lg-0 custom-nav">
+                <li className="nav-item ">
                     <Link to="/" class={`nav-link ${location.pathname ==="/" ? 'active-link' : ''}`}>Accueil</Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                     <Link to="/financement" class={`nav-link ${location.pathname ==="/financement" ? 'active-link' : ''}`}>Financement</Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                     <Link to="/execution" class={`nav-link ${location.pathname ==="/execution" ? 'active-link' : ''}`}>Niveau d'execution</Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                     <Link to="/vigilance" class={`nav-link ${location.pathname ==="/vigilance" ? 'active-link' : ''}`}>Point de vigilances</Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
                     <Link to="/documentation" class={`nav-link ${location.pathname ==="/documentation" ? 'active-link' : ''}`}>Documentation</Link>
                 </li>
               </ul>
-              <div class="auth-buttons my-2 my-lg-0">
+              <div className="auth-buttons my-2 my-lg-0">
                 <Link /* to="/sign-up" */>
-                  <button class="auth-btn sign-up">
+                  <button className="auth-btn sign-up">
                       S'INSCRIRE
                   </button>
                 </Link>
                 <Link to="/sign-in">
-                  <button class="auth-btn sign-in">
+                  <button className="auth-btn sign-in">
                       SE CONNECTER
                   </button>
                 </Link>

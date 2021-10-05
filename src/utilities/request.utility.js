@@ -16,7 +16,7 @@ export const removeItem = (url,id, libelle)=>{
                 icon: "success",
             });
             //return removeItem(url, id);
-            return http.delete(`${url}/${id}`)
+            return http.delete(url, id)
         } else {
             swal("Suppression Annulée!");
             return;
@@ -34,6 +34,9 @@ export const getItem = (url, id)=>{
 
 export const storeItem =(url, data)=>{
   return http.post( url, data)
+}
+export const storeItemWithUplodingFile =(url, data)=>{
+  return http.postUpload( url, data)
 }
 
 export const updateItem =(url,id, data)=>{

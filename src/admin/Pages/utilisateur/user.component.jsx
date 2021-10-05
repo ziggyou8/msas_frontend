@@ -32,25 +32,25 @@ const User = (props)=>{
     return(
     <div>
         <UserForm {...otherProps}/>
-        <div class="page-header">
-            <h3 class="page-title">
-            <span class="page-title-icon bg-gradient-primary text-white mr-2">
-                <i class="mdi mdi-account"></i>
+        <div className="page-header">
+            <h3 className="page-title">
+            <span className="page-title-icon bg-gradient-primary text-white mr-2">
+                <i className="mdi mdi-account"></i>
             </span> Utilisateurs
             </h3>
             <nav aria-label="breadcrumb">
-            <ul class="breadcrumb">
-                <button class="btn btn-primary text-white display1"  data-toggle="modal" data-target="#exampleModal" onClick={()=>resetFormAndInitListRole()}><i class="mdi mdi-plus mdi-18px text-white align-left"></i> Utilisateur</button>
+            <ul className="breadcrumb">
+                <button className="btn btn-primary text-white display1"  data-toggle="modal" data-target="#exampleModal" onClick={()=>resetFormAndInitListRole()}><i className="mdi mdi-plus mdi-18px text-white align-left"></i> Utilisateur</button>
             </ul>
             </nav>
         </div>
-        <div class="row">
-            <div class="col-12 grid-margin">
-            <div class="card">
-                <div class="card-body">
-                <h4 class="card-title">Liste des utilisateurs</h4>
-                <div class="table-responsive">
-                    <table class="table">
+        <div className="row">
+            <div className="col-12 grid-margin">
+            <div className="card">
+                <div className="card-body">
+                <h4 className="card-title">Liste des utilisateurs</h4>
+                <div className="table-responsive">
+                    <table className="table">
                     <thead>
                         <tr>
                             <th> photo</th>
@@ -63,51 +63,51 @@ const User = (props)=>{
                     <tbody>
         
                        {usersList.map(user=>(
-                            <tr>
+                            <tr key={user.id}>
                             <td>
-                            <img style={{ border:'1px solid black' }} src={user.photo ? `${user.photo}` : '/assets/images/faces/avatar.png'} /* src="/assets/images/faces/face4.jpg" */ class="mr-2" alt="image" />
+                            <img style={{ border:'1px solid black' }} src={user.photo ? `${user.photo}` : '/assets/images/faces/avatar.png'} /* src="/assets/images/faces/face4.jpg" */ className="mr-2" alt="image" />
                             </td>
                             <td>{user.prenom} {user.nom}</td>
                             <td>{user.telephone}</td>
                             <td>{user.email}</td>
                             <td> 
                                 <div className="row" style={{ display:'inline-block' }}>
-                                <i class="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
-                                <i class="mdi mdi-pencil mdi-18px text-primary align-left mx-2" style={{ margin:'0px -15px' }} data-toggle="modal" data-target="#exampleModal" onClick={()=>getUserById(user.id)}></i>
-                                <i class="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteUser(user.id, user.nom)} ></i>
+                                <i className="mdi mdi-eye mdi-18px text-primary align-left mx-2"></i>
+                                <i className="mdi mdi-pencil mdi-18px text-primary align-left mx-2" style={{ margin:'0px -15px' }} data-toggle="modal" data-target="#exampleModal" onClick={()=>getUserById(user.id)}></i>
+                                <i className="mdi mdi-delete mdi-18px text-danger align-left mx-2" onClick={()=>deleteUser(user.id, user.nom)} ></i>
                                 </div> 
                                 </td>
                             </tr>
                        ))}
                         {/* <tr>
                         <td>
-                            <img src="/assets/images/faces/face2.jpg" class="mr-2" alt="image"/> Stella Johnson
+                            <img src="/assets/images/faces/face2.jpg" className="mr-2" alt="image"/> Stella Johnson
                         </td>
                         <td> High loading time </td>
                         <td>
-                            <label class="badge badge-gradient-warning">PROGRESS</label>
+                            <label className="badge badge-gradient-warning">PROGRESS</label>
                         </td>
                         <td> Dec 12, 2017 </td>
                         <td> WD-12346 </td>
                         </tr>
                         <tr>
                         <td>
-                            <img src="/assets/images/faces/face3.jpg" class="mr-2" alt="image" /> Marina Michel
+                            <img src="/assets/images/faces/face3.jpg" className="mr-2" alt="image" /> Marina Michel
                         </td>
                         <td> Website down for one week </td>
                         <td>
-                            <label class="badge badge-gradient-info">ON HOLD</label>
+                            <label className="badge badge-gradient-info">ON HOLD</label>
                         </td>
                         <td> Dec 16, 2017 </td>
                         <td> WD-12347 </td>
                         </tr>
                         <tr>
                         <td>
-                            <img src="/assets/images/faces/face4.jpg" class="mr-2" alt="image" /> John Doe
+                            <img src="/assets/images/faces/face4.jpg" className="mr-2" alt="image" /> John Doe
                         </td>
                         <td> Loosing control on server </td>
                         <td>
-                            <label class="badge badge-gradient-danger">REJECTED</label>
+                            <label className="badge badge-gradient-danger">REJECTED</label>
                         </td>
                         <td> Dec 3, 2017 </td>
                         <td> WD-12348 </td>

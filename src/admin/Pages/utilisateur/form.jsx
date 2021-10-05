@@ -91,79 +91,79 @@ function UserForm(props) {
     const closeModal = ()=> window.$('#exampleModal').modal('hide');
     
   return(
-        <div class="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">AJOUT D'UN UTILISATEUR</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={()=>resetForm()}>
+        <div className="modal fade"  data-keyboard="false" data-backdrop="static"  id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">AJOUT D'UN UTILISATEUR</h5>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>resetForm()}>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div className="modal-body">
                 
                 <form  onSubmit={handleSubmit(onSubmit)}>
                 <img style={{height: "70px", width: "70px", display:'none', borderRadius:'50%'}} id="avatar" /* src="" *//>
                 <div className="row">
-                        <div class="form-group col-md-6">
-                            <label for="prenom">Photo</label>
-                            <input type="file" id="photo"  class="form-control" {...register("photo")}  id="photo" placeholder="Prénom" />
-                            {errors.photo && errors.photo.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                        <div className="form-group col-md-6">
+                            <label htmlFor="prenom">Photo</label>
+                            <input type="file" id="photo"  className="form-control" {...register("photo")}  id="photo" placeholder="Prénom" />
+                            {errors.photo && errors.photo.type === "required" && <span className="text-danger">Veuillez remplir ce champ</span>}
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="prenom">Prénom</label>
-                            <input type="text"  class="form-control" {...register("prenom", { required: true })}  id="prenom" placeholder="Prénom" />
-                            {errors.prenom && errors.prenom.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                        <div className="form-group col-md-6">
+                            <label htmlFor="prenom">Prénom</label>
+                            <input type="text"  className="form-control" {...register("prenom", { required: true })}  id="prenom" placeholder="Prénom" />
+                            {errors.prenom && errors.prenom.type === "required" && <span className="text-danger">Veuillez remplir ce champ</span>}
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="nom">Nom</label>
-                            <input type="text" class="form-control" {...register("nom", { required: true })} id="nom" placeholder="Nom"/>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="nom">Nom</label>
+                            <input type="text" className="form-control" {...register("nom", { required: true })} id="nom" placeholder="Nom"/>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="telephone">Téléphone</label>
-                            <input type="text" class="form-control" {...register("telephone")} id="telephone" placeholder="+221 ...."/>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="telephone">Téléphone</label>
+                            <input type="text" className="form-control" {...register("telephone")} id="telephone" placeholder="+221 ...."/>
                         </div>
                         
-                        <div class="form-group col-md-6">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" {...register("email")} id="email" placeholder="Email"/>
+                        <div className="form-group col-md-6">
+                            <label htmlFor="email">Email</label>
+                            <input type="text" className="form-control" {...register("email")} id="email" placeholder="Email"/>
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="telephone">Rôles</label>
-                            <select class="form-control" {...register("role")} id="role">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="telephone">Rôles</label>
+                            <select className="form-control" {...register("role")} id="role">
                                 <option value="">CHoisir...</option>
                                 {rolesList?.map(role=>(
-                                    <option data-id={role.name} value={role.name}>{role.name}</option>
+                                    <option key={role.id} data-id={role.name} value={role.name}>{role.name}</option>
                                 ))}
                             </select>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="telephone">Structures</label>
-                            <select class="form-control" multiple {...register("structure_id[]")} id="structures">
+                        <div className="form-group col-md-6">
+                            <label htmlFor="telephone">Structures</label>
+                            <select className="form-control" multiple {...register("structure_id[]")} id="structures">
                                 <option value="">CHoisir...</option>
                                 {structures?.map(structure=>(
-                                    <option data-id={structure.denomination} value={structure.id}>{structure.denomination}</option>
+                                    <option key={structure.id} data-id={structure.denomination} value={structure.id}>{structure.denomination}</option>
                                 ))}
                             </select>
                         </div>
 
-                        {/* <div class="form-group col-md-6">
-                            <label for="source_investissement">Source d'investissement</label>
-                            <select   class="form-control" {...register("source_investissement", { required: true })} id="source_investissement">
+                        {/* <div className="form-group col-md-6">
+                            <label htmlFor="source_investissement">Source d'investissement</label>
+                            <select   className="form-control" {...register("source_investissement", { required: true })} id="source_investissement">
                             <option  value="">Choisir....</option>
                                 {sourceFinancements && sourceFinancements.map(finance =>(
                                     <option value={finance.source_financement}>{finance.source_financement}</option>
                                 ))}
                             </select>
-                            {errors.source_investissement && errors.source_investissement.type === "required" && <span class="text-danger">Veuillez remplir ce champ</span>}
+                            {errors.source_investissement && errors.source_investissement.type === "required" && <span className="text-danger">Veuillez remplir ce champ</span>}
                         </div> */}
                     
                     </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={()=>resetForm()}><i class="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>
-                            <button type="submit" class="btn btn-primary"  /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */><i class="mdi mdi-check mdi-18px text-white align-left"></i> Enregistrer</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>resetForm()}><i className="mdi mdi-close mdi-18px text-white align-left"></i> Annuler</button>
+                            <button type="submit" className="btn btn-primary"  /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */><i className="mdi mdi-check mdi-18px text-white align-left"></i> Enregistrer</button>
                         </div>
                 </form>
             </div>

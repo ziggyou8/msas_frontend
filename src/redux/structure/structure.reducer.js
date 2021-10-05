@@ -52,6 +52,12 @@ const structureReducer = (state = INITIAL_STATE, action) => {
           isFetching:false,
           structureById: action.payload
         };
+        case structureActionTypes.FETCH_STRUCTURE_BY_TYPE:
+         return {
+          ...state,
+          isFetching:false,
+          structures: action.payload
+        };
         case structureActionTypes.RESET_EDITED_STRUCTURE:
         return {
           ...state,

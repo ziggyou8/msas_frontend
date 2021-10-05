@@ -2,7 +2,7 @@ import React from 'react';
 import './sign-in.style.scss';
 import FormInput from '../../../components/share/form-input/form-input';
 import CustomButton from '../../../components/share/custom-button/custom-button';
-import axios from 'axios';
+import http from '../../../utilities/axio.config';
 
 
 class AuthPage extends React.Component {
@@ -17,12 +17,11 @@ class AuthPage extends React.Component {
   
     handleSubmit = async event => {
       event.preventDefault();
-      const { email, password } = this.state;
      
-      axios.post('login', this.state).
-       then(res=>{
+      http.login('login', this.state)
+       .then(res=>{
          localStorage.setItem('token', res.data.data.token)
-         this.props.history.push("admin/roles")
+         this.props.history.push("admin/structures")
        }).catch(err=>{
          if (err) {
            document.getElementById('error').style.display="block"

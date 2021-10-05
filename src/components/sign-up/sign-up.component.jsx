@@ -1,7 +1,7 @@
 import React from 'react';
 import FormInput from '../share/form-input/form-input';
 import CustomButton from '../share/custom-button/custom-button';
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+/* import { auth, createUserProfileDocument } from '../../firebase/firebase.utils'; */
 import './sign-up.style.scss'
 import { withRouter } from "react-router-dom";
 
@@ -18,7 +18,7 @@ class SignUp extends React.Component{
     }
 
 
-    handleChange = event => {
+    /* handleChange = event => {
         const {name, value} = event.target;
         this.setState({[name]:value})
     }
@@ -46,13 +46,13 @@ class SignUp extends React.Component{
         }catch(error){
             alert(error.message);
         }
-    }
+    } */
     render(){
         const {displayName, email, password, confirmPassword} = this.state;
 
         return(
             <div className="sign-up-form">
-                <h2>J'ai pas de compte</h2>
+                {/* <h2>J'ai pas de compte</h2>
                 <span className="title">S'enregistrer avec email et mot de pass</span>
                 <form onSubmit={this.handleSubmit}>
                     <FormInput label="Nom complet" name="displayName" type="text" value={displayName} handleChange={this.handleChange}/>
@@ -60,7 +60,7 @@ class SignUp extends React.Component{
                     <FormInput label="Mot de passe" name="password" type="password" value={password} handleChange={this.handleChange}/>
                     <FormInput label="Confirme mot de pass" name="confirmPassword" type="password" value={confirmPassword} handleChange={this.handleChange}/>
                     <CustomButton type="submit">S'ENREGISTRER</CustomButton>
-                </form>
+                </form> */}
             </div>
         )
     }
