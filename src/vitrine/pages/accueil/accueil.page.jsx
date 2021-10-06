@@ -208,7 +208,7 @@ const labels2 = [
                 <h5 className="card-title text-white pt-5 col-md-9">Le Financemet de la santé, une priorité pour les acteurs...</h5>
                 <div className="divider"></div>
               </div>
-              <p className="card-text text-white pb-3" style={{ textAlign:'justify' }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus explicabo
+              <p className="card-text text-white pb-3" style={{ textAlign:'justify', width:"95%" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus explicabo
                 assumenda nisi nostrum natus suscipit vero quo quia sint ipsum aut, doloribus molestias quaerat atque
                 totam. Ratione quasi assumenda cumque!</p>
               <div className="pb-5">

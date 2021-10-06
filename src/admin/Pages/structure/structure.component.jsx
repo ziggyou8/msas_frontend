@@ -129,6 +129,7 @@ function Structure (props){
           <li className="tab-link" data-tab="2">PTF</li>
           <li className="tab-link" data-tab="3">EPS</li>
           <li className="tab-link" data-tab="4">SPS</li>
+          <li className="tab-link" data-tab="5">Etat</li>
       </ul>
     </div>
   
@@ -248,7 +249,7 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="ESP").map(structure =>(
+                      {structures && structures.filter(str => str.type_acteur ==="EPS").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
                         <td> {structure.type_acteur} </td>
@@ -326,8 +327,52 @@ function Structure (props){
         </div>
       </div>
 
-      <div id="tab-4"className="tab-content">
-        MGGGG
+      <div id="tab-5"className="tab-content">
+      <div className="row">
+          <div className="col-12 grid-margin">
+            <div className="card">
+              <div className="card-body">
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th> Dénomination </th>
+                        <th> Type d'acteur </th>
+                        <th> Dimensions de l'acteur </th>
+                        <th> Téléphone </th>
+                        <th> Adresse </th>
+                        <th> Action </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {structures && structures.filter(str => str.type_acteur ==="Etat").map(structure =>(
+                        <tr key={structure.id}>
+                        <td>{structure.denomination}</td>
+                        <td> {structure.type_acteur} </td>
+                        <td>
+                          {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
+                          {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
+                          {structure.achat_service ? <span className="badge badge-primary mx-1">Achat service</span>: ""}
+                        </td>
+                        <td> {structure.telephone_siege} </td>
+                        <td> {structure?.adresse_siege} </td>
+                       
+                        <td> 
+                            <div className="row" style={{ display:'inline-block' }}>
+                            <i className="mdi mdi-eye mdi-18px text-primary"  onClick={()=>history.push(`/admin/structures/${structure.id}`)}></i>
+                            <i className="mdi mdi-pencil mdi-18px text-primary " style={{ margin:'0px -15px' }} data-toggle="modal" data-target="#exampleModal" onClick={()=>props.getStructureById(structure.id)}></i>
+                            <i className="mdi mdi-delete mdi-18px text-danger" onClick={() =>deleteStructure(structure.id, structure.denomination )}></i>
+                            </div> 
+                          </td>
+                      </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div id="tab-4"className="tab-content">

@@ -664,7 +664,7 @@ function  StructureForm(props) {
                         <div className="row bg-white mx-1  py-3" style={{   marginTop:'-30px' }}>
                             <div className="form-group col-md-3">
                                 <label htmlFor="documents">Documents</label>
-                                <input type="text" name="documents" /* onChange={onFileChange} */  className="form-control" 
+                                <input type="file" name="documents" onChange={onFileChange}  className="form-control" 
                                  id="documents"/>
                             </div>
                         </div>
