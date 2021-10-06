@@ -150,13 +150,11 @@ function  StructureForm(props) {
             }
               props.storeStructure(formData);
              console.log('✅✅', data)
-
-         
-
-            //e.preventDefault();
-            //props.initStructureData()
-            //closeModal();
-            // resetForm();
+                
+                e.preventDefault();
+                props.initStructureData()
+                closeModal();
+                resetForm();
 
           //props.errorMessage && alert(props.errorMessage)
     }
