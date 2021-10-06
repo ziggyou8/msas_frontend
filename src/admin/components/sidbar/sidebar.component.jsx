@@ -52,12 +52,12 @@ function AdminSideBar ({currentUser}){
               <i className=" mdi mdi-houzz  menu-icon"></i>
             </Link>
           </li>
-          <li className="nav-item">
+{/*           <li className="nav-item">
             <Link className={`nav-link ${location.pathname === "/admin/source_financement" ? 'active' : ''}`} to="/admin/source_financement">
               <span className="menu-title">Types de structure</span>
               <i className="mdi mdi-chart-line menu-icon"></i>
             </Link>
-          </li>
+          </li> */}
           {/* <li className="nav-item">
             <a className="nav-link" href="pages/forms/basic_elements.html">
               <span className="menu-title">Forms</span>
