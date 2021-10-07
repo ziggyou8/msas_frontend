@@ -50,14 +50,24 @@ import {
     return dispatch => {
       dispatch(fetchStructureStart())
        storeItemWithUplodingFile('structures', data).then(res=>{
-        swal({
+         dispatch(storeStructureSuccess(res.data.data));
+         if (res.data.success) {
+           swal({
           title: "Ajout!",
           text: "Enregistrement effectué avec succès",
           icon: "success",
           button: "Ok!"
         });
-         dispatch(storeStructureSuccess(res.data.data));
+         }
+         
+
         }).catch(err=>{
+          swal({
+            title: "Erreur!",
+            text: "Cet adresse email est déjà utilisé",
+            icon: "error",
+            button: "Ok!"
+          });
           dispatch(fetchStructureFail(err.message))
         })
     }

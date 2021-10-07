@@ -148,13 +148,12 @@ function  StructureForm(props) {
                 }
                  
             }
-              props.storeStructure(formData);
-             console.log('✅✅', data)
-                
-                e.preventDefault();
+                props.storeStructure(formData);
+
+                /* e.preventDefault();
                 props.initStructureData()
                 closeModal();
-                resetForm();
+                resetForm(); */
 
           //props.errorMessage && alert(props.errorMessage)
     }
