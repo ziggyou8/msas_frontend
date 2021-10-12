@@ -51,14 +51,14 @@ import {
       dispatch(fetchStructureStart())
        storeItemWithUplodingFile('structures', data).then(res=>{
          dispatch(storeStructureSuccess(res.data.data));
-         if (res.data.success) {
+         
            swal({
           title: "Ajout!",
           text: "Enregistrement effectué avec succès",
           icon: "success",
           button: "Ok!"
         });
-         }
+       
          
 
         }).catch(err=>{

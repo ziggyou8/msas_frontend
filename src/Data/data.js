@@ -57,10 +57,26 @@ export const  piliers =[
     ['INTERNATIONAL','INTERNATIONAL']
   ];
 
-  export const typePtf =[
+  /* export const typePtf =[
     ['BILATERAL','BILATERAL'],
     ['MULTILATERAL','MULTILATERAL']
-  ]
+  ] */
+
+  export const typeActeurs ={
+    'ONG':['NATIONALE', 'INTERNATIONALE'],
+    'PTF':['BILATERAL', 'MULTILATERAL'],
+    'SPS':[
+      'Cabinet médical généraliste',
+      'Cabinet médical spécialiste', 
+      'Cabinet paramédical',
+      'Laboratoire',
+      'Imagerie',
+      'Opticien',
+    ],
+    'EPS':['Niveau 1', 'Niveau 2', 'Niveau 3'],
+  }
+
+  
   export const agentExecution =[
     ['ONG','ONG'],
     ['ASSOCIATION BENEFICIAIRE','ASSOCIATION BENEFICIAIRE']
@@ -144,11 +160,6 @@ export const typeAchat =[
     ['Passif','Passif'],
     ['Stratégique','Stratégique']
   ]
-  
-export const districts =[
-    ['District ','District 1 selon la commune'],
-    ['District 1','District 2 selon la commune']
-  ]
 
   export const mecanismeFinance =[
     ['Budget ','Budget'],
@@ -161,7 +172,7 @@ export const districts =[
   
 
   export const fetchAllContries = function(fn){
-    return  fetch('http://restcountries.eu/rest/v2/all')
+    return  fetch('https://restcountries.eu/rest/v2/all')
       .then(response => response.json())
       .then(data => fn(data));
   }

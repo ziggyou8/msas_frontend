@@ -15,6 +15,7 @@ import {
 } from '../../../redux/structure/structurethunk';
 import { selectListCollectivite } from '../../../redux/collectivite/collectivite.selector';
 import { fetchCollectiviteAsync } from '../../../redux/collectivite/collectivite.thunk';
+import { fetchAllContries } from '../../../Data/data';
 
 
 function Structure (props){
@@ -153,10 +154,10 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="ONG").map(structure =>(
+                      {structures && structures.filter(str => str.source_financement ==="ONG").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
-                        <td> {structure.type_acteur} </td>
+                        <td> {structure.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -201,10 +202,10 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="PTF").map(structure =>(
+                      {structures && structures.filter(str => str.source_financement ==="PTF").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
-                        <td> {structure.type_acteur} </td>
+                        <td> {structure.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -249,10 +250,10 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="EPS").map(structure =>(
+                      {structures && structures.filter(str => str.source_financement ==="EPS").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
-                        <td> {structure.type_acteur} </td>
+                        <td> {structure.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -297,10 +298,10 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="SPS").map(structure =>(
+                      {structures && structures.filter(str => str.source_financement ==="SPS").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
-                        <td> {structure.type_acteur} </td>
+                        <td> {structure.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -345,10 +346,10 @@ function Structure (props){
                       </tr>
                     </thead>
                     <tbody>
-                      {structures && structures.filter(str => str.type_acteur ==="Etat").map(structure =>(
+                      {structures && structures.filter(str => str.source_financement ==="Etat").map(structure =>(
                         <tr key={structure.id}>
                         <td>{structure.denomination}</td>
-                        <td> {structure.type_acteur} </td>
+                        <td> {structure.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}

@@ -15,36 +15,47 @@ import Stepper from 'react-stepper-horizontal';
 import {
     acteurs,
     agentExecution,
-    districts,
     piliers,
     typePtf,
     typeOng,
     typeAchat,
     tyepeSps,
-    sourceFinancements
+    sourceFinancements,
+    typeActeurs
 } from '../../../Data/data';
+import MultipleValueTextInput from 'react-multivalue-text-input';
 import Select from 'react-select';
 import CustomSelect from '../../../components/CostumSelect';
+import {useGeolocation} from 'react-use';
 
 
 
 function  StructureForm(props) {
-    const { register, handleSubmit,control, watch, getValues, reset, formState: { errors, isValid } } = useForm({mode:"all"}); 
 
+    const $ = window.$;
+    const { register, handleSubmit,control, watch, getValues, reset, formState: { errors, isValid } } = useForm({mode:"all"}); 
     //useStates
     const [formStep, setFormStep]=useState(0);
     const [ActivStep, setActivStep]=useState(0);
     const [selectedActeur, setselectedActeur] = useState()
     const [isRegionChanged, setisRegionChanged] = useState(true)
     const [isDepartementChanged, setisDepartementChanged] = useState(true)
+    const [isCommuneChanged, setisCommuneChanged] = useState(true)
     const [departements, setDepartements] =useState([])
     const [communes, setCommunes] =useState([])
+    const [districts, setdistricts] =useState([])
     const [isAchatServiceCheck, setIsAchatServiceCheck] = useState(false)
     const [sousRecipiandaire, setSousRecipiandaire] =useState([[1,"1"]])
     const [selectedFile, setSelectedFile] =useState({})
     const [selectedOptions, setSelectedOptions] =useState({
         type_acteur: null
     })
+
+    const [geolocalisationPoint, setGeolocalisationPoint] = useState({});
+    const [paquetSanteIntervention, setPaquetSanteIntervention] = useState();
+    const [isCurrentGeolocalisation, setIsCurrentGeolocalisation] = useState(false);
+
+
     
     const firsStepIsInValide = watch().type_acteur || !watch().denomination;
     const [steps, setSteps]=useState([
@@ -52,6 +63,7 @@ function  StructureForm(props) {
         {title: 'Autres informations'},
         {title: 'Personne responsable'},
         {title: 'Recap'}]);
+
 
     //Steps
     const completeFormStep = ()=> {
@@ -64,26 +76,62 @@ function  StructureForm(props) {
 
     }
     //handlers
+    const myGeo = useGeolocation();
+    let pointgeo;
+    
+
+    const currentPositionHandler = (e)=>{
+        e.target.checked ? setIsCurrentGeolocalisation(true) : setIsCurrentGeolocalisation(false);
+  
+        if (e.target.checked ) {
+            $('#latitude').val(`${myGeo.latitude}`);
+            $('#longitude').val(`${myGeo.longitude}`);
+            $('#altitude').val(`${myGeo.accuracy}`);
+          }else{
+           $('#latitude').val("");
+           $('#longitude').val("");
+           $('#altitude').val("");
+          }
+
+      }
+
+    if(isCurrentGeolocalisation){
+        pointgeo ={latitude: myGeo.latitude, longitude: myGeo.longitude, altitude: myGeo.accuracy};
+    }else{
+        pointgeo ={latitude: getValues().latitude, longitude: getValues().longitude, altitude: getValues().altitude};
+    }
+    //console.log('😎😎', pointgeo);
+
+
     const typeActeurHandler = (e)=>{
         setselectedActeur(e.target.value);
     }
 
+
     const regionHandler = (e)=>{
         e.target.value &&  e.target.value !== "" ? setisRegionChanged(false) : setisRegionChanged(true)
-        setDepartements(props.collectiviteList?.filter(col=>col.parent_code === e.target.value));
-        setCommunes([])
+        setDepartements(props.collectiviteList?.filter(col=>col.parent_code === e.target[e.target.selectedIndex].getAttribute('data-tag')));
+        setCommunes([]);
+        setdistricts([]);
       }
 
     const departementHandler = (e)=>{
-    e.target.value ? setisDepartementChanged(false) : setisDepartementChanged(true);
-    setCommunes(props.collectiviteList?.filter(col=>col.parent_code === e.target.value))
+    e.target.value !== "" ? setisDepartementChanged(false) : setisDepartementChanged(true);
+    setCommunes(props.collectiviteList?.filter(col=>col.parent_code === e.target[e.target.selectedIndex].getAttribute('data-tag')))
+    setdistricts([])
+    }
+
+    const communeHandler = (e)=>{
+        e.target.value !== "" ? setisCommuneChanged(false) : setisCommuneChanged(true);
+        setdistricts(props.collectiviteList?.filter(col=>col.parent_code === e.target[e.target.selectedIndex].getAttribute('data-tag')));
+        
     }
 
     const achatServiceHandler = (e)=>{
         setIsAchatServiceCheck(e.target.checked);
       }
     //Autres
-    const regions = props.collectiviteList?.filter(col=>col.type_collectivite === "REGION");
+    const regions = props.collectiviteList?.filter(col=>col.type_collectivite === "Region");
 
     //functions
     const addSousRecipainadaire = ()=>{
@@ -133,10 +181,16 @@ function  StructureForm(props) {
       setSelectedFile({...selectedFile, [name]:files[0]}); 
     };
 
-              console.log(getValues().type_acteur)
 
 
       const submitForm = async(data, e) => {
+
+          data.paquet_sante_intervention = paquetSanteIntervention?.join();
+          data.latitude = pointgeo.latitude;
+          data.longitude = pointgeo.longitude;
+          data.altitude = pointgeo.altitude;
+         
+            console.log('🔥🔥', data);
             const formData = new FormData();
             const fileField = Object.entries(selectedFile);
             fileField.forEach(file => formData.append(file[0], file[1]));
@@ -148,18 +202,18 @@ function  StructureForm(props) {
                 }
                  
             }
-                props.storeStructure(formData);
+              props.storeStructure(formData);
 
-                /* e.preventDefault();
+                e.preventDefault();
                 props.initStructureData()
                 closeModal();
-                resetForm(); */
+                resetForm();
 
           //props.errorMessage && alert(props.errorMessage)
     }
 
     
-    const $ = window.$;
+    //const $ = window.$;
     const closeModal = ()=> $('#exampleModal').modal('hide');
 
     const options = [
@@ -186,38 +240,29 @@ function  StructureForm(props) {
                     {formStep >= 0 && (<section style={{display: formStep === 0 ? "block" : "none"  }}>
                     <div className=" bg-white">
                         <div className="row bg-white mx-1  py-3">
-                        <div className="form-group col-md-3">
-                            <label htmlFor="type_acteur" className="require-label" >Type d'acteur</label>
-
-                            
-                            <select  {...register("type_acteur",{ required: 
-                                {value: true , message:"Veuillez choisir le type d'acteur"}})} 
-                                className="form-control" 
-                                onChange={typeActeurHandler}>
-                                <option value="">Choisir...</option>
-                                {acteurs.map(acteur=><option key={acteur[1]} disabled={acteur[2]}  value={acteur[1]}>{acteur[1]}</option>)}
-                            </select>
-                            {errors.type_acteur && getValues().type_acteur ==="" && <p className="text-danger mb-0">{errors.type_acteur.message}</p>}
-
-                                {/* <CustomSelect 
-                                control={control}
-                                name="type_acteur" 
-                                options={acteurs.map(acteur=>({value: acteur[0], label: acteur[1],}))} 
-                                customHandler={typeActeurHandler} /> */}
-
-                            {/* <Select  onChange={typeActeurHandler} value={selectedOptions.type_acteur} options={options} /> */}
-                        </div>
+                        
                         <div className="form-group col-md-3">
                             <label htmlFor="source_financement" className="require-label" >Source de Financement</label>
                             <select  {...register("source_financement",{ required: 
                                 {value: true , message:"Veuillez choisir le source de finncement"}})} 
                                 className="form-control"
-                                disabled={!selectedActeur}>
+                                onChange={typeActeurHandler}
+                                /* disabled={!selectedActeur} */>
                                 <option value="">Choisir...</option>
-                                {sourceFinancements[selectedActeur]?.map(acteur=><option key={acteur[1]}  value={acteur[1]}>{acteur[1]}</option>)}
+                                {acteurs.map(acteur=><option key={acteur[1]} disabled={acteur[2]}  value={acteur[1]}>{acteur[1]}</option>)}
                             </select>
                             {errors.source_financement && getValues().source_financement ==="" && <p className="text-danger mb-0">{errors.source_financement.message}</p>}
                         </div>
+                        <div className="form-group col-md-3">
+                                <label htmlFor="type">Type</label>
+                                <select {...register("type")} 
+                                    className="form-control">
+                                    <option >Choisir...</option>
+                                    {typeActeurs[selectedActeur]?.map(type=> <option key={type} value={type}>{type}</option>)}
+                                </select>
+                                {errors.type && <p className="text-danger mb-0">{errors.type.message}</p>}
+                        </div>
+                        
                         <div className="form-group col-md-3">
                             <label htmlFor="denomination" className="require-label">Dénomination</label>
                             <input type="text" className={`form-control ${errors.denomination && "is-invalid"}`} 
@@ -269,13 +314,12 @@ function  StructureForm(props) {
                             <div className="form-group col-md-3">
                                 <label htmlFor="region_intervention">Région d'intervention</label>
                                 <select 
-                                    onChange={regionHandler} 
                                     {...register("region_intervention",{ required: 
                                     {value: true , message:"Veuillez choisir la région"}})} 
                                     className="form-control" 
                                     onChange={regionHandler}>
                                     <option value="">Choisir...</option>
-                                    {regions.map(regions=><option key={regions.code} value={regions.code}>{regions.nom}</option>)}
+                                    {regions.map(regions=><option key={regions.code} data-tag={regions.code} value={regions.nom}>{regions.nom}</option>)}
                                 </select>
                                 {errors.region_intervention && <p className="text-danger mb-0">{errors.region_intervention.message}</p>}
                             </div>
@@ -289,7 +333,7 @@ function  StructureForm(props) {
                                     onChange={departementHandler}
                                     disabled={isRegionChanged}>
                                     <option value="">Choisir...</option>
-                                    {departements.map(dep=><option key={dep.code} value={dep.code}>{dep.nom}</option>)}
+                                    {departements.map(dep=><option key={dep.code} data-tag={dep.code} value={dep.nom}>{dep.nom}</option>)}
                                 </select>
                                 {errors.departement_intervention && <p className="text-danger mb-0">{errors.departement_intervention.message}</p>}
                             </div>
@@ -300,21 +344,22 @@ function  StructureForm(props) {
                                     {...register("commune_intervention",{ required: 
                                     {value: true , message:"Veuillez choisir la commune"}})} 
                                     className="form-control"
-                                    disabled={isDepartementChanged || isRegionChanged}>
+                                    onChange={communeHandler}
+                                    disabled={isDepartementChanged}>
                                     <option value="" >Choisir...</option>
-                                    {communes.map(commune=><option key={commune.code} value={commune.code}>{commune.nom}</option>)}
+                                    {communes.map(commune=><option key={commune.code} data-tag={commune.code} value={commune.nom}>{commune.nom}</option>)}
                                 </select>
                                 {errors.commune_intervention && <p className="text-danger mb-0">{errors.commune_intervention.message}</p>}
                             </div>
                             <div className="form-group col-md-3">
-                                <label htmlFor="districte_intervention" className="require-label">Districte d'intervention</label>
+                                <label htmlFor="districte_intervention" className="require-label">District d'intervention</label>
                                 <select 
                                     {...register("districte_intervention",{ required: 
                                     {value: true , message:"Veuillez choisir le distric sanitaire"}})} 
                                     className="form-control"
-                                    disabled={isRegionChanged}>
+                                    disabled={isCommuneChanged}>
                                     <option value="" >Choisir...</option>
-                                    {districts.map(district=><option key={district[1]} value={district[1]}>{district[1]}</option>)}
+                                    {districts.map(district=><option key={district.code} value={district.nom}>{district.nom}</option>)}
                                 </select>
                                 {errors.districte_intervention && <p className="text-danger mb-0">{errors.districte_intervention.message}</p>}
                             </div>
@@ -322,27 +367,40 @@ function  StructureForm(props) {
                     </div>
 
                     <div className=" bg-white" style={{ marginTop:'-30px' }}>
+                    <p style={{ marginBottom:'-15px', fontWeight:"bold" }} className="ml-3">Géolocalisation</p>
                             <div className="row bg-white mx-1  py-3">
-                            <div className="form-group col-md-3">
-                                <label htmlFor="latitude">Latitude</label>
-                                <input type="text" className="form-control" 
-                                {...register("latitude")} id="latitude" placeholder="Exemple: 14.2"/>
-                            </div>
-                            <div className="form-group col-md-3">
-                                <label htmlFor="longitude">Longitude</label>
-                                <input type="text" className="form-control" 
-                                {...register("longitude")} id="longitude" placeholder="Exemple: -17.2"/>
-                            </div>
-                            <div className="form-group col-md-3">
+                                <div className="row ml-3">
+                                <div className="form-group col-md-3 ">
+                                    <input className="form-check-input" onChange={currentPositionHandler} value="1" type="checkbox" /><small> Récupérer ma position actuelle ? </small>
+                                </div>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="latitude">Latitude</label>
+                                    <input type="number" {...register("latitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                      id="latitude" />
+                                </div>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="longitude">Longitude</label>
+                                    <input type="number" {...register("longitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                      id="longitude" />
+                                </div>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="altitude">Altitude</label>
+                                    <input type="number" {...register("altitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                      id="altitude"/>
+                                </div>
+                                </div>
+                            
+                            {/* <div className="form-group col-md-3">
                                 <label htmlFor="autre_secteur_intervention">Autres secteurs d'intervention</label>
                                 <input type="text" className="form-control" 
                                 {...register("autre_secteur_intervention")} id="autre_secteur_intervention" placeholder="Autres secteurs"/>
-                            </div>
-                            <div className="form-group col-md-3">
+                            </div> */}
+                            
+                            {/* <div className="form-group col-md-3">
                                 <label htmlFor="paquet_sante_intervention">Paquet santé d'intervention</label>
                                 <input type="text" className="form-control" 
                                 {...register("paquet_sante_intervention")} id="paquet_sante_intervention" placeholder="Paquet santé d'intervention"/>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className=" bg-white" style={{ marginTop:'-30px' }}>
@@ -362,16 +420,17 @@ function  StructureForm(props) {
                                 <input type="text" className="form-control" 
                                 {...register("email_siege")} id="email_siege" placeholder="Email du siège"/>
                             </div>
-                            <div className="form-group col-md-3">
+{/*                             <div className="form-group col-md-3">
                                 <label htmlFor="accord_siege">Accord de siège</label>
-                                <input type="text" className="form-control" 
-                                {...register("accord_siege")} id="accord_siege" placeholder="Accord de siège"/>
-                            </div>
+                                <input type="file" className="form-control" 
+                                name="accord_siege"
+                                 onChange={onFileChange} id="accord_siege" placeholder="Accord de siège"/>
+                            </div> */}
                         </div>
                     </div>
 
-                    <div className=" bg-white ml-4 mb-3" style={{ marginTop:'-10px' }}>
-                    <p style={{ marginBottom:'-15px', fontWeight:"bold" }}>Les dimensions  de l'acteur</p>
+                    {selectedActeur !== "SPS" &&<div className=" bg-white ml-4 mb-3" style={{ marginTop:'-10px'}}>
+                    <p style={{ marginBottom:'-15px', fontWeight:"bold" }}>Les dimensions du financement</p>
                         <div className="row bg-white mx-1 ml-4 py-3 d-flex flex-row">
                             <div className="form-check form-check-inline col-md-3">
                             <input className="form-check-input" {...register("mobilisation_ressource")} value="1" type="checkbox" id="mobilisation_ressource"  />
@@ -386,7 +445,7 @@ function  StructureForm(props) {
                             <label className="form-check-label" htmlFor="achat_service">Achat de services</label>
                             </div>
                         </div>
-                    </div>
+                    </div>}
 
                     <div className=" bg-white" style={{ marginTop:'-30px' }}>
                         <div className="row bg-white mx-1  py-3">
@@ -410,6 +469,24 @@ function  StructureForm(props) {
                                 {errors.type_achat && <p className="text-danger mb-0">{errors.type_achat.message}</p>}
                             </div>}
 
+                            {selectedActeur !== "SPS" &&<div className="form-group col-md-3">
+                            <label htmlFor="paquet_sante_intervention">
+                                Paquet santé d'intervention
+                                </label>
+                                    <MultipleValueTextInput className="form-control"
+                                        onItemAdded={(item, allItems) => setPaquetSanteIntervention(allItems)}
+                                        onItemDeleted={(item, allItems) => setPaquetSanteIntervention(allItems)}
+                                        name="paquet_sante_intervention"
+                                        placeholder="Taper sur entré ou mettez virgule aprés la saisie."
+                                    />
+                                <small> NB: Ce champ prend plusieur valeurs, tapez sur entré aprés chaque valeur </small>
+                            </div>}
+                            <div className="form-group col-md-3">
+                                <label htmlFor="secteur_intervention">Secteurs d'intervention</label>
+                                <input type="text" className="form-control" multiple 
+                                {...register("secteur_intervention")} id="secteur_intervention" placeholder="Secteur d'intervention"/>
+                            </div>
+
                         </div>
                     </div>
                     
@@ -424,7 +501,7 @@ function  StructureForm(props) {
                     {/* -----PTF--------  */}
                         {selectedActeur === 'PTF' && <div className=" bg-white">
                         <div className="row bg-white mx-1  py-3" >
-                            <div className="form-group col-md-3">
+                            {/* <div className="form-group col-md-3">
                                 <label htmlFor="type">Type</label>
                                 <select {...register("type")} 
                                     className="form-control">
@@ -432,7 +509,7 @@ function  StructureForm(props) {
                                     {typePtf.map(type=><option key={type[1]} value={type[1]}>{type[1]}</option>)}
                                 </select>
                                 {errors.type && <p className="text-danger mb-0">{errors.type.message}</p>}
-                            </div>
+                            </div> */}
                             <div className="form-group col-md-3">
                                 <label htmlFor="agent_execution">Agent d'exécution</label>
                                 <select {...register("agent_execution")} 
@@ -537,11 +614,11 @@ function  StructureForm(props) {
                         </div>
 
                         <div className="row bg-white mx-1  py-3" style={{ marginTop:'-30px' }}>
-                            <div className="form-group col-md-3">
+                            {/* <div className="form-group col-md-3">
                                 <label htmlFor="email">Email</label>
                                 <input type="text" className="form-control" 
                                 {...register("email")} id="email"/>
-                            </div>
+                            </div> */}
                             <div className="form-group col-md-3">
                                 <label htmlFor="piliers_intervention">Piliers d'intervention</label>
                                 <select {...register("piliers_intervention")} 
@@ -647,9 +724,9 @@ function  StructureForm(props) {
                                 {...register("projets")} id="projets"/>
                             </div>
                             <div className="form-group col-md-3">
-                                <label htmlFor="opprtunites">Opportunités</label>
+                                <label htmlFor="opportunites">Opportunités</label>
                                 <input type="text" className="form-control" 
-                                {...register("opprtunites")} id="opprtunites"/>
+                                {...register("opportunites")} id="opportunites"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="perspective">Perspectives</label>
@@ -670,7 +747,7 @@ function  StructureForm(props) {
                     {/* ----SPS--- */}
                     {selectedActeur === 'SPS' && <div className=" bg-white">
                         <div className="row bg-white mx-1  py-3" >
-                            <div className="form-group col-md-3">
+                            {/* <div className="form-group col-md-3">
                                 <label htmlFor="type">Type de structure</label>
                                 <select {...register("type_structure")} 
                                     className="form-control">
@@ -678,6 +755,15 @@ function  StructureForm(props) {
                                     {tyepeSps.map(sps=><option key={sps[1]} value={sps[1]}>{sps[1]}</option>)}
                                 </select>
                                 {errors.type_structure && <p className="text-danger mb-0">{errors.type_structure.message}</p>}
+                            </div> */}
+                             <div className="form-group col-md-3">
+                                <label htmlFor="type">Piliers d'intervention</label>
+                                <select {...register("piliers_intervention")} 
+                                    className="form-control">
+                                    <option >Choisir...</option>
+                                    {piliers.map(pilier=><optgroup key={pilier[1]} label={pilier[0]}>{pilier[1].map(p =><option key={p[1]} value={p[1]}>{p[1]}</option>)}</optgroup>)}
+                                </select>
+                                {errors.piliers_intervention && <p className="text-danger mb-0">{errors.piliers_intervention.message}</p>}
                             </div>
 
                             <div className="form-group col-md-3">
@@ -710,9 +796,9 @@ function  StructureForm(props) {
                                 {...register("projets")} id="projets"/>
                             </div>
                             <div className="form-group col-md-3">
-                                <label htmlFor="opprtunites">Opportunités</label>
+                                <label htmlFor="opportunites">Opportunités</label>
                                 <input type="text" className="form-control" 
-                                {...register("opprtunites")} id="opprtunites"/>
+                                {...register("opportunites")} id="opportunites"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="perspective">Perspectives</label>
@@ -722,15 +808,7 @@ function  StructureForm(props) {
                         </div>
 
                         <div className="row bg-white mx-1  py-3" style={{   marginTop:'-30px' }}>
-                            <div className="form-group col-md-3">
-                                <label htmlFor="type">Piliers d'intervention</label>
-                                <select {...register("piliers_intervention")} 
-                                    className="form-control">
-                                    <option >Choisir...</option>
-                                    {piliers.map(pilier=><optgroup key={pilier[1]} label={pilier[0]}>{pilier[1].map(p =><option key={p[1]} value={p[1]}>{p[1]}</option>)}</optgroup>)}
-                                </select>
-                                {errors.piliers_intervention && <p className="text-danger mb-0">{errors.piliers_intervention.message}</p>}
-                            </div>
+                           
                             <div className="form-group col-md-3">
                                 <label htmlFor="documents">Documents</label>
                                 <input type="file" className="form-control" 
@@ -781,9 +859,9 @@ function  StructureForm(props) {
                                 {...register("prestation_prise_en_charge")} id="prestation_prise_en_charge"/>
                             </div>
                             <div className="form-group col-md-3">
-                                <label htmlFor="opprtunites">Opportunités</label>
+                                <label htmlFor="opportunites">Opportunités</label>
                                 <input type="text" className="form-control" 
-                                {...register("opprtunites")} id="opprtunites"/>
+                                {...register("opportunites")} id="opportunites"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="perspective">Perspectives</label>
@@ -801,7 +879,7 @@ function  StructureForm(props) {
                             <div className="form-group col-md-3">
                                 <label htmlFor="documents">Documents</label>
                                 <input type="file" className="form-control" 
-                                /* {...register("documents")} */ id="documents"/>
+                                /* {...register("documents")} */ onChange={onFileChange} id="documents"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="service_soins_achetes">Service soins achetés</label>
@@ -840,6 +918,13 @@ function  StructureForm(props) {
                                 {...register("telephone_responsable")} id="telephone_responsable" placeholder="Téléphone responsable"/>
                             </div>
                         </div>
+                        <div>
+                            <div className="form-group col-md-6">
+                                <label htmlFor="fonction_responsable">Fonction</label>
+                                <input type="text" className="form-control" 
+                                {...register("fonction_responsable")} id="fonction_responsable" placeholder="Fonction"/>
+                            </div>
+                        </div>
                     </div>
                     <div className="modal-footer mt-5 d-flex justify-content-between">
                        {previousButton()}{nextButton()}
@@ -848,7 +933,7 @@ function  StructureForm(props) {
 
                     {formStep === 3 && (<section>
                         <div className=" bg-white">
-                            <div className="row bg-white container mx-auto mx-1  py-3 border border-success mt-4">
+                            <div className="row bg-white container-fluid mx-auto mx-1  py-3 border border-success mt-4">
                                 <div className="d-flex justify-content-between flex-column col-md-4 border-right border-success">
                                     <h4 className="mx-1 badge badge-primary">Etape 1</h4>
                                     {getValues().type_acteur &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Type d'acteur</span>: {getValues().type_acteur}</div>}
@@ -860,7 +945,9 @@ function  StructureForm(props) {
                                     {getValues().region_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Région</span>: {getValues().region_intervention}</div>}
                                     {getValues().departement_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Département</span>: {getValues().departement_intervention}</div>}
                                     {getValues().commune_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Commune</span>: {getValues().commune_intervention}</div>}
-                                    {getValues().autre_secteur_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Autre secteur d'intervention</span>: {getValues().autre_secteur_intervention}</div>}
+                                    {getValues().districte_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >District</span>: {getValues().districte_intervention}</div>}
+                                    {pointgeo.latitude &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Géolocalisation</span>: <div className="badge badge-primary"> {`${pointgeo.latitude},  ${pointgeo.longitude},  ${pointgeo.altitude}`}</div></div>}
+                                    {getValues().secteur_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Autre secteur d'intervention</span>: {getValues().secteur_intervention}</div>}
                                     {getValues().paquet_sante_intervention &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Paquet santé d'intervention</span>: {getValues().paquet_sante_intervention}</div>}
                                     {getValues().adresse_siege &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Adresse siège</span>: {getValues().adresse_siege}</div>}
                                     {getValues().email_siege &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Email siège</span>: {getValues().email_siege}</div>}
@@ -893,7 +980,7 @@ function  StructureForm(props) {
                                     {getValues().beneficiaire &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Bénéficiaire</span>: {getValues().beneficiaire}</div>}
                                     {getValues().projets &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Projet</span>: {getValues().projets}</div>}
                                     {getValues().investissement_en_cours &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Investissements en cours</span>: {getValues().investissement_en_cours}</div>}
-                                    {getValues().opprtunites &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Opportinutés</span>: {getValues().opprtunites}</div>}
+                                    {getValues().opportunites &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Opportinutés</span>: {getValues().opportunites}</div>}
                                     {getValues().perspective &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Perspective</span>: {getValues().perspective}</div>}
                                     {getValues().documents &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >Documents</span>: {getValues().documents}</div>}
                                     {getValues().numero_autorisation &&<div className="py-1 mb-2 bg-light"><span className="text-muted recap mr-2" >N° autorisation</span>: {getValues().numero_autorisation}</div>}
@@ -911,6 +998,7 @@ function  StructureForm(props) {
                                     {getValues().nom_responsable &&<div className="py-1 mb-3 bg-light"><span className="text-muted recap mr-2" >Nom</span>: {getValues().nom_responsable}</div>}
                                     {getValues().email_responsable &&<div className="py-1 mb-3 bg-light"><span className="text-muted recap mr-2" >Email</span>: {getValues().email_responsable}</div>}
                                     {getValues().telephone_responsable &&<div className="py-1 mb-3 bg-light"><span className="text-muted recap mr-2" >Téléphone</span>: {getValues().telephone_responsable}</div>}
+                                    {getValues().fonction_responsable &&<div className="py-1 mb-3 bg-light"><span className="text-muted recap mr-2" >Fonction</span>: {getValues().fonction_responsable}</div>}
                                     
                                 </div>
                             {/* <pre>{JSON.stringify(getValues(), null, 2)}</pre> */}
