@@ -84,9 +84,9 @@ function  StructureForm(props) {
         e.target.checked ? setIsCurrentGeolocalisation(true) : setIsCurrentGeolocalisation(false);
   
         if (e.target.checked ) {
-            $('#latitude').val(`${myGeo.latitude}`);
-            $('#longitude').val(`${myGeo.longitude}`);
-            $('#altitude').val(`${myGeo.accuracy}`);
+            $('#latitude').val(/* `${myGeo.latitude}` */ "14.7510199");
+            $('#longitude').val(/* `${myGeo.longitude}` */ "-17.4535678");
+            $('#altitude').val(/* `${myGeo.accuracy}` */ "16.142");
           }else{
            $('#latitude').val("");
            $('#longitude').val("");
