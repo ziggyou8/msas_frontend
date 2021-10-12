@@ -96,7 +96,7 @@ function  StructureForm(props) {
       }
 
     if(isCurrentGeolocalisation){
-        pointgeo ={latitude: myGeo.latitude, longitude: myGeo.longitude, altitude: myGeo.accuracy};
+        pointgeo ={latitude: /* myGeo.latitude */ "14.7510199", longitude: /* myGeo.longitude */"-17.4535678", altitude: /* myGeo.accuracy */"16.142"};
     }else{
         pointgeo ={latitude: getValues().latitude, longitude: getValues().longitude, altitude: getValues().altitude};
     }
