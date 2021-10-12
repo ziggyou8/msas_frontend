@@ -208,7 +208,7 @@ function  StructureForm(props) {
                 props.initStructureData()
                 closeModal();
                 resetForm();
-                
+
           //props.errorMessage && alert(props.errorMessage)
     }
 
@@ -375,17 +375,17 @@ function  StructureForm(props) {
                                 </div>
                                 <div className="form-group col-md-3">
                                     <label htmlFor="latitude">Latitude</label>
-                                    <input type="number" {...register("latitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                    <input type="text" {...register("latitude")} className="form-control" disabled={isCurrentGeolocalisation} 
                                       id="latitude" />
                                 </div>
                                 <div className="form-group col-md-3">
                                     <label htmlFor="longitude">Longitude</label>
-                                    <input type="number" {...register("longitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                    <input type="text" {...register("longitude")} className="form-control" disabled={isCurrentGeolocalisation} 
                                       id="longitude" />
                                 </div>
                                 <div className="form-group col-md-3">
                                     <label htmlFor="altitude">Altitude</label>
-                                    <input type="number" {...register("altitude")} className="form-control" disabled={isCurrentGeolocalisation} 
+                                    <input type="text" {...register("altitude")} className="form-control" disabled={isCurrentGeolocalisation} 
                                       id="altitude"/>
                                 </div>
                                 </div>
