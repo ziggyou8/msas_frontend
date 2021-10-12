@@ -208,7 +208,6 @@ function  StructureForm(props) {
                 props.initStructureData()
                 closeModal();
                 resetForm();
-
           //props.errorMessage && alert(props.errorMessage)
     }
 
