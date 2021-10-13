@@ -46,6 +46,8 @@ function  StructureForm(props) {
     const [districts, setdistricts] =useState([])
     const [isAchatServiceCheck, setIsAchatServiceCheck] = useState(false)
     const [sousRecipiandaire, setSousRecipiandaire] =useState([[1,"1"]])
+    const [agentBailleur, setAgentBailleur] =useState([[1,"1"]])
+    const [pilierIntervention, setPilierIntervention] =useState([[1,"1"]])
     const [selectedFile, setSelectedFile] =useState({})
     const [selectedOptions, setSelectedOptions] =useState({
         type_acteur: null
@@ -147,6 +149,33 @@ function  StructureForm(props) {
         setSousRecipiandaire(prevCount => prevCount.filter((sr) => sr !== id));
       }
 
+
+        const addAgentBailleur = ()=>{
+            setAgentBailleur(prevCount => [...prevCount, [prevCount?.length +1, `${prevCount?.length +1}`]])
+         }
+
+        const RemoveAgentBailleur = (id)=>{
+        const row = document.getElementById(`agent_bailleur_${id[0]}`).querySelectorAll('input');
+        row.forEach(element => {
+            element.remove()
+        });
+
+        setAgentBailleur(prevCount => prevCount.filter((sr) => sr !== id));
+        }
+
+        const addPilierIntervention = ()=>{
+            setPilierIntervention(prevCount => [...prevCount, [prevCount?.length +1, `${prevCount?.length +1}`]])
+         }
+
+        const RemovePilierIntervention = (id)=>{
+        const row = document.getElementById(`pilier_${id[0]}`).querySelectorAll('input');
+        row.forEach(element => {
+            element.remove()
+        });
+
+        setPilierIntervention(prevCount => prevCount.filter((sr) => sr !== id));
+        }
+
       //Boutons
       const submitButton =()=>{
          return <button disabled={!isValid} type="submit" className="btn btn-primary" /* onClick={()=> setTimeout(function() {$('#exampleModal').modal('hide')}, 4000)} */>
@@ -181,6 +210,19 @@ function  StructureForm(props) {
       setSelectedFile({...selectedFile, [name]:files[0]}); 
     };
 
+    const onNPlus1FileChange = event => { 
+        const { name, files } = event.target;
+
+       /*  getValues()?.projection_annee_n_plus1_par_pilier?.forEach((element, index) => { 
+          //setSelectedFile({...selectedFile, [name] :files[0]}); 
+          setSelectedFile({...selectedFile, projection_annee_n_plus1_par_pilier :element["files"][0]});
+         }) */
+
+    //console.log('🔥🔥', selectedFile)
+
+      };
+
+
 
 
       const submitForm = async(data, e) => {
@@ -190,10 +232,19 @@ function  StructureForm(props) {
           data.longitude = pointgeo.longitude;
           data.altitude = pointgeo.altitude;
          
-            console.log('🔥🔥', data);
+            
+
+            /* data.projection_annee_n_plus1_par_pilier?.forEach((element, index) => { 
+                console.log('🔥🔥', element.files[0]);
+            }) */
+
             const formData = new FormData();
             const fileField = Object.entries(selectedFile);
             fileField.forEach(file => formData.append(file[0], file[1]));
+            //multiple files
+            data.projection_annee_n_plus1_par_pilier?.forEach((element, index) => { 
+                formData.append('projection_annee_n_plus1_par_pilier[]', element.files[0]);
+            })
 
             for (let formField in data ) {
                 if (data[formField]) {
@@ -202,12 +253,15 @@ function  StructureForm(props) {
                 }
                  
             }
-              props.storeStructure(formData);
 
-                e.preventDefault();
+            
+
+              // props.storeStructure(formData);
+
+               /* e.preventDefault();
                 props.initStructureData()
                 closeModal();
-                resetForm();
+                resetForm(); */
 
           //props.errorMessage && alert(props.errorMessage)
     }
@@ -237,7 +291,8 @@ function  StructureForm(props) {
                 <Stepper steps={ steps } activeStep={ ActivStep }/>
 
                 <form onSubmit={handleSubmit(submitForm)}>
-                    {formStep >= 0 && (<section style={{display: formStep === 0 ? "block" : "none"  }}>
+                    {formStep >= 0 && (
+                    <section style={{display: formStep === 0 ? "block" : "none"  }}>
                     <div className=" bg-white">
                         <div className="row bg-white mx-1  py-3">
                         
@@ -420,12 +475,13 @@ function  StructureForm(props) {
                                 <input type="text" className="form-control" 
                                 {...register("email_siege")} id="email_siege" placeholder="Email du siège"/>
                             </div>
-{/*                             <div className="form-group col-md-3">
+{                            <div className="form-group col-md-3">
                                 <label htmlFor="accord_siege">Accord de siège</label>
                                 <input type="file" className="form-control" 
                                 name="accord_siege"
                                  onChange={onFileChange} id="accord_siege" placeholder="Accord de siège"/>
-                            </div> */}
+                            </div>
+                            }
                         </div>
                     </div>
 
@@ -491,7 +547,7 @@ function  StructureForm(props) {
                     </div>
                     
 
-                    <div className="modal-footer mt-5">
+                    <div className="modal-footer mt-2">
                        {nextButton()}
                     </div>
 
@@ -500,16 +556,33 @@ function  StructureForm(props) {
 
                     {/* -----PTF--------  */}
                         {selectedActeur === 'PTF' && <div className=" bg-white">
-                        <div className="row bg-white mx-1  py-3" >
-                            {/* <div className="form-group col-md-3">
-                                <label htmlFor="type">Type</label>
-                                <select {...register("type")} 
-                                    className="form-control">
-                                    <option >Choisir...</option>
-                                    {typePtf.map(type=><option key={type[1]} value={type[1]}>{type[1]}</option>)}
-                                </select>
-                                {errors.type && <p className="text-danger mb-0">{errors.type.message}</p>}
-                            </div> */}
+                        <div style={{ marginTop:'15px', border:'2px solid #F2EDF3',padding:'10px 4px', marginBottom:'30px'}}>
+                            <p style={{ marginBottom:'25px', marginLeft:"20px", fontWeight:"bold" }}>Agent d'exécution</p>
+
+                                {agentBailleur.map(el=><div key={el[1]} id={`agent_bailleur_${el[1]}`} className="row bg-white mx-1  py-3" style={{   marginTop:'-30px' }}>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="agent_execution">Agent</label>
+                                    <input type="text" className="form-control" 
+                                    {...register(`agent_execution[${el[1]}]`)} id="agent_execution"/>
+                                </div>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="date_debut_intervention">Début de l'intervention </label>
+                                    <input type="date" className="form-control" 
+                                    {...register(`date_debut_intervention[${el[1]}]`)} id="date_debut_intervention"/>
+                                </div>
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="date_fin_intervention">Fin de l'intervention </label>
+                                    <input type="date" className="form-control" 
+                                    {...register(`date_fin_intervention[${el[1]}]`)} id="date_fin_intervention"/>
+                                </div>
+                                <div className="form-group col-md-3">
+                                <button style={{ marginTop:'25px', marginLeft:"-25px" }} type="button" className="btn btn-danger btn-sm float-left p-2" disabled = {`${agentBailleur.length === 1  ? 'disabled': ''}`}  onClick={()=>RemoveAgentBailleur(el)} ><i className="mdi mdi-delete mdi-18px text-white "></i></button>
+                                </div>
+                            </div>)}
+
+                        <button style={{ margin:'-40px' }} type="button" className="btn btn-sm btn-primary mx-4  float-left" onClick={()=>addAgentBailleur()} ><i className="mdi mdi-plus mdi-18px text-danger mb-0 "></i></button>
+                    </div>
+                        {/* <div className="row bg-white mx-1  py-3" >
                             <div className="form-group col-md-3">
                                 <label htmlFor="agent_execution">Agent d'exécution</label>
                                 <select {...register("agent_execution")} 
@@ -530,9 +603,73 @@ function  StructureForm(props) {
                                 <input type="date" className="form-control" 
                                 {...register("date_fin_intervention")} id="date_fin_intervention"/>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div className="row bg-white mx-1  py-3" style={{ marginTop:'-30px' }}>
+
+                    <div style={{ marginTop:'15px', border:'2px solid #F2EDF3',padding:'5px 0px', marginBottom:'30px'}}>
+                            <p style={{ marginBottom:'40px', marginLeft:"20px", fontWeight:"bold" }}>Piliers d'intervention</p>
+
+                                {pilierIntervention.map(el=><div key={el[1]} id={`pilier_${el[1]}`} className="row bg-white mx-1 " style={{   marginTop:'-30px' }}>
+                               
+                                <div className="row col-md-11 mx-auto mb-3">
+                                <div className="form-group col-md-3">
+                                <label htmlFor="piliers_intervention">Pilier</label>
+                                <select {...register(`piliers_intervention[${el[1]}]`)} 
+                                    className="form-control">
+                                    <option >Choisir...</option>
+                                    {piliers.map(pilier=><optgroup key={pilier[1]} label={pilier[0]}>{pilier[1].map(p =><option key={p[1]} value={p[1]}>{p[1]}</option>)}</optgroup>)}
+                                </select>
+                                {errors.piliers_intervention && <p className="text-danger mb-0">{errors.piliers_intervention.message}</p>}
+                               </div>
+
+                               <div className="form-group col-md-3">
+                                    <label htmlFor="mt_prevu_par_pilier_annee_en_cour">Montant prévu année en cours</label>
+                                    <input type="number" className="form-control" 
+                                    {...register(`mt_prevu_par_pilier_annee_en_cour[${el[1]}]`)} id="mt_prevu_par_pilier_annee_en_cour"/>
+                                </div>
+
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="mt_mobilise_par_pilier">Montant Mobilisé </label>
+                                    <input type="number" className="form-control" 
+                                    {...register(`mt_mobilise_par_pilier[${el[1]}]`)} id="mt_mobilise_par_pilier"/>
+                                </div>
+                                
+
+                                <div className="form-group col-md-3">
+                                    <label htmlFor="mt_execute_par_pilier">Montant exécuté </label>
+                                    <input type="text" className="form-control" 
+                                    {...register(`mt_execute_par_pilier[${el[1]}]`)} id="mt_execute_par_pilier"/>
+                                </div>
+                                </div>
+
+                                <div className="form-group col-md-1 mt-1">
+                                <button style={{ marginTop:'25px', marginLeft:"-25px" }} type="button" className="btn btn-danger btn-sm float-left p-2" disabled = {`${pilierIntervention.length === 1  ? 'disabled': ''}`}  onClick={()=>RemovePilierIntervention(el)} ><i className="mdi mdi-delete mdi-18px text-white "></i></button>
+                                </div>
+                            </div>)}
+
+                        <button style={{ marginTop:'-30px', marginBottom:"20px" }} type="button" className="btn btn-sm btn-primary mx-4 float-left" onClick={()=>addPilierIntervention()} ><i className="mdi mdi-plus mdi-18px text-danger mb-0 "></i></button>
+                           <div style={{border:'1px solid #F2EDF3', marginTop:"20px"}}></div>
+                        <div className="row col-md-9 mt-3">
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="projection_annee_n_plus1_par_pilier">Projection année N+1 par année</label>
+                                    <input type="file" className="form-control" 
+                                    {...register(`projection_annee_n_plus1_par_pilier`)}
+                                    name="projection_annee_n_plus1_par_pilier"
+                                    onChange={onFileChange} id="projection_annee_n_plus1_par_pilier"/>
+                                </div>
+
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="projection_annee_n_plus2_par_pilier">Projection année N+2 par année</label>
+                                    <input type="file" className="form-control" 
+                                    {...register(`projection_annee_n_plus2_par_pilier`)}
+                                    name="projection_annee_n_plus2_par_pilier"
+                                    onChange={onFileChange}
+                                    id="projection_annee_n_plus2_par_pilier"/>
+                                </div>
+                                </div>
+                    </div>
+
+                        {/* <div className="row bg-white mx-1  py-3" style={{ marginTop:'-30px' }}>
                             <div className="form-group col-md-3">
                                 <label htmlFor="mt_prevu_par_pilier_annee_en_cour">Montant prévu par pilier année en cours</label>
                                 <input type="number" className="form-control" 
@@ -541,12 +678,12 @@ function  StructureForm(props) {
                             <div className="form-group col-md-3">
                                 <label htmlFor="projection_annee_n_plus1_par_pilier">Projection année N+1 par année</label>
                                 <input type="file" name="projection_annee_n_plus1_par_pilier" className="form-control" 
-                                /* {...register("projection_annee_n_plus1_par_pilier")} */ onChange={onFileChange} id="projection_annee_n_plus1_par_pilier"/>
+                                 onChange={onFileChange} id="projection_annee_n_plus1_par_pilier"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="projection_annee_n_plus2_par_pilier">Projection année N+2 par année</label>
                                 <input type="file" name="projection_annee_n_plus2_par_pilier" className="form-control" 
-                                /* {...register("projection_annee_n_plus2_par_pilier")} */ onChange={onFileChange} id="projection_annee_n_plus2_par_pilier"/>
+                                 onChange={onFileChange} id="projection_annee_n_plus2_par_pilier"/>
                             </div>
                             <div className="form-group col-md-3">
                                 <label htmlFor="mt_mobilise_par_pilier">Montatnt mobilisé par pilier</label>
@@ -562,7 +699,7 @@ function  StructureForm(props) {
                                 {...register("mt_execute_par_pilier")} id="mt_execute_par_pilier"/>
                             </div>
                             <div className="form-group col-md-3">
-                                <label htmlFor="piliers_intervention">Piliers d'intervention</label>
+                                <label htmlFor="piliers_intervention">Pilier</label>
                                 <select {...register("piliers_intervention")} 
                                     className="form-control">
                                     <option >Choisir...</option>
@@ -580,7 +717,7 @@ function  StructureForm(props) {
                                 <input type="number" className="form-control" 
                                 {...register("mt_mobilise_par_pilier")} id="mt_mobilise_par_pilier"/>
                             </div>
-                        </div>
+                        </div> */}
                     </div>}
 
                     {/* ----ONG--- */}
@@ -677,7 +814,7 @@ function  StructureForm(props) {
                                 </div>
                             </div>)}
 
-                        <button style={{ marginTop:'-20 px' }} type="button" className="btn btn-sm btn-primary ml-4 float-left" onClick={()=>addSousRecipainadaire()} ><i className="mdi mdi-plus mdi-18px text-danger mb-0 "></i></button>
+                        <button style={{ marginTop:'-40px' }} type="button" className="btn btn-sm btn-primary ml-4 float-left" onClick={()=>addSousRecipainadaire()} ><i className="mdi mdi-plus mdi-18px text-danger mb-0 "></i></button>
                     </div>
                     </div>}
 
@@ -889,7 +1026,7 @@ function  StructureForm(props) {
                         </div>
                     </div>}
                     
-                    <div className="modal-footer mt-5 d-flex justify-content-between">
+                    <div className="modal-footer mt-2 d-flex justify-content-between">
                        {previousButton()}{nextButton()}
                     </div>
                     </section>)}
@@ -926,7 +1063,7 @@ function  StructureForm(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="modal-footer mt-5 d-flex justify-content-between">
+                    <div className="modal-footer mt-2 d-flex justify-content-between">
                        {previousButton()}{nextButton()}
                     </div>
                     </section>)}
@@ -1007,7 +1144,7 @@ function  StructureForm(props) {
 
 
                        
-                        <div className="modal-footer mt-5 d-flex justify-content-between">
+                        <div className="modal-footer mt-2 d-flex justify-content-between">
                        {previousButton()}{submitButton()}
                     </div>
                     </section>)}

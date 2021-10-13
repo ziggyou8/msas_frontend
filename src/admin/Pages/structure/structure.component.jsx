@@ -161,8 +161,8 @@ function Structure (props){
                     <tbody>
                       {structures && structures.filter(str => str.source_financement ==="ONG").map(structure =>(
                         <tr key={structure.id}>
-                        <td>{structure.denomination}</td>
-                        <td> {structure.source_financement} </td>
+                        <td>{structure?.denomination}</td>
+                        <td> {structure?.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -209,8 +209,8 @@ function Structure (props){
                     <tbody>
                       {structures && structures.filter(str => str.source_financement ==="PTF").map(structure =>(
                         <tr key={structure.id}>
-                        <td>{structure.denomination}</td>
-                        <td> {structure.source_financement} </td>
+                        <td>{structure?.denomination}</td>
+                        <td> {structure?.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -257,8 +257,8 @@ function Structure (props){
                     <tbody>
                       {structures && structures.filter(str => str.source_financement ==="EPS").map(structure =>(
                         <tr key={structure.id}>
-                        <td>{structure.denomination}</td>
-                        <td> {structure.source_financement} </td>
+                        <td>{structure?.denomination}</td>
+                        <td> {structure?.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -305,8 +305,8 @@ function Structure (props){
                     <tbody>
                       {structures && structures.filter(str => str.source_financement ==="SPS").map(structure =>(
                         <tr key={structure.id}>
-                        <td>{structure.denomination}</td>
-                        <td> {structure.source_financement} </td>
+                        <td>{structure?.denomination}</td>
+                        <td> {structure?.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
@@ -353,8 +353,8 @@ function Structure (props){
                     <tbody>
                       {structures && structures.filter(str => str.source_financement ==="Etat").map(structure =>(
                         <tr key={structure.id}>
-                        <td>{structure.denomination}</td>
-                        <td> {structure.source_financement} </td>
+                        <td>{structure?.denomination}</td>
+                        <td> {structure?.source_financement} </td>
                         <td>
                           {structure.mobilisation_ressource ? <span className="badge badge-primary mx-1">Mobilisation</span>: ""}
                           {structure.mis_en_commun_ressource ? <span className="badge badge-primary mx-1">Mis en commun</span>: ""}
