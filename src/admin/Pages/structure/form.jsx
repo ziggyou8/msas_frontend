@@ -242,9 +242,9 @@ function  StructureForm(props) {
             const fileField = Object.entries(selectedFile);
             fileField.forEach(file => formData.append(file[0], file[1]));
             //multiple files
-            data.projection_annee_n_plus1_par_pilier?.forEach((element, index) => { 
+            /* data.projection_annee_n_plus1_par_pilier?.forEach((element, index) => { 
                 formData.append('projection_annee_n_plus1_par_pilier[]', element.files[0]);
-            })
+            }) */
 
             for (let formField in data ) {
                 if (data[formField]) {
@@ -256,12 +256,12 @@ function  StructureForm(props) {
 
             
 
-              // props.storeStructure(formData);
+               props.storeStructure(formData);
 
-               /* e.preventDefault();
+               e.preventDefault();
                 props.initStructureData()
                 closeModal();
-                resetForm(); */
+                resetForm();
 
           //props.errorMessage && alert(props.errorMessage)
     }
