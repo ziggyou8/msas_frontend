@@ -1,39 +1,60 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
-function AdminSideBar ({currentUser}){
-
+function AdminSideBar({ currentUser }) {
   const location = useLocation();
-    return(
-        <nav className="sidebar sidebar-offcanvas" id="sidebar">
-        <ul className="nav">
-          <li className="nav-item nav-profile">
-            <a href="#" className="nav-link">
-              <div className="nav-profile-image">
-                <img src={currentUser && currentUser?.data?.photo ? `${currentUser?.data?.photo}` : '/assets/images/faces/avatar.png'} alt="profile" />
-                <span className="login-status online"></span>
-                {/* <!--change to offline or busy as needed--> */}
-              </div>
-              <div className="nav-profile-text d-flex flex-column">
-                <span className="font-weight-bold mb-2">{currentUser && `${currentUser?.data?.prenom} ${currentUser?.data?.nom}`}</span>
-                <span className="text-secondary text-small">{currentUser && currentUser?.data.roles[0].toUpperCase()}</span>
-              </div>
-              <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-            </a>
-          </li>
-          <li className="nav-item">
-          <Link className={`nav-link ${location.pathname === '/admin/roles' ? 'active' : ''}`} to="/admin/roles">
-              <span className="menu-title">Role</span>
-              <i className="mdi mdi-home menu-icon"></i>
+  return (
+    <nav className="sidebar sidebar-offcanvas" id="sidebar">
+      <ul className="nav">
+        <li className="nav-item nav-profile">
+          <a href="#" className="nav-link">
+            <div className="nav-profile-image">
+              <img
+                src={
+                  currentUser && currentUser?.data?.photo
+                    ? `${currentUser?.data?.photo}`
+                    : "/assets/images/faces/avatar.png"
+                }
+                alt="profile"
+              />
+              <span className="login-status online"></span>
+              {/* <!--change to offline or busy as needed--> */}
+            </div>
+            <div className="nav-profile-text d-flex flex-column">
+              <span className="font-weight-bold mb-2">
+                {currentUser &&
+                  `${currentUser?.data?.prenom} ${currentUser?.data?.nom}`}
+              </span>
+              <span className="text-secondary text-small">
+                {currentUser && currentUser?.data.roles[0].toUpperCase()}
+              </span>
+            </div>
+            <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+          </a>
+        </li>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${
+              location.pathname === "/admin/roles" ? "active" : ""
+            }`}
+            to="/admin/roles"
+          >
+            <span className="menu-title">Role</span>
+            <i className="mdi mdi-home menu-icon"></i>
           </Link>
-          </li>
-          <li className="nav-item">
-            <Link className={`nav-link ${location.pathname === "/admin/utilisateurs" ? 'active' : ''}`} to="/admin/utilisateurs">
-              <span className="menu-title">Utilisateurs</span>
-              <i className="mdi mdi-account menu-icon"></i>
-            </Link>
-          </li>
-          {/* <li className="nav-item">
+        </li>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${
+              location.pathname === "/admin/utilisateurs" ? "active" : ""
+            }`}
+            to="/admin/utilisateurs"
+          >
+            <span className="menu-title">Utilisateurs</span>
+            <i className="mdi mdi-account menu-icon"></i>
+          </Link>
+        </li>
+        {/* <li className="nav-item">
             <a className="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span className="menu-title">Basic UI Elements</span>
               <i className="menu-arrow"></i>
@@ -46,19 +67,24 @@ function AdminSideBar ({currentUser}){
               </ul>
             </div>
           </li> */}
-          <li className="nav-item">
-            <Link className={`nav-link ${location.pathname === "/admin/structures" ? 'active' : ''}`} to="/admin/structures">
-              <span className="menu-title">Structures</span>
-              <i className=" mdi mdi-houzz  menu-icon"></i>
-            </Link>
-          </li>
-{/*           <li className="nav-item">
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${
+              location.pathname === "/admin/structures" ? "active" : ""
+            }`}
+            to="/admin/structures"
+          >
+            <span className="menu-title">Structures</span>
+            <i className=" mdi mdi-houzz  menu-icon"></i>
+          </Link>
+        </li>
+        {/*           <li className="nav-item">
             <Link className={`nav-link ${location.pathname === "/admin/source_financement" ? 'active' : ''}`} to="/admin/source_financement">
               <span className="menu-title">Types de structure</span>
               <i className="mdi mdi-chart-line menu-icon"></i>
             </Link>
           </li> */}
-          {/* <li className="nav-item">
+        {/* <li className="nav-item">
             <a className="nav-link" href="pages/forms/basic_elements.html">
               <span className="menu-title">Forms</span>
               <i className="mdi mdi-format-list-bulleted menu-icon"></i>
@@ -109,9 +135,9 @@ function AdminSideBar ({currentUser}){
               </div>
             </span>
           </li> */}
-        </ul>
-      </nav>
-    )
-};
+      </ul>
+    </nav>
+  );
+}
 
 export default AdminSideBar;
