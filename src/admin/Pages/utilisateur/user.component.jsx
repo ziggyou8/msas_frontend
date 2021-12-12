@@ -100,6 +100,7 @@ const User = (props) => {
                       <th> TELEPHONE</th>
                       <th> EMAIL</th>
                       <th> RÔLE</th>
+                      <th> ETAT</th>
                       <th> ACTIONS </th>
                     </tr>
                   </thead>
@@ -127,6 +128,13 @@ const User = (props) => {
                           <td>{item.telephone}</td>
                           <td>{item.email}</td>
                           <td>{item.roles[0]}</td>
+                          <td>
+                            {item.actif ? (
+                              <span className="actif">Activé</span>
+                            ) : (
+                              <span className="complet">Desactivé</span>
+                            )}
+                          </td>
                           <td>
                             <span>
                               <FontAwesomeIcon
