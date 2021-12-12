@@ -4,7 +4,7 @@ import http from "./axio.config";
 
 export const removeItem = (url,id, libelle)=>{
     return swal({
-        title: `Etes vous de voulour supprimer "${libelle}"?`,
+        title: `Etes vous sûr de voulour supprimer "${libelle}"?`,
         text: "La suppression sera définitive!",
         icon: "warning",
         buttons: true,

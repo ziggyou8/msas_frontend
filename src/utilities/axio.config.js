@@ -1,30 +1,29 @@
-import axios from 'axios';    
-import swal from 'sweetalert';
+import axios from "axios";
+import swal from "sweetalert";
 
 const updateToken = () => {
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+localStorage.getItem('token')
-    }
-    return headers;
-}
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  };
+  return headers;
+};
 
 const updateTokenUpload = () => {
-    const headers = {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer '+localStorage.getItem('token')
-    }
-    return headers;
-}
+  const headers = {
+    "Content-Type": "multipart/form-data",
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  };
+  return headers;
+};
 
 let baseURL = "";
 
-if(process.env.NODE_ENV ==="development"){
-    baseURL = 'http://localhost:8000/api/v1/';
-}else{
-    baseURL = 'http://176.31.107.205/msas_backend/public/api/v1/'
+if (process.env.NODE_ENV === "development") {
+  baseURL = "http://localhost:8000/api/v1/";
+} else {
+  baseURL = "http://176.31.107.205/msas_backend/public/api/v1/";
 }
-
 
 /* axios.interceptors.request.use(
   function (config) {
@@ -42,48 +41,42 @@ if(process.env.NODE_ENV ==="development"){
   }
 ); */
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use(
+  (response) => {
     return response;
- }, error => {
-   if (error.response && error.response.status && error.response.status === 401) {
-      console.log(error)
-    //place your reentry code
-   }
-   throw error;
-});
+  },
+  (error) => {
+    if (
+      error.response &&
+      error.response.status &&
+      error.response.status === 401
+    ) {
+      console.log(error);
+      //place your reentry code
+    }
+    throw error;
+  }
+);
 
 const login = (url, data) => {
-    return axios.post(baseURL + url, data);
-}
+  return axios.post(baseURL + url, data);
+};
 
 const get = (url) => {
-    
-    return axios.get(baseURL + url, {headers: updateToken()});
-}
+  return axios.get(baseURL + url, { headers: updateToken() });
+};
 
 const post = (url, data) => {
-    swal({
-        title: "Ajout!",
-        text: "Enregistrement effectué avec succés!",
-        icon: "success",
-        button: "Ok!"
-      });
-    return axios.post(baseURL + url, data, {headers: updateToken()});
-}
+  return axios.post(baseURL + url, data, { headers: updateToken() });
+};
 
 const postUpload = (url, data) => {
-    /* swal({
-        title: "Ajout!",
-        text: "Enregistrement effectué avec succés!",
-        icon: "success",
-        button: "Ok!"
-      }); */
-    return axios.post(baseURL + url, data, {headers: updateTokenUpload()});
-}
+  return axios.post(baseURL + url, data, { headers: updateTokenUpload() });
+};
 
 const remove = (url, id) => {
-    return axios.delete(baseURL + url + '/' + id, {headers: updateToken()});
-}
+  return axios.delete(baseURL + url + "/" + id, { headers: updateToken() });
+};
 
 /* const getExport = (url) => {
     return axios.get(API.BASE_URL + API.API_PATH + url, {headers: updateToken(),responseType: 'arraybuffer'});
@@ -128,10 +121,10 @@ const toggle = (url, data) => {
 
 export default {
   get: get, //axios.get,
-  post: post,/* axios.post, */
+  post: post /* axios.post, */,
   put: axios.put,
   delete: remove, //axios.delete,
   patch: axios.patch,
-  login:login,
-  postUpload:postUpload
+  login: login,
+  postUpload: postUpload,
 };

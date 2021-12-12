@@ -1,0 +1,179 @@
+/* .form-control{
+    border: 1px solid #D0D6DB;
+    border-radius: 5px;
+    height: 40px;
+} */
+
+.require-label:after {
+  content: "*";
+  color: red;
+  font-size: 20px;
+  position: absolute;
+  top: -3;
+  font-weight: bolder;
+}
+
+.recap {
+  font-weight: bolder;
+}
+
+.wrapper {
+  width: 100%;
+  margin: auto;
+  margin-top: 80px;
+}
+
+.tab-wrapper {
+  text-align: center;
+  display: block;
+  margin: auto;
+  max-width: 500px;
+  margin-bottom: -20px;
+}
+
+.tabs {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-link {
+  margin: 0 1%;
+  list-style: none;
+  padding: 10px 40px;
+  color: #aaa;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all ease 0.5s;
+  border-bottom: solid 3px rgba(255, 255, 255, 0);
+  letter-spacing: 1px;
+}
+
+.tab-link:hover {
+  color: #999;
+  border-color: #999;
+}
+
+.tab-link.active {
+  color: #333;
+  border-color: #333;
+}
+
+/* .tab-link:nth-of-type(1).active {
+    color: #EE6534;
+    border-color: #EE6534;
+  } */
+
+/*   .tab-link:nth-of-type(2).active {
+    color: #1790D2;
+    border-color: #1790D2;
+  }
+  
+  .tab-link:nth-of-type(3).active {
+    color: #EEC63B;
+    border-color: #EEC63B;
+  } */
+
+.content-wrapper {
+  padding: 40px 80px;
+}
+
+.tab-content {
+  display: none;
+  text-align: center;
+  color: #888;
+  font-weight: 300;
+  font-size: 15px;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn 0.5s ease 1 forwards;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.multiselect {
+  width: 100%;
+}
+
+.selectBox {
+  position: relative;
+}
+
+.selectBox select {
+  width: 100%;
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#mySelectOptions {
+  display: none;
+  border: 0.5px #7c7c7c solid;
+  background-color: #ffffff;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+#mySelectOptions label {
+  display: block;
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  min-height: 1.2em;
+  background-color: #ffffff00;
+  padding: 0 2.25rem 0 0.75rem;
+  /* padding: .375rem 2.25rem .375rem .75rem; */
+}
+
+#mySelectOptions label:hover {
+  background-color: #1e90ff;
+}
+
+fieldset.scheduler-border {
+  padding: 0 0 0 1.4em !important;
+  -webkit-box-shadow: 0px 0px 0px 0px #000;
+  box-shadow: 0px 0px 0px 0px #000;
+  margin-top: 30px !important;
+}
+
+legend.scheduler-border {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+  margin-top: -15px;
+  background-color: white;
+  color: black;
+}
+
+.input-group-text {
+  width: 8rem;
+}
+.input-group-text span {
+  margin: 0 auto;
+}
+
+.inf-content {
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+}

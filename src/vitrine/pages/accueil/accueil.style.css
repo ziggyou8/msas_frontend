@@ -1,280 +1,274 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&display=swap");
 @media screen and (max-width: 768px) {
-.icon-social{
+  .icon-social {
     justify-content: center !important;
+  }
 }
+body {
+  font-family: "Montserrat";
 }
-body{
-    font-family: "Montserrat";
+.header {
+  background-color: #00173f;
+  min-height: 30px;
 }
-.header{
-    background-color: #00173f;
-    min-height: 30px;
+.header-content {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
-.header-content{
-    padding: 10px;
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    
-}
-.reseaux-sociaux{
+.reseaux-sociaux {
   float: right;
 }
-.ligne{
-    color: white;
+.ligne {
+  color: white;
 }
-.max{
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+.max {
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
 }
-.icon{
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 13px;
-   
-} 
-ul{
-    list-style-type: none;
+.icon {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 13px;
 }
- 
-.logo{
-     width: 160px;
-    height: 100%;  
+ul {
+  list-style-type: none;
 }
-.nav-link{
-    color: black;
+
+.logo {
+  width: 160px;
+  height: 100%;
 }
-.nav-link:hover{
-color:#3378e1 ;
-font-weight: bold;
+.nav-link {
+  color: black;
 }
-.btn-order{
-    font-size: 17px;
-    font-weight: bold;
-   color: #3378e1 ;
-    transition: 0.5s;
-    border-color:#3378e1 ;
+.nav-link:hover {
+  color: #3378e1;
+  font-weight: bold;
+}
+.btn-order {
+  font-size: 17px;
+  font-weight: bold;
+  color: #3378e1;
+  transition: 0.5s;
+  border-color: #3378e1;
 }
 .btn-order:hover,
-.btn-order:active{
-    color: white;
-    font-weight: bold;
-    background-color:#3378e1 ;
-   
+.btn-order:active {
+  color: white;
+  font-weight: bold;
+  background-color: #3378e1;
 }
-.btn-order2{
-    font-size: 17px;
-    font-weight: bold;
-   color: white ;
-    background-color:#3378e1 ;
+.btn-order2 {
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+  background-color: #3378e1;
 }
-.btn-order2:hover{
-    font-size: 17px;
-    font-weight: bold;
-   color: white ;
-    background-color:#00173f ;
+.btn-order2:hover {
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+  background-color: #00173f;
 }
-.bg-blue-img{
-    background-color:#3378e1;
-    height: 70vh;
+.bg-blue-img {
+  background-color: #3378e1;
+  height: 70vh;
 }
 
-.bg-blue{
-    background-color:#3378e1 ; 
-    border-radius: 15px 0 0 15px; 
+.bg-blue {
+  background-color: #3378e1;
+  border-radius: 15px 0 0 15px;
 }
-.divider{
-    
+.divider {
   background-color: white;
-   width: 170px;
-  height: 3px 
+  width: 170px;
+  height: 3px;
 }
-.trick4{
-    padding-bottom: 10px;
+.trick4 {
+  padding-bottom: 10px;
 }
-.bouton{
-    cursor: pointer;
-    color: white;
-    border-color: white;
-    background-color:#3378e1 ;
+.bouton {
+  cursor: pointer;
+  color: white;
+  border-color: white;
+  background-color: #3378e1;
 }
-.bouton:hover{
-    color: white;
+.bouton:hover {
+  color: white;
 }
-.bg-grand-section{
-    background-color: #f3f3f7;
-    height: 100%;
-    width: auto;
-    margin-top: -10px;
+.bg-grand-section {
+  background-color: #f3f3f7;
+  height: 100%;
+  width: auto;
+  margin-top: -10px;
 }
-.text-blue{
-    font-weight: 900;
-    font-size: 17px;
-    color:#3378e1 ;
+.text-blue {
+  font-weight: 900;
+  font-size: 17px;
+  color: #3378e1;
 }
-.bg-image1{
-    background-image: url('../../../assets/vitrine/Assets/images/Groupe\ 1979@2x.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 300px;
+.bg-image1 {
+  background-image: url("../../../assets/vitrine/Assets/images/Groupe\ 1979@2x.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
 }
-.bg-image2{
-    background-image: url('../../../assets/vitrine/Assets/images/Groupe\ de\ masques\ 29.png');
-    background-repeat: no-repeat;
-    min-height: 200px;
+.bg-image2 {
+  background-image: url("../../../assets/vitrine/Assets/images/Groupe\ de\ masques\ 29.png");
+  background-repeat: no-repeat;
+  min-height: 200px;
 }
-.divider-financement{
-    background-color:#3378e1 ;
-    width: 60%;
-    height: 3px   
+.divider-financement {
+  background-color: #3378e1;
+  width: 60%;
+  height: 3px;
 }
-.icon-fin{
-    width: 90px;
-    border-right: 1px solid rgb(0,0,0,0.1);
+.icon-fin {
+  width: 90px;
+  border-right: 1px solid rgb(0, 0, 0, 0.1);
 }
-.financement{
-    font-size: 15px;
-     font-weight: 600;
-      color: #6f96aa;
-      width:auto;
-      height:auto;
-      background:white
-} 
-.mob-mise-en-commun-achat{
-    font-weight: 600;
-     text-align: center;
-      position: relative;
-       top: 40%
+.financement {
+  font-size: 15px;
+  font-weight: 600;
+  color: #6f96aa;
+  width: auto;
+  height: auto;
+  background: white;
 }
-.icon-info{
-    width: 20px;
-    /* padding: 10px; */
-    margin-right: 5px;
-    margin-top: 15px;
-    list-style: none;
-    text-decoration: none;
-    color: white;
-    cursor: pointer;
-    float: right;
+.mob-mise-en-commun-achat {
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  top: 40%;
 }
-.financement-Mise-en-commun{
-     font-size: 15px;
-     font-weight: 600;
-      color: #3378e1; 
+.icon-info {
+  width: 20px;
+  /* padding: 10px; */
+  margin-right: 5px;
+  margin-top: 15px;
+  list-style: none;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  float: right;
 }
-.text-financement{
-    font-size: 12px;
+.financement-Mise-en-commun {
+  font-size: 15px;
+  font-weight: 600;
+  color: #3378e1;
 }
-.chiffres{
-    margin-bottom: 0;
-      color: #6f96aa;
-       font-weight: 800;
+.text-financement {
+  font-size: 12px;
 }
-.sous-ligne{
-    border-bottom: 1px solid rgb(216, 210, 210);
+.chiffres {
+  margin-bottom: 0;
+  color: #6f96aa;
+  font-weight: 800;
 }
-.secteur{
-    margin-bottom: 0;
+.sous-ligne {
+  border-bottom: 1px solid rgb(216, 210, 210);
 }
-.categorie-volume-financement{
-    color: #3378e1;
-     font-size: 15px ;
-      font-weight: 800;
+.secteur {
+  margin-bottom: 0;
 }
-.icon2{
-    width: 20px;
+.categorie-volume-financement {
+  color: #3378e1;
+  font-size: 15px;
+  font-weight: 800;
 }
-.task{
-    margin-left: 20px;
-    margin-top: 50px;
+.icon2 {
+  width: 20px;
 }
-.trait-vertical-gauche{
-    border-left: 1px solid rgb(216, 210, 210);
+.task {
+  margin-left: 20px;
+  margin-top: 50px;
 }
-.trait-vertical-droite{
-    border-right: 1px solid rgb(216, 210, 210); 
+.trait-vertical-gauche {
+  border-left: 1px solid rgb(216, 210, 210);
 }
-.circles-text{
-    font-size: 30px !important;
+.trait-vertical-droite {
+  border-right: 1px solid rgb(216, 210, 210);
 }
-.circles-wrp{
-    margin-top: 25% !important;
-    margin-left: 13% !important;
+.circles-text {
+  font-size: 30px !important;
 }
-.card{
-    border-radius: 1rem;
-    min-height: 275px;
+.circles-wrp {
+  margin-top: 25% !important;
+  margin-left: 13% !important;
 }
-.bande{
-    height: 55px;
-   /* width: 14rem; */
-   border: 2px solid rgb(111, 150, 170, 0.2);
-    border-radius: 10px;
+.card {
+  border-radius: 1rem;
+  min-height: 275px;
 }
-.text-bande{
-    color: #6f96aa;
-    font-size: 14px;
+.bande {
+  height: 55px;
+  /* width: 14rem; */
+  border: 2px solid rgb(111, 150, 170, 0.2);
+  border-radius: 10px;
 }
-.pourcentage{
-    opacity: 0.3;
-    font-weight: bold;
-    font-size: 14px;
+.text-bande {
+  color: #6f96aa;
+  font-size: 14px;
 }
-.mobilisation{
-    color: #6f96aa;
+.pourcentage {
+  opacity: 0.3;
+  font-weight: bold;
+  font-size: 14px;
 }
-.orange-progress{
-    width: 54%;
-     background-color: #ff9100;
+.mobilisation {
+  color: #6f96aa;
 }
-.vert-progress{
-    width: 90%;
-     background-color: green;
+.orange-progress {
+  width: 54%;
+  background-color: #ff9100;
 }
-.bleu-progress{
-    width: 64%; 
-    background-color: 3cc2e0;
+.vert-progress {
+  width: 90%;
+  background-color: green;
 }
-.vert-progress2{
-    width: 91%;
-     background-color: green;
+.bleu-progress {
+  width: 64%;
+  background-color: 3cc2e0;
 }
-.meuve-progress{
-    width: 64%;
-     background-color:#7d6aeb;
+.vert-progress2 {
+  width: 91%;
+  background-color: green;
 }
-.rouge-progress{
-    width: 34%;
-     background-color: #b10e1e;
+.meuve-progress {
+  width: 64%;
+  background-color: #7d6aeb;
 }
-.rose-progress{
-    width: 74%; 
-    background-color: #ff606b;
+.rouge-progress {
+  width: 34%;
+  background-color: #b10e1e;
 }
-.vert-progress2{
-    width: 92%;
-     background-color: green;
+.rose-progress {
+  width: 74%;
+  background-color: #ff606b;
 }
-.rouge-progess2{
-    width: 14%;
-     background-color: #b10e1e;
+.vert-progress2 {
+  width: 92%;
+  background-color: green;
 }
-.jaune-progess{
-    width: 10%;
-     background-color: #ffbf47;
+.rouge-progess2 {
+  width: 14%;
+  background-color: #b10e1e;
 }
-.height-progress{
-    height: 7px ;
+.jaune-progess {
+  width: 10%;
+  background-color: #ffbf47;
+}
+.height-progress {
+  height: 7px;
 }
 .card-stat {
-    min-height: 290px;
+  min-height: 290px;
 }
-.canvas{
-    width: 200px;
-     margin-left: auto; 
-     margin-right: auto;
+.canvas {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
-
-

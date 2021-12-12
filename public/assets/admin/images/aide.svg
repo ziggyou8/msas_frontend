@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7e4f25;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 16px;
+        font-family: Gilroy-ExtraBold, Gilroy;
+        font-weight: 800;
+        opacity: 0.999;
+      }
+    </style>
+  </defs>
+  <g id="Groupe_1631" data-name="Groupe 1631" transform="translate(-714 -629)">
+    <circle id="Ellipse_291" data-name="Ellipse 291" class="cls-1" cx="11" cy="11" r="11" transform="translate(714 629)"/>
+    <text id="_" data-name="?" class="cls-2" transform="translate(721 646)"><tspan x="0" y="0">?</tspan></text>
+  </g>
+</svg>

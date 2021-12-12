@@ -1,23 +1,26 @@
 import { createSelector } from "reselect";
 
-
-const selectStructure = state => state.structure;
+const selectStructure = (state) => state.structure;
 
 export const selectStructureList = createSelector(
-    [selectStructure],
-    structure => structure.structures
-)
-
+  [selectStructure],
+  (structure) => structure.structures
+);
 
 export const selectStructureById = createSelector(
-    [selectStructure],
-    structure => structure.structureById
-)
+  [selectStructure],
+  (structure) => structure.structureById
+);
 
 export const selectErrorMessage = createSelector(
-    [selectStructure],
-    structure => structure.messageError
-)
+  [selectStructure],
+  (structure) => structure.messageError
+);
+
+export const selectIsLoading = createSelector(
+  [selectStructure],
+  (structure) => structure.isFetching
+);
 
 /* export const selectTypeActeur = createSelector(
     [selectStructure],
