@@ -26,13 +26,18 @@ import { selectListCollectivite } from "../../../../redux/collectivite/collectiv
 import { fetchCollectiviteAsync } from "../../../../redux/collectivite/collectivite.thunk";
 import Pagination from "../../../components/pagination/Pagination";
 import StructureForm from "./form";
-import { fetchInvestissementsAsync } from "../../../../redux/investissement/investissement.thunk";
+import {
+  fetchInvestissementByIdAsync,
+  fetchInvestissementsAsync,
+} from "../../../../redux/investissement/investissement.thunk";
 import {
   selectListInvestissementByStructure,
   selectListInvestissement,
+  selectInvestissementById,
 } from "../../../../redux/investissement/investissement.selector";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faDonate } from "@fortawesome/free-solid-svg-icons";
+import SpsEpsEditForm from "./SpsEpsEditForm";
 
 let PageSize = 8;
 function Investissements(props) {
@@ -43,6 +48,9 @@ function Investissements(props) {
     currentUser,
     investissementData,
     investissements,
+    investissementsById,
+    fetchInvestissementById,
+    isLoading,
     ...otherProps
   } = props;
   const [allContries, setAllContries] = useState([
@@ -70,6 +78,10 @@ function Investissements(props) {
     /*  props.initStructureData(); */
   };
 
+  const editInvestisement = (id) => {
+    fetchInvestissementById(id);
+  };
+
   return (
     <div>
       <div class="content">
@@ -79,22 +91,16 @@ function Investissements(props) {
               <FontAwesomeIcon icon={faDonate} className="mr-1 mb-1" />
               GESTION DES INVESTISSEMENTS
             </h3>
-            <button
-              className="btn btn-primary btn-sm text-white display1"
-              data-toggle="modal"
-              data-target="#exampleModal"
-            >
-              <span>
-                <FontAwesomeIcon icon={faBuilding} className="mr-1" />
-              </span>
-              Ajouter une structure
-            </button>
           </div>
           <div class="row mb-4">
             <div class="col-md-12 col-lg-12">
-              {currentUser?.roles.includes("Admin") && (
-                <StructureForm allContries={allContries} {...otherProps} />
-              )}
+              <SpsEpsEditForm
+                {...otherProps}
+                //fetchInvestissement={fetchInvestissement}
+                currentUser={currentUser}
+                investissementsById={investissementsById}
+                isLoading={isLoading}
+              />
 
               <div class="card">
                 <div class="card-header">
@@ -134,11 +140,11 @@ function Investissements(props) {
                                     />
                                   </span>
                                   <span class="nom-benef">
-                                    {item.denomination}
+                                    {item.structure.denomination}
                                   </span>
                                 </div>
                               </td>
-                              <td>{item.structure?.denomination}</td>
+                              <td>{item?.annee}</td>
                               <td>{item.structure?.source_financement}</td>
                               <td>
                                 <span>
@@ -158,6 +164,9 @@ function Investissements(props) {
                                     icon={faPen}
                                     color="grey"
                                     role="button"
+                                    data-toggle="modal"
+                                    data-target="#editModal"
+                                    onClick={() => editInvestisement(item.id)}
                                   />
                                 </span>
                               </td>
@@ -187,6 +196,8 @@ function Investissements(props) {
 const mapDispatchToProps = (dispatch) => ({
   investissementData: () => dispatch(fetchInvestissementsAsync()),
   initCollectiviteList: () => dispatch(fetchCollectiviteAsync()),
+  fetchInvestissementById: (id) => dispatch(fetchInvestissementByIdAsync(id)),
+
   /*  initStructureData: () => dispatch(fetchStructureAsync()),
   getCurrentStructure: (id) => dispatch(fetchStructureByIdAsync(id)),
   getStructureByType: (type) => dispatch(fetchStructureByTypeAsync(type)),
@@ -204,6 +215,7 @@ const mapStateToProps = createStructuredSelector({
   /* structure: selectStructureById,
   currentUser: selectCurrentUser */
   isLoading: selectIsLoading,
+  investissementsById: selectInvestissementById,
 });
 export default connect(
   mapStateToProps,
