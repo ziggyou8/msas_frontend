@@ -59,6 +59,7 @@ const INITIAL_STATE = {
          listUsers: [...state.listUsers.filter(user =>(user.id !== action.payload))]
        };
         case userTypeActuions.FETCH_USER_BY_ID:
+        case userTypeActuions.ACTIVE_STATUS_USER:
          return {
           ...state,
           isFetching:false,

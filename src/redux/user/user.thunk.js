@@ -16,6 +16,7 @@ import {
   storeUserSuccess,
   updateCurrentUserSuccess,
   updateUserSuccess,
+  activateUserStatusSuccess,
 } from "./user.actions";
 
 export const fetchCurrentUserAsync = () => {
@@ -52,6 +53,38 @@ export const fetchUserByIdAsync = (id) => {
         dispatch(fetchUserByIdSuccess(res.data.data));
       })
       .catch((err) => {
+        dispatch(fetchUserFail(err.message));
+      });
+  };
+};
+
+export const activateUserStatusdAsync = (id) => {
+  return (dispatch) => {
+    dispatch(fetchUserStart());
+    getItem("users/status", id)
+      .then((res) => {
+        dispatch(activateUserStatusSuccess(res.data.data));
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "success-alert",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         dispatch(fetchUserFail(err.message));
       });
   };

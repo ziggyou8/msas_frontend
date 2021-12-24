@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import {
   getItem,
   getItems,
@@ -77,8 +78,29 @@ export const storeInvestissementAsync = (data) => {
     storeItem("investissements", data)
       .then((res) => {
         dispatch(storeInvestissementSuccess(res.data.data));
+        console.log();
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "success-alert",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((err) => {
+        toast.error(err.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        console.log(err);
         dispatch(fetchInvestissementFail(err.message));
       });
   };

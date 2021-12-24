@@ -14,6 +14,7 @@ import {
   storeUserAsync,
   updateUserAsync,
   removeUserAsync,
+  activateUserStatusdAsync,
 } from "../../../redux/user/user.thunk";
 import {
   fetchRoleByIdAsync,
@@ -24,6 +25,8 @@ import { resetEditedUser } from "../../../redux/user/user.actions";
 import { fetchStructureAsync } from "../../../redux/structure/structurethunk";
 import { selectStructureList } from "../../../redux/structure/structure.selector";
 import Pagination from "../../components/pagination/Pagination";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { faToggleOff } from "@fortawesome/free-solid-svg-icons";
 import {
   faEye,
   faPlus,
@@ -35,7 +38,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 let PageSize = 8;
 const User = (props) => {
-  const { usersList, getUserById, removeUser, ...otherProps } = props;
+  const {
+    usersList,
+    getUserById,
+    removeUser,
+    activateUserStatus,
+    ...otherProps
+  } = props;
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -51,6 +60,11 @@ const User = (props) => {
 
   const deleteUser = (id, libelle) => {
     removeUser(id, libelle);
+  };
+
+  const userStatusActivation = (id) => {
+    activateUserStatus(id);
+    props.initUsersList();
   };
 
   const resetFormAndInitListRole = () => {
@@ -139,6 +153,13 @@ const User = (props) => {
                             <span>
                               <FontAwesomeIcon
                                 className="mr-2"
+                                icon={faPowerOff}
+                                color={`${item.actif ? "red" : "green"}`}
+                                role="button"
+                                onClick={() => userStatusActivation(item.id)}
+                              />
+                              <FontAwesomeIcon
+                                className="mr-2"
                                 icon={faEye}
                                 color="grey"
                                 role="button"
@@ -179,6 +200,7 @@ const User = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   resetUser: () => dispatch(resetEditedUser()),
   getUserById: (id) => dispatch(fetchUserByIdAsync(id)),
+  activateUserStatus: (id) => dispatch(activateUserStatusdAsync(id)),
   initUsersList: () => dispatch(fetchUsersAsync()),
   storeUser: (data) => dispatch(storeUserAsync(data)),
   updateUser: (id, data) => dispatch(updateUserAsync(id, data)),
