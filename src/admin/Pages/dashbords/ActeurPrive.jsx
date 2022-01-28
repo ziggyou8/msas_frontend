@@ -372,7 +372,7 @@ const ActeurPrive = ({
   );
 };
 
-/* const mapDispatchToProps = (dispatch) => ({
+/*const mapDispatchToProps = (dispatch) => ({
   storeStructure: (subUrl, data) => dispatch(storeStructureAsync(subUrl, data)),
   getStructureById: (id) => dispatch(fetchStructureByIdAsync(id)),
 });

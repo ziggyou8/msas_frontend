@@ -57,15 +57,15 @@ function PriveSanteDashbord(props) {
   };
 
   return (
-    <div class="content">
-      <div class="container-fluid">
+    <div class="content Title">
+      <div class="container-fluid bg-title">
         <div class="page-title d-flex align-items-center justify-content-between">
           <h3>
             <FontAwesomeIcon icon={faDonate} className="mr-1 mb-1" />
             GESTION DES INVESTISSEMENTS
           </h3>
           <button
-            className="btn btn-primary btn-sm text-white display1"
+            className="btn btn-primary btn-sm text-white display1 btn-bar"
             data-toggle="modal"
             data-target="#exampleModal"
           >
@@ -73,7 +73,9 @@ function PriveSanteDashbord(props) {
             Ajouter un investissement
           </button>
         </div>
+      </div>
 
+      <div class="container-fluid dash-content">
         <div class="row mb-4">
           <div class="col-md-12 col-lg-12">
             <ActeurPriveForm
@@ -100,6 +102,7 @@ function PriveSanteDashbord(props) {
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
