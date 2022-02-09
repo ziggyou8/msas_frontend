@@ -16,6 +16,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isLoading } from "../../../../redux/user/user.selector";
 import { withRouter } from "react-router-dom";
+import Structure from "../../../../assets/images/structure.svg";
 
 let PageSize = 8;
 const PriveSanteTable = ({
@@ -93,74 +94,77 @@ const PriveSanteTable = ({
 
   return (
     <div>
-      <div class="row mb-4  ">
-        <div class="col-md-12">
-          <div class=" recherche-avance">
-            <div class="card-header"></div>
-
-            <div class="">
-              <div
-                className="mt-1 pb-3"
-                style={{
-                  height: "auto",
-                  background: "white",
-                  marginTop: "-15px",
-                }}
-              >
-                {!isStructureUpdated ? (
-                  <div
-                    className="card-body pb-4"
-                    style={{ marginTop: "-20px" }}
-                  >
-                    {isLoading ? (
-                      <Skeleton count={1} height="120px" />
-                    ) : (
-                      <div className="row">
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">
-                            Source de fiancement :
-                          </label>{" "}
-                          {currentUser?.structure?.source_financement}
+      <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card stats un-stat-2">
+                  {!isStructureUpdated ? (
+                    <div class="content">
+                      {isLoading ? (
+                        <Skeleton count={1} height="120px" />
+                      ) : (
+                        <div class="row">
+                            <div class="col-md-6 col-lg-2 no-border">
+                                <div class="un-stat">
+                                    <div class="shadow-2 struture-logo un-stat-img">
+                                    <img src={Structure} alt="" class="app-logo struture-logo ml-1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="un-stat">
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">
+                                      Source de fiancement :
+                                    </label>{" "}
+                                    {currentUser?.structure?.source_financement}<br/>
+                                  </div>
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">
+                                      Adresse :
+                                    </label>{" "}
+                                    {currentUser?.structure?.adresse_siege}<br/>
+                                  </div>
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">
+                                      Type acteur :
+                                    </label>{" "}
+                                    {currentUser?.structure?.type_acteur}
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 no-border">
+                                <div class="un-stat">
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">Spécialisation :</label>{" "}
+                                    {currentUser?.structure?.type_acteur}
+                                  </div>
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">Email :</label>{" "}
+                                    {currentUser?.structure?.email_siege}
+                                  </div>
+                                  <div className="col-md-12 mb-1">
+                                    <label className="text-muted">Téléphone :</label>{" "}
+                                    {currentUser?.structure?.telephone_siege}
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-2">
+                                    <button onClick={() => displayForm()} type="submit" className="float-right btn btn-sm btn-primary btn-style mt-4"
+                                    >
+                                      <FontAwesomeIcon
+                                        className="mr-2"
+                                        icon={faPen}
+                                        size="lg"
+                                        color="white"
+                                        role="button"
+                                      />
+                                      <strong className="text-white">Modifier</strong>
+                                    </button>
+                            </div>
                         </div>
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">Type acteur :</label>{" "}
-                          {currentUser?.structure?.type_acteur}
-                        </div>
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">Spécialisation :</label>{" "}
-                          {currentUser?.structure?.type_acteur}
-                        </div>
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">Adresse :</label>{" "}
-                          {currentUser?.structure?.adresse_siege}
-                        </div>
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">Email :</label>{" "}
-                          {currentUser?.structure?.email_siege}
-                        </div>
-                        <div className="col-md-4 mb-1">
-                          <label className="text-muted">Téléphone :</label>{" "}
-                          {currentUser?.structure?.telephone_siege}
-                        </div>
-                      </div>
-                    )}
-
-                    <button
-                      onClick={() => displayForm()}
-                      type="submit"
-                      className="float-right btn btn-sm btn-primary"
-                    >
-                      <FontAwesomeIcon
-                        className="mr-2"
-                        icon={faPen}
-                        size="lg"
-                        color="white"
-                        role="button"
-                      />
-                      <strong className="text-white">Modifier</strong>
-                    </button>
-                  </div>
-                ) : (
+                      )}
+                    </div>
+                  ) : (
                   <div className="card-body" style={{ marginTop: "-20px" }}>
                     <form onSubmit={handleSubmit(submitForm)}>
                       <div className="">
@@ -362,16 +366,16 @@ const PriveSanteTable = ({
                     </form>
                   </div>
                 )}
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+
+      
 
       {!isStructureUpdated && (
-        <div class="card">
+        <div class="card un-stat-2">
           <div class="card-header">
-            <h5 class="mb-0">{currentUser?.structure?.denomination}</h5>
+            <h5 class="mb-0 table-title">{currentUser?.structure?.denomination}</h5>
             <div class="dropdown exporter"></div>
           </div>
           <div class="card-body">
@@ -383,11 +387,11 @@ const PriveSanteTable = ({
                 </div>
               ) : (
                 <div
-                  className="mt-3"
+                  className="mt-1"
                   style={{ height: "auto", background: "white" }}
                 >
                   <table
-                    class="table table-hover table-sm table-bordered tab-beneficiaires"
+                    class="table table-hover table-bordered tab-beneficiaires"
                     /* id="dataTables-example" */
                     width="100%"
                   >

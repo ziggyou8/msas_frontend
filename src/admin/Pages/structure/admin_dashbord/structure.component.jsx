@@ -66,8 +66,8 @@ function Structure(props) {
 
   return (
     <div>
-      <div class="content">
-        <div class="container-fluid">
+      <div class="content Title">
+        <div class="container-fluid bg-title">
           <div class="page-title d-flex align-items-center justify-content-between">
             <h3>
               {" "}
@@ -75,7 +75,7 @@ function Structure(props) {
               GESTION DES STRUCTURES
             </h3>
             <button
-              className="btn btn-primary btn-sm text-white display1"
+              className="btn btn-primary btn-sm text-white display1 btn-bar"
               data-toggle="modal"
               data-target="#exampleModal"
             >
@@ -85,6 +85,9 @@ function Structure(props) {
               Ajouter une structure
             </button>
           </div>
+        </div>
+
+        <div class="container-fluid dash-content">
           <div class="row mb-4">
             <div class="col-md-12 col-lg-12">
               {currentUser?.roles.includes("Admin") && (

@@ -61,8 +61,8 @@ function PriveSanteDashbord(props) {
       <div class="container-fluid bg-title">
         <div class="page-title d-flex align-items-center justify-content-between">
           <h3>
-            <FontAwesomeIcon icon={faDonate} className="mr-1 mb-1" />
-            GESTION DES INVESTISSEMENTS
+            {/* <FontAwesomeIcon icon={faDonate} className="mr-1 mb-1" /> */}
+            Gestion des investissements
           </h3>
           <button
             className="btn btn-primary btn-sm text-white display1 btn-bar"

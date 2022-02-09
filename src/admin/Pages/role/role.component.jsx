@@ -57,8 +57,8 @@ const Role = (props) => {
   };
 
   return (
-    <div class="content">
-      <div class="container-fluid">
+    <div class="content Title">
+      <div class="container-fluid bg-title">
         <div class="page-title d-flex align-items-center justify-content-between">
           <h3>
             {" "}
@@ -77,7 +77,9 @@ const Role = (props) => {
             Ajouter un rôle
           </button> */}
         </div>
-
+      </div>
+      
+      <div class="container-fluid dash-content">
         <div class="row mb-4">
           <div class="col-md-12 col-lg-12">
             <RoleForm {...otherProps} />
