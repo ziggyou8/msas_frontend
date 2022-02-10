@@ -784,7 +784,7 @@ function SpsEpsEditForm(props) {
                           Piliers et axes d'intervention
                         </legend>
                         
-                        {piliers.map((pilier, index) => (
+                        {piliers?.map((pilier, index) => (
                           <div class="row p-3">
                             <div key={index} className="row p-4 pt-3 d-flex border m-1 bg-white cadrage control" >
                               <div className="offset-md-10 col-md-2 mb-0 pb-0 action-section decale1">
@@ -818,7 +818,9 @@ function SpsEpsEditForm(props) {
                                   >
                                     <option>Choisir...</option>
                                     {Object.keys(pilierData).map((pilier) => (
-                                      <option key={pilier} value={pilier}>
+                                      <option 
+                                      key={pilier} 
+                                      value={pilier}>
                                         {pilier}
                                       </option>
                                     ))}
