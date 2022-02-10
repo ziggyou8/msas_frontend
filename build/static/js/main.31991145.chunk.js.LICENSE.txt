@@ -1,0 +1,3 @@
+//!editedDistricte && $("#permission option").prop("selected", false).trigger( "change" );
+
+//!editedRole && $("#permission option").prop("selected", false).trigger( "change" );
