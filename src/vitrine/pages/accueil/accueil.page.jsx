@@ -356,7 +356,7 @@ function AccueilPage() {
                 </div>
               </div>
             </div>
-            {/* <div className="d-flex flex-column max pb-5">
+            <div className="d-flex flex-column max pb-5">
               <p className="card-title text-blue fs-4  pt-5 col-md-9">
                 Le Volume du Financement de la santé par sources
               </p>
@@ -986,7 +986,7 @@ function AccueilPage() {
               <div className="card-body">
                 <div
                   style={{ height: "300px" }}
-                  / id="chart-container"
+                  /* className="max" */ id="chart-container"
                 >
                   <div id="barChart" style={{ height: "100%" }}>
                     <Bar data={BarData} options={chartOptions} />
@@ -1268,7 +1268,7 @@ function AccueilPage() {
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
