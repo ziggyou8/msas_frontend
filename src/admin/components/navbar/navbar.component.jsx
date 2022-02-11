@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router";
-import Logo from "../../../assets/images/logo.svg";
+import setting from "../../../assets/images/setting_navbar.svg";
+import notif from "../../../assets/images/notif_navbar.svg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -18,13 +19,13 @@ function AdminNavbar({ currentUser, history }) {
   };
 
   return (
-    <nav class="navbar navbar-expand-lg navbar-white bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-white bg-white">
       <div class="d-flex align-items-center">
-        <button type="button" id="sidebarCollapse" class="btn btn-light mr-4">
+        {/* <button type="button" id="sidebarCollapse" class="btn btn-light mr-4">
           <img src="/assets/admin/images/menu-bar.svg" alt="" />
-        </button>
-        <h4 class="app-title mb-0 text-white">
-          MINISTERE DE LA SANTE ET DE L'ACTION SOCIALE
+        </button> */}
+        <h4 class="app-title mb-0 ml-4">
+          PLATEFORME NUMERIQUE DE SUIVI DU FINANCEMENT DE LA SANTE AU SENEGAL
         </h4>
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -36,7 +37,7 @@ function AdminNavbar({ currentUser, history }) {
                 class="nav-item nav-link dropdown-toggle"
                 data-toggle="dropdown"
               >
-                <FontAwesomeIcon icon={faBell} className="ml-1" />
+                <img src={notif} alt="logo" alt="MSAS" class="app-logo" />
                 <span class="nb-notif">3</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right nav-link-menu dropdown-notif">
@@ -138,14 +139,14 @@ function AdminNavbar({ currentUser, history }) {
               </div>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown notifications">
             <div class="nav-dropdown">
               <a
                 href=""
-                class="nav-item nav-link dropdown-toggle user-profile"
+                class="nav-item nav-link2 dropdown-toggle user-profile"
                 data-toggle="dropdown"
               >
-                <div class="nom-role">
+                {/* <div class="nom-role">
                   <span class="username">
                     {currentUser &&
                       `${currentUser?.prenom} ${currentUser?.nom}`}
@@ -155,17 +156,19 @@ function AdminNavbar({ currentUser, history }) {
                       ? currentUser?.roles[0]
                       : "Piont focal"}
                   </span>
-                </div>
-                <div class="avatar">
+                </div> */}
+                <img src={setting} alt="logo" alt="MSAS" class="app-logo1" />
+                {/* <span class="nb-notif">3</span> */}
+                {/* <div class="avatar">
                   <img
                     src={
                       currentUser && currentUser?.photo
                         ? `${currentUser?.photo}`
-                        : "/assets/images/faces/avatar.png"
+                        : notif
                     }
                     alt="Profile"
                   />
-                </div>
+                </div> */}
               </a>
               <div class="dropdown-menu dropdown-menu-right nav-link-menu">
                 <ul class="nav-list">

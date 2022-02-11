@@ -1,8 +1,8 @@
 .sign-in-container{
   width: 100vw;
   height: 100vh;
-  background:linear-gradient(to bottom left, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-  url('https://wathi.org/wp-content/uploads/2020/04/MSAS-min-600x337.png');
+  background:
+  url('../../../assets/images/login.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -10,17 +10,21 @@
 }
 
 .sign-in-form {
-  width: 380px;
+  width: 420px;
   display: flex;
   flex-direction: column;
   position: absolute;
   text-align: center;
   top: 50%;
-  left: 50%;
+  left: 75%;
   transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.9) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
   padding: 40px 30px;
-  background: rgba(0, 0, 0, 0.9);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: Montserrat;
+  font-weight: 600;
+
 
   .title {
     margin: 10px 0;

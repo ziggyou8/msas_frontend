@@ -18,8 +18,12 @@ import {
   faAngleDoubleRight,
   faPlus,
   faTrash,
+  faCalendar,
+  faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
+import Ajout from "../../../../assets/images/ajout.svg";
+import Supprimer from "../../../../assets/images/supprimer.svg";
 
 function ActeurPriveForm(props) {
   const $ = window.$;
@@ -626,8 +630,8 @@ function ActeurPriveForm(props) {
           </div>
           <div className="modal-body">
             <div
-              className="bg-primary bg-opacity-10 pb-3 w-100"
-              style={{ marginTop: "-20px", width: "100vw !important" }}
+              className="bg-opacity-10 pb-3 w-100 top-form"
+              style={{ marginTop: "-15px", width: "100vw !important" }}
             >
               <Stepper steps={steps} activeStep={ActivStep} />
             </div>
@@ -1248,7 +1252,7 @@ function ActeurPriveForm(props) {
               )} */}
               {formStep >= 0 && (
                 <section style={{ display: formStep === 0 ? "block" : "none" }}>
-                  <div className="bg-white mt-2">
+                  <div className="bg-white mt-4">
                     <div className=" bg-white ">
                       {/* <fieldset className="scheduler-border border">
                         <legend className="scheduler-border text-muted">
@@ -1348,45 +1352,59 @@ function ActeurPriveForm(props) {
                         </div>
                       </fieldset> */}
 
-                      <div className="row mt-2">
-                        <div className="form-group input-group-sm col-md-3">
+                      <div className="row container-fluid m-0">
+                        <div className="form-group col-md-6 ">
                           <label htmlFor="annee">Année</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            {...register("annee", {
-                              required: {
-                                value: true,
-                                message: "Veuillez saisir l'année",
-                              },
-                            })}
-                            id="annee"
-                            placeholder="Année"
-                          />
+                          <div class="input-group right-prepend">
+                            <input
+                              type="number"
+                              className="form-control input-style"
+                              {...register("annee", {
+                                required: {
+                                  value: true,
+                                  message: "Veuillez saisir l'année",
+                                },
+                              })}
+                              id="annee"
+                              placeholder="Année"
+                            />
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text style-right-prepend bg-style text-white">
+                                  <FontAwesomeIcon icon={faCalendar} className="mr-1 mb-1" />
+                                </span>
+                            </div>
+                          </div>
                           {errors.annee && (
                             <p className="text-danger mb-0">
                               {errors.annee.message}
                             </p>
                           )}
                         </div>
-                        <div className="form-group input-group-sm col-md-3">
+                        <div className="form-group col-md-6">
                           <label htmlFor="monnaie">Monnaie</label>
-                          <select
-                            {...register("monnaie", {
-                              required: {
-                                value: true,
-                                message: "Veuillez choisir la monnaie",
-                              },
-                            })}
-                            onChange={monneyHandler}
-                            id="monnaie"
-                            className="form-control"
-                          >
-                            <option value="XOF">XOF (CFA)</option>
-                            <option value="EURO">EURO (€)</option>
-                            <option value="DOLLAR">DOLLAR ($)</option>
-                            <option value="Autre">Autre</option>
-                          </select>
+                          <div class="input-group right-prepend">
+                            <select
+                              {...register("monnaie", {
+                                required: {
+                                  value: true,
+                                  message: "Veuillez choisir la monnaie",
+                                },
+                              })}
+                              onChange={monneyHandler}
+                              id="monnaie"
+                              className="form-control input-style"
+                            >
+                              <option value="XOF">XOF (CFA)</option>
+                              <option value="EURO">EURO (€)</option>
+                              <option value="DOLLAR">DOLLAR ($)</option>
+                              <option value="Autre">Autre</option>
+                            </select>
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text style-right-prepend bg-style text-white">
+                                  <FontAwesomeIcon icon={faCoins} className="mr-1 mb-1" />
+                                  </span>
+                            </div>
+                          </div>
                         </div>
 
                         {monnaie === "Autre" && (
@@ -1403,11 +1421,11 @@ function ActeurPriveForm(props) {
                         )}
                       </div>
 
-                      <fieldset className="scheduler-border border">
+                      <fieldset className="scheduler-border border section-style">
                         <legend className="scheduler-border text-muted">
                           Les dimensions du financement
                         </legend>
-                        <div className="row bg-white mx-1 px-2 d-flex flex-row">
+                        <div className="row mx-1 px-2 d-flex flex-row bg-section">
                           <div className="form-check form-check-inline col-md-4 d-flex">
                             <input
                               className="form-check mr-2 big-checkbox"
@@ -1457,70 +1475,82 @@ function ActeurPriveForm(props) {
                         </div>
                       </fieldset>
 
-                      <fieldset className="scheduler-border border">
+                      <fieldset className="scheduler-border border section-style">
                         <legend className="scheduler-border text-muted">
                           Mode de financement
                         </legend>
-                        <div className=" bg-white pb-2">
+                        <div className="pb-2 bg-section">
                           <div className="d-flex flex-wrap mx-1 pt-2 w-100">
-                            <div className="input-group mb-1 col-md-6">
+                            <div className="input-group mb-4 col-md-6 right-prepend">
                               <div className="input-group-prepend ">
-                                <span className="input-group-text bg-primary bg-opacity-75 text-white">
+                                <span className="input-group-text bg-style bg-opacity-75 text-white text-style">
                                   Subvention
                                 </span>
                               </div>
                               <input
                                 type="number"
                                 {...register("subvention")}
-                                className="form-control form-control-sm w-20"
+                                className="form-control form-control-sm w-20 input-style"
                                 aria-label="Dollar amount (with dot and two decimal places)"
                                 placeholder="Le montant de la subvention"
                               />
+                              <div class="input-group-prepend ">
+                                  <span class="input-group-text style-right-prepend">CFA</span>
+                              </div>
                             </div>
 
-                            <div className="input-group mb-1 col-md-6">
+                            <div className="input-group mb-4 col-md-6 right-prepend">
                               <div className="input-group-prepend ">
-                                <span className="input-group-text bg-primary bg-opacity-75 text-white">
+                                <span className="input-group-text bg-style bg-opacity-75 text-white text-style">
                                   Transfert
                                 </span>
                               </div>
                               <input
                                 type="number"
                                 {...register("transfert")}
-                                className="form-control form-control-sm w-20"
+                                className="form-control form-control-sm w-20 input-style"
                                 aria-label="Dollar amount (with dot and two decimal places)"
                                 placeholder="Le montant du transfert"
                               />
+                              <div class="input-group-prepend ">
+                                  <span class="input-group-text style-right-prepend">CFA</span>
+                              </div>
                             </div>
 
-                            <div className="input-group mb-1 col-md-6">
+                            <div className="input-group mb-4 col-md-6 right-prepend">
                               <div className="input-group-prepend ">
-                                <span className="input-group-text bg-primary bg-opacity-75 text-white">
+                                <span className="input-group-text bg-style bg-opacity-75 text-white text-style">
                                   Recette
                                 </span>
                               </div>
                               <input
                                 type="number"
                                 {...register("recette")}
-                                className="form-control form-control-sm w-20"
+                                className="form-control form-control-sm w-20 input-style"
                                 aria-label="Dollar amount (with dot and two decimal places)"
                                 placeholder="Le montant de la recette"
                               />
+                              <div class="input-group-prepend ">
+                                  <span class="input-group-text style-right-prepend">CFA</span>
+                              </div>
                             </div>
 
-                            <div className="input-group mb-1 col-md-6">
+                            <div className="input-group mb-4 col-md-6 right-prepend">
                               <div className="input-group-prepend ">
-                                <span className="input-group-text bg-primary bg-opacity-75 text-white">
+                                <span className="input-group-text bg-style bg-opacity-75 text-white text-style">
                                   Don
                                 </span>
                               </div>
                               <input
                                 type="number"
                                 {...register("don")}
-                                className="form-control form-control-sm w-20"
+                                className="form-control form-control-sm w-20 input-style"
                                 aria-label="Dollar amount (with dot and two decimal places)"
                                 placeholder="Le montant du don"
                               />
+                              <div class="input-group-prepend ">
+                                  <span class="input-group-text style-right-prepend">CFA</span>
+                              </div>
                             </div>
                           </div>
 
@@ -1584,396 +1614,527 @@ function ActeurPriveForm(props) {
                         </div>
                       </fieldset>
 
-                      <fieldset className="scheduler-border border mb-5">
-                        <legend className="scheduler-border text-muted">
+                      <fieldset className="row scheduler-border border mb-5 section-style m-0">
+                        <legend className="scheduler-border text-muted pb-4">
+                          <div className="col-md-8 pb-2 action-section-ajout">
+                            <a href="#" onClick={() => addPilier()}>
+                                <button type="button" className="btn btn-sm text-success">
+                                  <small class="text-bold">Ajouter Pilier</small>
+                                  <img src={Ajout} alt="" class="ml-1"/>
+                                </button>
+                            </a>
+                        </div>
                           Piliers et axes d'intervention
                         </legend>
+                        
                         {piliers.map((pilier, index) => (
-                          <div
-                            key={index}
-                            className="d-flex no-gutters border m-1"
-                          >
-                            <div
-                              className="col-md-2 px-1 pb-3"
-                              style={{ margin: "auto" }}
-                            >
-                              <div className="form-group mb-4">
-                                <label htmlFor="pilier">Pilier</label>
-                                <select
-                                  /* name="pilier" */
-                                  {...register(`pilier_${index}`, {
-                                    required: {
-                                      value: true,
-                                      message: "Veuillez saisir l'année",
-                                    },
-                                  })}
-                                  id="pilier"
-                                  onChange={pilierLibelleHandler(index)}
-                                  className="form-control form-control-sm"
-                                >
-                                  <option>Choisir...</option>
-                                  {Object.keys(pilierData).map((pilier) => (
-                                    <option key={pilier} value={pilier}>
-                                      {pilier}
-                                    </option>
-                                  ))}
-                                </select>
+                          <div class="row p-3">
+                            <div key={index} className="row p-4 pt-3 d-flex border m-1 bg-white cadrage control" >
+                              <div className="offset-md-10 col-md-2 mb-0 pb-0 action-section decale1">
+                                  {/* <a href="#" onClick={() => addPilier()}>
+                                      <button type="button" className="btn btn-sm text-success">
+                                        <small>Ajouter Pilier</small>
+                                        <FontAwesomeIcon icon={faPlus} />
+                                      </button>
+                                  </a> */}
+                                  <a href="#" onClick={() => removePilier(index)}>
+                                      <button type="button" className="btn btn-sm text-danger">
+                                        <small class="text-bold">Supprimer</small>
+                                       <img src={Supprimer} alt="" class="ml-1"/>
+                                      </button>
+                                  </a>
                               </div>
-                            </div>
-
-                            <div className="col-md-9  border-right border-left">
-                              {pilier.axe.map((axe, i) => (
-                                <div
-                                  key={i}
-                                  className="d-flex no-gutters border-bottom "
-                                >
-                                  <div
-                                    className="col-md-3 mx-1"
-                                    style={{ margin: "auto" }}
+                              <div className="row col-md-12 " >
+                                <div className="form-group mb-4">
+                                  <label htmlFor="pilier">Pilier</label>
+                                  <select
+                                    /* name="pilier" */
+                                    {...register(`pilier_${index}`, {
+                                      required: {
+                                        value: true,
+                                        message: "Veuillez saisir l'année",
+                                      },
+                                    })}
+                                    id="pilier"
+                                    onChange={pilierLibelleHandler(index)}
+                                    className="form-control form-control-sm"
                                   >
-                                    <div className="form-group mx-auto">
-                                      <label htmlFor="libelle">Axe</label>
-                                      <select
-                                        name="libelle"
-                                        id="libelle"
-                                        onChange={axeInputHandler(index, i)}
+                                    <option>Choisir...</option>
+                                    {Object.keys(pilierData).map((pilier) => (
+                                      <option key={pilier} value={pilier}>
+                                        {pilier}
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                              </div>
+                              
+                              {pilier.axe.map((axe, i) => (
+                              <div class="row bg-axe p-4 border cadrage control mt-4">
+                                <div className="col-md-12 ">
+                                    <div key={i} className="row d-flex no-gutters border-bottom ">
+                                      <div className="row col-md-12 mx-1 mb-3" style={{ margin: "auto" }}>
+                                        <div className="offset-md-7 col-md-5 mb-0 pb-0 action-section decale">
+                                          <a href="#" onClick={() => addAxe(index)}>
+                                              <button type="button" className="btn btn-sm text-success">
+                                            <small class="text-bold">Ajouter Axe d'intervention</small>
+                                            <img src={Ajout} alt="" class="ml-1"/>
+                                          </button>
+                                          </a>
+                                          <a href="#" onClick={() => RemoveAxe(index, i)}>
+                                              <button type="button" className="btn btn-sm text-danger">
+                                                <small class="text-bold">Supprimer</small>
+                                                <img src={Supprimer} alt="" class="ml-1"/>
+                                              </button>
+                                          </a>
+                                          
+                                        </div>
+                                        <div className="form-group mx-auto">
+                                          <label htmlFor="libelle">Axe d'intervention</label>
+                                          <select
+                                            name="libelle"
+                                            id="libelle"
+                                            onChange={axeInputHandler(index, i)}
+                                            className="form-control form-control-sm"
+                                          >
+                                            <option>Choisir...</option>
+                                            {pilier.optionAxies?.map((axe) => (
+                                              <option key={axe[i]} value={axe[1]}>
+                                                {axe[1]}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                      <div className="row col-md-12 mx-auto ">
+                                        <div class="row cadrage control bg-axe-section-input mb-4" style={{"min-height": "100px"}}>
+                                          <div class="col-md-2  bg-axe-section p-4">
+                                              <span className="bg-opacity-75 text-white text-style">
+                                                Biens et Services
+                                              </span>
+                                          </div>
+                                          <div class="row col-md-10 bg-axe-section-input pt-2">
+                                              <div class="form-group col-md-4 ">
+                                                <label htmlFor="Montant prévu">Montant prévu</label>
+                                                <div class="input-group right-prepend">
+                                                    <input
+                                                    onChange={modeFinanceMontantHandler(
+                                                      index,
+                                                      i,
+                                                      "bien_et_service",
+                                                      "montant_prevu"
+                                                    )}
+                                                    type="number"
+                                                    className="form-control form-control-sm w-20 input-style2"
+                                                    aria-label="Dollar amount (with dot and two decimal places)"
+                                                    placeholder="XXXXXXXXXX"
+                                                  />
+                                                  <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                   <label htmlFor="Montant mobilise">Montant mobilisé</label>
+                                                    <div class="input-group right-prepend">
+                                                      <input
+                                                        type="number"
+                                                        onChange={modeFinanceMontantHandler(
+                                                          index,
+                                                          i,
+                                                          "bien_et_service",
+                                                          "montant_mobilise"
+                                                        )}
+                                                        className="form-control form-control-sm w-20 input-style2"
+                                                        aria-label="Dollar amount (with dot and two decimal places)"
+                                                        placeholder="XXXXXXXXXX"
+                                                      />
+                                                      <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                      </div>
+                                                    </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                   <label htmlFor="Montant execute">Montant exécuté</label>
+                                                    <div class="input-group right-prepend">
+                                                      <input
+                                                        type="number"
+                                                        onChange={modeFinanceMontantHandler(
+                                                          index,
+                                                          i,
+                                                          "bien_et_service",
+                                                          "montant_execute"
+                                                        )}
+                                                        className="form-control form-control-sm input-style2"
+                                                        aria-label="Dollar amount (with dot and two decimal places)"
+                                                        placeholder="XXXXXXXXXX"
+                                                      />
+                                                      <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                      </div>
+                                                    </div>
+                                              </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="row cadrage control bg-axe-section-input mb-3" style={{"min-height": "100px"}}>
+                                          <div class="col-md-2  bg-axe-section p-4">
+                                              <span className="bg-opacity-75 text-white text-style pt-3">
+                                                Investissements
+                                              </span>
+                                          </div>
+                                          <div class="row col-md-10 bg-axe-section-input pt-2">
+                                              <div class="form-group col-md-4 ">
+                                                <label htmlFor="Montant prevu">Montant prévu</label>
+                                                <div class="input-group right-prepend">
+                                                    <input
+                                                      type="number"
+                                                      onChange={modeFinanceMontantHandler(
+                                                        index,
+                                                        i,
+                                                        "investissement",
+                                                        "montant_prevu"
+                                                      )}
+                                                      className="form-control form-control-sm w-20 input-style2"
+                                                      aria-label="Dollar amount (with dot and two decimal places)"
+                                                      placeholder="XXXXXXXXXX"
+                                                    />
+                                                  <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                   <label htmlFor="Montant mobilise">Montant mobilisé</label>
+                                                    <div class="input-group right-prepend">
+                                                      <input
+                                                        type="number"
+                                                        onChange={modeFinanceMontantHandler(
+                                                          index,
+                                                          i,
+                                                          "investissement",
+                                                          "montant_mobilise"
+                                                        )}
+                                                        className="form-control form-control-sm input-style2"
+                                                        aria-label="Dollar amount (with dot and two decimal places)"
+                                                        placeholder="XXXXXXXXXX"
+                                                      />
+                                                      <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                      </div>
+                                                    </div>
+                                              </div>
+                                              <div class="form-group col-md-4 ">
+                                                   <label htmlFor="Montant execute">Montant exécuté</label>
+                                                    <div class="input-group right-prepend">
+                                                      <input
+                                                        type="number"
+                                                        onChange={modeFinanceMontantHandler(
+                                                          index,
+                                                          i,
+                                                          "investissement",
+                                                          "montant_execute"
+                                                        )}
+                                                        className="form-control form-control-sm w-20 input-style2"
+                                                        aria-label="Dollar amount (with dot and two decimal places)"
+                                                        placeholder="XXXXXXXXXX"
+                                                      />
+                                                      <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
+                                                      </div>
+                                                    </div>
+                                              </div>
+                                          </div>
+                                          
+                                        </div>
+
+                                        {/* <div className="col-md-6 mt-1 bg-primary bg-opacity-75">
+                                          <label className="text-white">
+                                            Biens et Services
+                                          </label>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "bien_et_service",
+                                                "montant_prevu"
+                                              )}
+                                              type="number"
+                                              className="form-control form-control-sm w-20"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant prévu"
+                                            />
+                                          </div>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              type="number"
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "bien_et_service",
+                                                "montant_mobilise"
+                                              )}
+                                              className="form-control form-control-sm"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant mobilisé"
+                                            />
+                                          </div>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              type="number"
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "bien_et_service",
+                                                "montant_execute"
+                                              )}
+                                              className="form-control form-control-sm"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant exécuté"
+                                            />
+                                          </div>
+                                        </div>
+
+                                        <div className="col-md-6 mt-1 border-left bg-primary bg-opacity-75 border-right">
+                                          <label className="text-white">
+                                            Investissements
+                                          </label>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              type="number"
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "investissement",
+                                                "montant_prevu"
+                                              )}
+                                              className="form-control form-control-sm"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant prévu"
+                                            />
+                                          </div>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              type="number"
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "investissement",
+                                                "montant_mobilise"
+                                              )}
+                                              className="form-control form-control-sm"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant mobilisé"
+                                            />
+                                          </div>
+                                          <div className="form-group input-group-sm mb-1">
+                                            <input
+                                              type="number"
+                                              onChange={modeFinanceMontantHandler(
+                                                index,
+                                                i,
+                                                "investissement",
+                                                "montant_execute"
+                                              )}
+                                              className="form-control form-control-sm"
+                                              aria-label="Dollar amount (with dot and two decimal places)"
+                                              placeholder="Montant exécuté"
+                                            />
+                                          </div>
+                                        </div> */}
+                                      </div>
+                                      
+
+                                      {/* <div className="form-group col-md-3 col-sm-12 pl-1">
+                                      <label htmlFor="montant_prevu">
+                                        Montant prévu (
+                                        {monnaie == "EURO"
+                                          ? "€"
+                                          : monnaie == "DOLLAR"
+                                          ? "$"
+                                          : monnaie == "XOF"
+                                          ? "CFA"
+                                          : `${getValues().autre_monnaie}`}
+                                        )
+                                      </label>
+                                      <input
+                                        type="number"
                                         className="form-control form-control-sm"
+                                        name="montant_prevu"
+                                        value={axe.montant_prevu || ""}
+                                        onChange={axeInputHandler(
+                                          index,
+                                          i
+                                        )}
+                                        id="montant_prevu"
+                                        id="montant_prevu"
+                                        placeholder={`Montant en ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}
+                                      />
+                                    </div>
+                                    <div className="form-group col-md-3 col-sm-12 pl-1">
+                                      <label htmlFor="montant_mobilise">
+                                        Montant mobilisé (
+                                        {monnaie == "EURO"
+                                          ? "€"
+                                          : monnaie == "DOLLAR"
+                                          ? "$"
+                                          : monnaie == "XOF"
+                                          ? "CFA"
+                                          : `${getValues().autre_monnaie}`}
+                                        )
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        name="montant_mobilise"
+                                        value={axe.montant_mobilise || ""}
+                                        onChange={axeInputHandler(
+                                          index,
+                                          i
+                                        )}
+                                        id="montant_mobilise"
+                                        id="montant_mobilise"
+                                        placeholder={`Montant en ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}
+                                      />
+                                    </div>
+                                    <div className="form-group col-md-3 col-sm-12 pl-1">
+                                      <label htmlFor="montant_execute">
+                                        Montant executé (
+                                        {monnaie == "EURO"
+                                          ? "€"
+                                          : monnaie == "DOLLAR"
+                                          ? "$"
+                                          : monnaie == "XOF"
+                                          ? "CFA"
+                                          : `${getValues().autre_monnaie}`}
+                                        )
+                                      </label>
+                                      <input
+                                        type="number"
+                                        className="form-control form-control-sm"
+                                        name="montant_execute"
+                                        value={axe.montant_execute || ""}
+                                        onChange={axeInputHandler(
+                                          index,
+                                          i
+                                        )}
+                                        id="montant_execute"
+                                        id="montant_execute"
+                                        placeholder={`Montant en ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}
+                                      />
+                                    </div> */}
+                                      {/* <div className="form-group col-md-1  mx-auto my-auto ">
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm"
+                                        onClick={() => RemoveAxe(index, i)}
                                       >
-                                        <option>Choisir...</option>
-                                        {pilier.optionAxies?.map((axe) => (
-                                          <option key={axe[i]} value={axe[1]}>
-                                            {axe[1]}
-                                          </option>
-                                        ))}
-                                      </select>
+                                        <i className="mdi mdi-delete mdi-18px text-danger "></i>
+                                      </button>
+                                    </div> */}
                                     </div>
-                                  </div>
+                                 
 
-                                  <div className="row col-md-8 mx-auto">
-                                    <div className="col-md-6 mt-1 bg-primary bg-opacity-75">
-                                      <label className="text-white">
-                                        Biens et Services
-                                      </label>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "bien_et_service",
-                                            "montant_prevu"
-                                          )}
-                                          type="number"
-                                          className="form-control form-control-sm w-20"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant prévu"
-                                        />
-                                      </div>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          type="number"
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "bien_et_service",
-                                            "montant_mobilise"
-                                          )}
-                                          className="form-control form-control-sm"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant mobilisé"
-                                        />
-                                      </div>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          type="number"
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "bien_et_service",
-                                            "montant_execute"
-                                          )}
-                                          className="form-control form-control-sm"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant exécuté"
-                                        />
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6 mt-1 border-left bg-primary bg-opacity-75 border-right">
-                                      <label className="text-white">
-                                        Investissements
-                                      </label>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          type="number"
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "investissement",
-                                            "montant_prevu"
-                                          )}
-                                          className="form-control form-control-sm"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant prévu"
-                                        />
-                                      </div>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          type="number"
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "investissement",
-                                            "montant_mobilise"
-                                          )}
-                                          className="form-control form-control-sm"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant mobilisé"
-                                        />
-                                      </div>
-                                      <div className="form-group input-group-sm mb-1">
-                                        <input
-                                          type="number"
-                                          onChange={modeFinanceMontantHandler(
-                                            index,
-                                            i,
-                                            "investissement",
-                                            "montant_execute"
-                                          )}
-                                          className="form-control form-control-sm"
-                                          aria-label="Dollar amount (with dot and two decimal places)"
-                                          placeholder="Montant exécuté"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="form-group col-md-1  mx-auto my-auto ">
+                                  {/* <div style={{ marginTop: "-10px" }}>
                                     <button
                                       type="button"
-                                      className="btn btn-sm"
-                                      onClick={() => RemoveAxe(index, i)}
+                                      className="btn btn-sm text-primary"
+                                      onClick={() => addAxe(index)}
                                     >
-                                      <FontAwesomeIcon
-                                        className="mr-2"
-                                        icon={faTrash}
-                                        size="lg"
-                                        color="red"
-                                        role="button"
-                                      />
+                                      <FontAwesomeIcon icon={faPlus} />
+                                      <small>Axe d'intervention</small>
                                     </button>
-                                  </div>
+                                  </div> */}
 
-                                  {/* <div className="form-group col-md-3 col-sm-12 pl-1">
-                                  <label htmlFor="montant_prevu">
-                                    Montant prévu (
-                                    {monnaie == "EURO"
-                                      ? "€"
-                                      : monnaie == "DOLLAR"
-                                      ? "$"
-                                      : monnaie == "XOF"
-                                      ? "CFA"
-                                      : `${getValues().autre_monnaie}`}
-                                    )
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control form-control-sm"
-                                    name="montant_prevu"
-                                    value={axe.montant_prevu || ""}
-                                    onChange={axeInputHandler(
-                                      index,
-                                      i
-                                    )}
-                                    id="montant_prevu"
-                                    id="montant_prevu"
-                                    placeholder={`Montant en ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}
-                                  />
+                                  {/* {pilier.axe.length > 1 && (
+                                    <div className="bg-light row w-full no-gutters p-1">
+                                      <div className="col-md-3 my-auto">
+                                        <small className="text-muted font-weight-bold">
+                                          {pilier.pilier}
+                                        </small>
+                                      </div>
+                                      <div className="col-md-2 mx-4 pl-2 border-left">
+                                        <small className="text-muted font-weight-bold">
+                                          Total prévu
+                                        </small>
+                                        <p
+                                          style={{ margin: "2px 1px" }}
+                                          className="text-muted"
+                                        >{`${totalPillier(index).total_prevu} ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}</p>
+                                      </div>
+                                      <div className="col-md-2 mx-4 pl-2 border-left">
+                                        <small className="text-muted font-weight-bold">
+                                          Total mobilisé
+                                        </small>
+                                        <p
+                                          style={{ margin: "2px 1px" }}
+                                          className="text-muted"
+                                        >{`${totalPillier(index).total_mobilise} ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}</p>
+                                      </div>
+                                      <div className="col-md-2 mx-4 pl-2 border-left">
+                                        <small className="text-muted font-weight-bold">
+                                          Total exécuté
+                                        </small>
+                                        <p
+                                          style={{ margin: "2px 1px" }}
+                                          className="text-muted"
+                                        >{`${totalPillier(index).total_execute} ${
+                                          monnaie == "EURO"
+                                            ? "€"
+                                            : monnaie == "DOLLAR"
+                                            ? "$"
+                                            : monnaie == "XOF"
+                                            ? "CFA"
+                                            : `${getValues().autre_monnaie}`
+                                        }`}</p>
+                                      </div>
+                                    </div>
+                                  )} */}
                                 </div>
-                                <div className="form-group col-md-3 col-sm-12 pl-1">
-                                  <label htmlFor="montant_mobilise">
-                                    Montant mobilisé (
-                                    {monnaie == "EURO"
-                                      ? "€"
-                                      : monnaie == "DOLLAR"
-                                      ? "$"
-                                      : monnaie == "XOF"
-                                      ? "CFA"
-                                      : `${getValues().autre_monnaie}`}
-                                    )
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control form-control-sm"
-                                    name="montant_mobilise"
-                                    value={axe.montant_mobilise || ""}
-                                    onChange={axeInputHandler(
-                                      index,
-                                      i
-                                    )}
-                                    id="montant_mobilise"
-                                    id="montant_mobilise"
-                                    placeholder={`Montant en ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}
-                                  />
-                                </div>
-                                <div className="form-group col-md-3 col-sm-12 pl-1">
-                                  <label htmlFor="montant_execute">
-                                    Montant executé (
-                                    {monnaie == "EURO"
-                                      ? "€"
-                                      : monnaie == "DOLLAR"
-                                      ? "$"
-                                      : monnaie == "XOF"
-                                      ? "CFA"
-                                      : `${getValues().autre_monnaie}`}
-                                    )
-                                  </label>
-                                  <input
-                                    type="number"
-                                    className="form-control form-control-sm"
-                                    name="montant_execute"
-                                    value={axe.montant_execute || ""}
-                                     onChange={axeInputHandler(
-                                      index,
-                                      i
-                                    )}
-                                    id="montant_execute"
-                                    id="montant_execute"
-                                    placeholder={`Montant en ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}
-                                  />
-                                </div> */}
-                                  {/* <div className="form-group col-md-1  mx-auto my-auto ">
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm"
-                                    onClick={() => RemoveAxe(index, i)}
-                                  >
-                                    <i className="mdi mdi-delete mdi-18px text-danger "></i>
-                                  </button>
-                                </div> */}
-                                </div>
-                              ))}
-
-                              <div style={{ marginTop: "-10px" }}>
-                                <button
-                                  type="button"
-                                  className="btn btn-sm text-primary"
-                                  onClick={() => addAxe(index)}
-                                >
-                                  <FontAwesomeIcon icon={faPlus} />
-                                  <small>Axe d'intervention</small>
-                                </button>
                               </div>
-
-                              {/* {pilier.axe.length > 1 && (
-                                <div className="bg-light row w-full no-gutters p-1">
-                                  <div className="col-md-3 my-auto">
-                                    <small className="text-muted font-weight-bold">
-                                      {pilier.pilier}
-                                    </small>
-                                  </div>
-                                  <div className="col-md-2 mx-4 pl-2 border-left">
-                                    <small className="text-muted font-weight-bold">
-                                      Total prévu
-                                    </small>
-                                    <p
-                                      style={{ margin: "2px 1px" }}
-                                      className="text-muted"
-                                    >{`${totalPillier(index).total_prevu} ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}</p>
-                                  </div>
-                                  <div className="col-md-2 mx-4 pl-2 border-left">
-                                    <small className="text-muted font-weight-bold">
-                                      Total mobilisé
-                                    </small>
-                                    <p
-                                      style={{ margin: "2px 1px" }}
-                                      className="text-muted"
-                                    >{`${totalPillier(index).total_mobilise} ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}</p>
-                                  </div>
-                                  <div className="col-md-2 mx-4 pl-2 border-left">
-                                    <small className="text-muted font-weight-bold">
-                                      Total exécuté
-                                    </small>
-                                    <p
-                                      style={{ margin: "2px 1px" }}
-                                      className="text-muted"
-                                    >{`${totalPillier(index).total_execute} ${
-                                      monnaie == "EURO"
-                                        ? "€"
-                                        : monnaie == "DOLLAR"
-                                        ? "$"
-                                        : monnaie == "XOF"
-                                        ? "CFA"
-                                        : `${getValues().autre_monnaie}`
-                                    }`}</p>
-                                  </div>
-                                </div>
-                              )} */}
+                               ))}
                             </div>
-                            <div
-                              className="col-md-1 "
-                              style={{ margin: "auto" }}
-                              onClick={() => removePilier(index)}
-                            >
-                              <button type="button" className="btn">
-                                <FontAwesomeIcon
-                                  icon={faTrash}
-                                  size="lg"
-                                  color="red"
-                                />
-                              </button>
-                            </div>
+                            
                           </div>
                         ))}
 
-                        <div className="">
-                          <button
-                            type="button"
-                            className="btn btn-sm text-primary"
-                            onClick={() => addPilier()}
-                          >
-                            <FontAwesomeIcon icon={faPlus} />
-                            <small>Pilier</small>
-                          </button>
-                        </div>
+                        
                       </fieldset>
                     </div>
                   </div>

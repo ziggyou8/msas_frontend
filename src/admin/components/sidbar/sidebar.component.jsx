@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo.svg";
+import Lamine from "../../../assets/images/lamine.png";
 
 function AdminSideBar({ currentUser }) {
   const location = useLocation();
@@ -18,11 +19,21 @@ function AdminSideBar({ currentUser }) {
       <div class="sidebar-header bg-default">
         <img src={Logo} alt="logo" alt="MSAS" class="app-logo" />
       </div>
+      <div class="photo">
+          <div class="m-5 mb-1">
+            <img class="avatar" src={Lamine}  alt=""/>
+          </div>
+          <p class="text-center mb-1 text-secondary">
+              Lamine NDIAYE
+          </p>
+          <p class="text-center mb-4 text-small"><span>Citoyen</span></p>
+          
+        </div>
       <ul class="list-unstyled components">
         <li>
           <Link
-            className={`nav-link ${location.pathname === "#" ? "active" : ""}`}
-            to="#"
+            className={`nav-link ${location.pathname === "/admin/dashboard" ? "active" : ""}`}
+            to="/admin/dashboard"
           >
             <FontAwesomeIcon icon={faTachometerAlt} />
             <span className="menu-title">Tableau de Bord</span>

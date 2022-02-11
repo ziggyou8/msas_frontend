@@ -3,6 +3,7 @@ import "./sign-in.style.scss";
 import FormInput from "../../../components/share/form-input/form-input";
 import CustomButton from "../../../components/share/custom-button/custom-button";
 import http from "../../../utilities/axio.config";
+import Logo from "../../../assets/images/logo.svg";
 
 class AuthPage extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class AuthPage extends React.Component {
         switch (res.data.data.roles[0]) {
           case "SPS Admin":
           case "EPS Admin":
-            this.props.history.push("/admin/structures/prive");
+            this.props.history.push("/admin/dashboard");
             break;
           case "ONG Admin":
             this.props.history.push("/admin/structures/ong");
@@ -37,7 +38,7 @@ class AuthPage extends React.Component {
             this.props.history.push("/admin/structures/rse");
             break;
           default:
-            this.props.history.push("/admin/structures");
+            this.props.history.push("/admin/dashboard");
             break;
         }
         console.log("✅✅", res.data.data.roles[0]);
@@ -59,8 +60,10 @@ class AuthPage extends React.Component {
     return (
       <div className="sign-in-container">
         <div className="sign-in-form">
-          <h2>CONNEXION</h2>
-          <span>Se connecter avec mon compte</span>
+          <div class="sidebar-header bg-default mb-3">
+            <img src={Logo} alt="logo" alt="MSAS" class="app-logo" />
+          </div>
+          <span>Identifiez vous pour accéder à votre espace</span>
           <p
             id="error"
             style={{ color: "red", marginTop: "10px", display: "none" }}

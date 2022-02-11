@@ -1,6 +1,7 @@
 //import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import Dashboard from "./admin/Pages/dashbords/Dashboard";
 import Structure from "./admin/Pages/structure/admin_dashbord/structure.component";
 import PriveSanteDashbord from "./admin/Pages/structure/prive_sante_dashbord/PriveSanteDashbord";
 import AuthPage from "./admin/Pages/auth/auth.page";
@@ -54,6 +55,12 @@ function App() {
   return (
     <Switch>
       {/* <Route exact path="/" render={()=> currentUser ? <Redirect  to="admin/dashboard"/> : <PublicRoute /> } /> */}
+      <AdminRouteDispatcher
+        exact
+        path="/admin/dashboard"
+        component={Dashboard}
+      />
+
       <AdminRouteDispatcher
         exact
         path="/admin/structures"
