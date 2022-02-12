@@ -69,7 +69,6 @@ function DistricteForm(props) {
 
 
     const onSubmit = async(data, e) => {
-        
         const { name, permission_id} = data;
         const districteData = {name, permission_id:[...permission_id]}
          if (editedDistricte) {
