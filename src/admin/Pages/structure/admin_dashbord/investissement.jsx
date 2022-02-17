@@ -5,9 +5,10 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-toastify";
 import {
   fetchStructureAsync,
   fetchStructureByIdAsync,
@@ -81,6 +82,18 @@ function Investissements(props) {
   const editInvestisement = (id) => {
     fetchInvestissementById(id);
   };
+  const ValideInvestisement = (id) => {
+   toast.success(`Validé avec succés`, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "success-alert",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+};
 
   return (
     <div>
@@ -161,6 +174,15 @@ function Investissements(props) {
                                         `/admin/investissements/${item.id}`
                                       )
                                     }
+                                  />
+                                  <FontAwesomeIcon
+                                    className="mr-2"
+                                    icon={faCheck}
+                                    color="grey"
+                                    role="button"
+                                    // data-toggle="modal"
+                                    // data-target="#editModal"
+                                    onClick={() => ValideInvestisement(item.id)}
                                   />
                                   {/* <FontAwesomeIcon
                                     className="mr-2"

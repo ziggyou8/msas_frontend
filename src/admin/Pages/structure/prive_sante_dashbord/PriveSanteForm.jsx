@@ -630,7 +630,7 @@ function ActeurPriveForm(props) {
           </div>
           <div className="modal-body">
             <div
-              className="bg-opacity-10 pb-3 w-100 top-form white-text"
+              className="bg-opacity-10 pb-3 w-100 top-for"
               style={{ marginTop: "-15px", width: "100vw !important" }}
             >
               <Stepper steps={steps} activeStep={ActivStep} />
