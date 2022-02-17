@@ -4,7 +4,7 @@ import { ReactComponent as LinkedInLightIcon } from "../../../assets/icons/linke
 import { ReactComponent as TwiterLightIcon } from "../../../assets/icons/twiter.svg";
 import { ReactComponent as FaceBookLightIcon } from "../../../assets/icons/facebook.svg";
 import { ReactComponent as InfoIcon } from "../../../assets/icons/information.svg";
-import logo from "../../../assets/vitrine/Assets/images/minist.png";
+import logo from "../../../assets/vitrine/Assets/images/logo.svg";
 import source from "../../../assets/vitrine/Assets/icon/mobil ressource.svg";
 import sourceCommun from "../../../assets/vitrine/Assets/icon/ressource en commun.svg";
 import service from "../../../assets/vitrine/Assets/icon/services.svg";
@@ -143,16 +143,16 @@ function AccueilPage() {
   return (
     <div>
       <div className="header">
-        <div className="header-content row d-flex  align-items-center m-auto">
-          <div className="col-md-8 col-sm-12 px-0">
-            <p className="title fw-bold" style={{ fontSize: "2.5vh" }}>
+        <div className="header-content row d-flex  align-items-center ">
+          <div className="col-md-7 col-sm-12 px-0">
+            <p className="title fw-bold" style={{ fontSize: "2vh" }}>
               PLATEFORME NUMERIQUE DE SUIVI DU FINANCEMENT DE LA SANTE AU
               SENEGAL
             </p>
           </div>
-          <div className="col-md-4 col-sm-12  rs reseaux-sociaux ">
+          <div className="col-md-5 col-sm-12  rs reseaux-sociaux ">
             <ul className="d-flex" style={{ marginRight: "-1rem" }}>
-              <p className="">Nous suivre sur :</p>
+              <p className="title">Nous suivre sur :</p>
               <li>
                 <Link to="">
                   <LinkedInLightIcon />
@@ -247,9 +247,9 @@ function AccueilPage() {
           <div className="card ">
             <div className="row g-0">
               <div className="col-md-5 col-sm-12 bg-blue-img ">
-                <div className="card-body text-light ms-5 ps-3 px-0 pt-5  max">
+                <div className="card-body text-light ms-5 ps-3 px-0 pt-5 m-5 max">
                   <div className="d-flex flex-column pb-4">
-                    <h5 className="card-title text-white pt-5 col-md-9">
+                    <h5 className="card-title slide-texxt text-white pt-5">
                       Le Financemet de la santé, une priorité pour les
                       acteurs...
                     </h5>
@@ -1273,9 +1273,9 @@ function AccueilPage() {
         </div>
       </div>
       <div className="header">
-        <div className="header-content row max  d-flex  justify-content-between align-items-center m-auto">
+        <div className="header-content row max  d-flex  justify-content-between align-items-center ">
           <div className="col-md-7 col-sm-12 px-0">
-            <p className="title " style={{ fontSize: "2.5vh" }}>
+            <p className="title " style={{ fontSize: "2vh" }}>
               DIRECTION DE LA PLANIFICATION DE LA RECHERCHE ET DES STATISTIQUES
             </p>
           </div>
