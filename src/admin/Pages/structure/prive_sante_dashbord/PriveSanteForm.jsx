@@ -633,7 +633,7 @@ function ActeurPriveForm(props) {
               className="bg-opacity-10 pb-3 w-100 top-for"
               style={{ marginTop: "-15px", width: "100vw !important" }}
             >
-              <Stepper steps={steps} activeStep={ActivStep} />
+              <Stepper steps={steps} activeStep={ActivStep}  />
             </div>
 
             <form onSubmit={handleSubmit(submitForm)}>
