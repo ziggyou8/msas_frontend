@@ -817,11 +817,13 @@ function SpsEpsEditForm(props) {
                                     className="form-control form-control-sm"
                                   >
                                     <option>Choisir...</option>
-                                    {Object.keys(pilierData).map((pilier) => (
-                                      <option 
-                                      key={pilier} 
-                                      value={pilier}>
-                                        {pilier}
+                                    {Object.keys(pilierData).map((pl) => (
+                                    <option
+                                      selected={pilier.pilier == pl}
+                                      key={pl}
+                                      value={pl}
+                                    >
+                                      {pl}
                                       </option>
                                     ))}
                                   </select>
@@ -857,9 +859,14 @@ function SpsEpsEditForm(props) {
                                             className="form-control form-control-sm"
                                           >
                                             <option>Choisir...</option>
-                                            {pilier.optionAxies?.map((axe) => (
-                                              <option key={axe[i]} value={axe[1]}>
-                                                {axe[1]}
+                                            {pilierData[pilier.pilier]?.map(
+                                          (ax) => (
+                                            <option
+                                              selected={axe.libelle === ax[1]}
+                                              key={ax[i]}
+                                              value={ax[1]}
+                                            >
+                                              {ax[1]}
                                               </option>
                                             ))}
                                           </select>
@@ -888,6 +895,9 @@ function SpsEpsEditForm(props) {
                                                     className="form-control form-control-sm w-20 input-style2"
                                                     aria-label="Dollar amount (with dot and two decimal places)"
                                                     placeholder="XXXXXXXXXX"
+                                                    defaultValue={
+                                                      axe.bien_et_service.montant_prevu
+                                                    }
                                                   />
                                                   <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                   </div>
@@ -907,6 +917,9 @@ function SpsEpsEditForm(props) {
                                                         className="form-control form-control-sm w-20 input-style2"
                                                         aria-label="Dollar amount (with dot and two decimal places)"
                                                         placeholder="XXXXXXXXXX"
+                                                        defaultValue={
+                                                          axe.bien_et_service.montant_mobilise
+                                                        }
                                                       />
                                                       <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                       </div>
@@ -926,6 +939,9 @@ function SpsEpsEditForm(props) {
                                                         className="form-control form-control-sm input-style2"
                                                         aria-label="Dollar amount (with dot and two decimal places)"
                                                         placeholder="XXXXXXXXXX"
+                                                        defaultValue={
+                                                          axe.bien_et_service.montant_execute
+                                                        }
                                                       />
                                                       <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                       </div>
@@ -955,6 +971,9 @@ function SpsEpsEditForm(props) {
                                                       className="form-control form-control-sm w-20 input-style2"
                                                       aria-label="Dollar amount (with dot and two decimal places)"
                                                       placeholder="XXXXXXXXXX"
+                                                      defaultValue={
+                                                        axe.investissement.montant_prevu
+                                                      }
                                                     />
                                                   <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                   </div>
@@ -974,6 +993,9 @@ function SpsEpsEditForm(props) {
                                                         className="form-control form-control-sm input-style2"
                                                         aria-label="Dollar amount (with dot and two decimal places)"
                                                         placeholder="XXXXXXXXXX"
+                                                        defaultValue={
+                                                          axe.investissement.montant_mobilise
+                                                        }
                                                       />
                                                       <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                       </div>
@@ -993,6 +1015,9 @@ function SpsEpsEditForm(props) {
                                                         className="form-control form-control-sm w-20 input-style2"
                                                         aria-label="Dollar amount (with dot and two decimal places)"
                                                         placeholder="XXXXXXXXXX"
+                                                        defaultValue={
+                                                          axe.investissement.montant_execute
+                                                        }
                                                       />
                                                       <div class="input-group-prepend">                        <span class="input-group-text style-right-prepend2">CFA</span>
                                                       </div>
@@ -1001,290 +1026,8 @@ function SpsEpsEditForm(props) {
                                           </div>
                                           
                                         </div>
-
-                                        {/* <div className="col-md-6 mt-1 bg-primary bg-opacity-75">
-                                          <label className="text-white">
-                                            Biens et Services
-                                          </label>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "bien_et_service",
-                                                "montant_prevu"
-                                              )}
-                                              type="number"
-                                              className="form-control form-control-sm w-20"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant prévu"
-                                            />
-                                          </div>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              type="number"
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "bien_et_service",
-                                                "montant_mobilise"
-                                              )}
-                                              className="form-control form-control-sm"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant mobilisé"
-                                            />
-                                          </div>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              type="number"
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "bien_et_service",
-                                                "montant_execute"
-                                              )}
-                                              className="form-control form-control-sm"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant exécuté"
-                                            />
-                                          </div>
-                                        </div>
-
-                                        <div className="col-md-6 mt-1 border-left bg-primary bg-opacity-75 border-right">
-                                          <label className="text-white">
-                                            Investissements
-                                          </label>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              type="number"
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "investissement",
-                                                "montant_prevu"
-                                              )}
-                                              className="form-control form-control-sm"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant prévu"
-                                            />
-                                          </div>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              type="number"
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "investissement",
-                                                "montant_mobilise"
-                                              )}
-                                              className="form-control form-control-sm"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant mobilisé"
-                                            />
-                                          </div>
-                                          <div className="form-group input-group-sm mb-1">
-                                            <input
-                                              type="number"
-                                              onChange={modeFinanceMontantHandler(
-                                                index,
-                                                i,
-                                                "investissement",
-                                                "montant_execute"
-                                              )}
-                                              className="form-control form-control-sm"
-                                              aria-label="Dollar amount (with dot and two decimal places)"
-                                              placeholder="Montant exécuté"
-                                            />
-                                          </div>
-                                        </div> */}
-                                      </div>
-                                      
-
-                                      {/* <div className="form-group col-md-3 col-sm-12 pl-1">
-                                      <label htmlFor="montant_prevu">
-                                        Montant prévu (
-                                        {monnaie == "EURO"
-                                          ? "€"
-                                          : monnaie == "DOLLAR"
-                                          ? "$"
-                                          : monnaie == "XOF"
-                                          ? "CFA"
-                                          : `${getValues().autre_monnaie}`}
-                                        )
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control form-control-sm"
-                                        name="montant_prevu"
-                                        value={axe.montant_prevu || ""}
-                                        onChange={axeInputHandler(
-                                          index,
-                                          i
-                                        )}
-                                        id="montant_prevu"
-                                        id="montant_prevu"
-                                        placeholder={`Montant en ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}
-                                      />
-                                    </div>
-                                    <div className="form-group col-md-3 col-sm-12 pl-1">
-                                      <label htmlFor="montant_mobilise">
-                                        Montant mobilisé (
-                                        {monnaie == "EURO"
-                                          ? "€"
-                                          : monnaie == "DOLLAR"
-                                          ? "$"
-                                          : monnaie == "XOF"
-                                          ? "CFA"
-                                          : `${getValues().autre_monnaie}`}
-                                        )
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control form-control-sm"
-                                        name="montant_mobilise"
-                                        value={axe.montant_mobilise || ""}
-                                        onChange={axeInputHandler(
-                                          index,
-                                          i
-                                        )}
-                                        id="montant_mobilise"
-                                        id="montant_mobilise"
-                                        placeholder={`Montant en ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}
-                                      />
-                                    </div>
-                                    <div className="form-group col-md-3 col-sm-12 pl-1">
-                                      <label htmlFor="montant_execute">
-                                        Montant executé (
-                                        {monnaie == "EURO"
-                                          ? "€"
-                                          : monnaie == "DOLLAR"
-                                          ? "$"
-                                          : monnaie == "XOF"
-                                          ? "CFA"
-                                          : `${getValues().autre_monnaie}`}
-                                        )
-                                      </label>
-                                      <input
-                                        type="number"
-                                        className="form-control form-control-sm"
-                                        name="montant_execute"
-                                        value={axe.montant_execute || ""}
-                                        onChange={axeInputHandler(
-                                          index,
-                                          i
-                                        )}
-                                        id="montant_execute"
-                                        id="montant_execute"
-                                        placeholder={`Montant en ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}
-                                      />
-                                    </div> */}
-                                      {/* <div className="form-group col-md-1  mx-auto my-auto ">
-                                      <button
-                                        type="button"
-                                        className="btn btn-sm"
-                                        onClick={() => RemoveAxe(index, i)}
-                                      >
-                                        <i className="mdi mdi-delete mdi-18px text-danger "></i>
-                                      </button>
-                                    </div> */}
-                                    </div>
-                                 
-
-                                  {/* <div style={{ marginTop: "-10px" }}>
-                                    <button
-                                      type="button"
-                                      className="btn btn-sm text-primary"
-                                      onClick={() => addAxe(index)}
-                                    >
-                                      <FontAwesomeIcon icon={faPlus} />
-                                      <small>Axe d'intervention</small>
-                                    </button>
-                                  </div> */}
-
-                                  {/* {pilier.axe.length > 1 && (
-                                    <div className="bg-light row w-full no-gutters p-1">
-                                      <div className="col-md-3 my-auto">
-                                        <small className="text-muted font-weight-bold">
-                                          {pilier.pilier}
-                                        </small>
-                                      </div>
-                                      <div className="col-md-2 mx-4 pl-2 border-left">
-                                        <small className="text-muted font-weight-bold">
-                                          Total prévu
-                                        </small>
-                                        <p
-                                          style={{ margin: "2px 1px" }}
-                                          className="text-muted"
-                                        >{`${totalPillier(index).total_prevu} ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}</p>
-                                      </div>
-                                      <div className="col-md-2 mx-4 pl-2 border-left">
-                                        <small className="text-muted font-weight-bold">
-                                          Total mobilisé
-                                        </small>
-                                        <p
-                                          style={{ margin: "2px 1px" }}
-                                          className="text-muted"
-                                        >{`${totalPillier(index).total_mobilise} ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}</p>
-                                      </div>
-                                      <div className="col-md-2 mx-4 pl-2 border-left">
-                                        <small className="text-muted font-weight-bold">
-                                          Total exécuté
-                                        </small>
-                                        <p
-                                          style={{ margin: "2px 1px" }}
-                                          className="text-muted"
-                                        >{`${totalPillier(index).total_execute} ${
-                                          monnaie == "EURO"
-                                            ? "€"
-                                            : monnaie == "DOLLAR"
-                                            ? "$"
-                                            : monnaie == "XOF"
-                                            ? "CFA"
-                                            : `${getValues().autre_monnaie}`
-                                        }`}</p>
                                       </div>
                                     </div>
-                                  )} */}
                                 </div>
                               </div>
                                ))}

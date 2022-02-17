@@ -162,7 +162,7 @@ function Investissements(props) {
                                       )
                                     }
                                   />
-                                  <FontAwesomeIcon
+                                  {/* <FontAwesomeIcon
                                     className="mr-2"
                                     icon={faPen}
                                     color="grey"
@@ -170,7 +170,7 @@ function Investissements(props) {
                                     data-toggle="modal"
                                     data-target="#editModal"
                                     onClick={() => editInvestisement(item.id)}
-                                  />
+                                  /> */}
                                 </span>
                               </td>
                             </tr>

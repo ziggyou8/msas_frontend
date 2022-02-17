@@ -110,7 +110,7 @@ const Dashboard = () => {
             {" "}
             Tableau de bord
           </h3>
-          <button
+          {/* <button
             className="btn btn-primary btn-sm text-white display btn-bar"
             data-toggle="modal"
             data-target="#exampleModal"
@@ -120,7 +120,7 @@ const Dashboard = () => {
               <FontAwesomeIcon icon={faUser} className="mr-1" />
             </span>
             Ajouter un utilisateur
-          </button>
+          </button> */}
         </div>
       </div>
       <div class="container-fluid dash-content">
