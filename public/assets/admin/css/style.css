@@ -61,6 +61,8 @@ a:hover {
 .avatar{
   border-radius: 15px;
   border: 10px solid #dfe7f7;
+  width: 155px;
+  height: 150px;
 }
 
 .photo{

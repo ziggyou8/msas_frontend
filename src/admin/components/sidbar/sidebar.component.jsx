@@ -10,9 +10,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo.svg";
+import user from "../../../assets/images/user.png";
 import Lamine from "../../../assets/images/lamine.png";
+import { fetchCurrentUserAsync } from "../../../redux/user/user.thunk";
 
 function AdminSideBar({ currentUser }) {
+  // console.log(currentUser);
   const location = useLocation();
   return (
     <nav id="sidebar" class="">
@@ -21,12 +24,19 @@ function AdminSideBar({ currentUser }) {
       </div>
       <div class="photo">
           <div class="m-5 mb-1">
-            <img class="avatar" src={Lamine}  alt=""/>
+            <img class="avatar" src={
+                      currentUser && currentUser?.photo
+                        ? `${currentUser?.photo}`
+                        : user
+                    }  alt=""/>
           </div>
           <p class="text-center mb-1 text-secondary">
-              Lamine NDIAYE
+              {currentUser &&
+                      `${currentUser?.prenom} ${currentUser?.nom}`}
           </p>
-          <p class="text-center mb-4 text-small"><span>Citoyen</span></p>
+          <p class="text-center mb-4 text-small"><span>{currentUser?.roles.length > 0
+                      ? currentUser?.roles[0]
+                      : "Piont focal"}</span></p>
           
         </div>
       <ul class="list-unstyled components">
@@ -187,5 +197,8 @@ function AdminSideBar({ currentUser }) {
     </nav>
   );
 }
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: () => dispatch(fetchCurrentUserAsync()),
+});
 
 export default AdminSideBar;
