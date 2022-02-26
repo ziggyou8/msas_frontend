@@ -20,7 +20,7 @@ const updateTokenUpload = () => {
 let baseURL = "";
 
 if (process.env.NODE_ENV === "development") {
-  baseURL = "http://176.31.107.205/msas_backend/public/api/v1/";
+      baseURL = "http://localhost:8000/api/v1/";
 } else {
   baseURL = "http://176.31.107.205/msas_backend/public/api/v1/";
 }

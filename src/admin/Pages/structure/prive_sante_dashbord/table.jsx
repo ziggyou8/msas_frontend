@@ -401,6 +401,7 @@ const PriveSanteTable = ({
                         <th>MONNAIE</th>
                         <th>MODE FINANCEMENT</th>
                         <th>PILIER</th>
+                        <th>STATUT</th>
                         <th>ACTIONS</th>
                       </tr>
                     </thead>
@@ -431,8 +432,19 @@ const PriveSanteTable = ({
                                 ))}
                               </div>
                             </td>
+                            <td><p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p></td>
                             <td>
-                              <span>
+                              <span style={{display:"inline-block", justifyContent:"space-between", width:"100%"}}>
+                              <FontAwesomeIcon
+                                  className="mr-2"
+                                  icon={faCheck}
+                                  color="grey"
+                                  role="button"
+                                  data-toggle="modal"
+                                  data-target="#editModal"
+                                  //TODO : Validation action
+                                  onClick={() => ""}
+                                />
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faEye}

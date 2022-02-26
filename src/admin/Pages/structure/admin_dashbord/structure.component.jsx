@@ -90,7 +90,7 @@ function Structure(props) {
         <div class="container-fluid dash-content">
           <div class="row mb-4">
             <div class="col-md-12 col-lg-12">
-              {currentUser?.roles.includes("Admin") && (
+              {currentUser?.roles.includes("Admin DPRS") && (
                 <StructureForm allContries={allContries} {...otherProps} />
               )}
 

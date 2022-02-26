@@ -49,7 +49,7 @@ function AdminSideBar({ currentUser }) {
             <span className="menu-title">Tableau de Bord</span>
           </Link>
         </li>
-        {currentUser?.roles.includes("Admin") && (
+        {currentUser?.roles.includes("Admin DPRS") && (
           <>
             <li>
               <Link
@@ -98,7 +98,7 @@ function AdminSideBar({ currentUser }) {
           </>
         )}
 
-        {!currentUser?.roles.includes("Admin") && (
+        {!currentUser?.roles.includes("Admin DPRS") && (
           <li>
             <Link
               className={`nav-link ${
@@ -140,7 +140,7 @@ function AdminSideBar({ currentUser }) {
             <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
           </a>
         </li>
-        {currentUser?.roles.includes("Admin") ? (
+        {currentUser?.roles.includes("Admin DPRS") ? (
           <>
             <li className="nav-item">
               <Link

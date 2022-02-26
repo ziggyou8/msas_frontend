@@ -227,7 +227,7 @@ function UserProfile({
                         <div className="row ml-0   pt-3 border-bottom  bg-light">
                           <strong className="col-md-3">Rôle :</strong>
                           <p className=" col-md-7 text-muted">
-                            {currentUser?.roles?.includes("Admin")
+                            {currentUser?.roles?.includes("Admin DPRS")
                               ? currentUser?.roles[0]
                               : "Point focal"}
                           </p>
