@@ -2,6 +2,7 @@ import {
   faCheck,
   faEye,
   faPen,
+  faPowerOff,
   faPenAlt,
   faPencilRuler,
   faTimes,
@@ -469,6 +470,14 @@ const PriveSanteTable = ({
                                   //TODO : Validation action
                                   onClick={() => validate(item.id)}
                                 />
+                                <FontAwesomeIcon
+                                className="mr-2"
+                                icon={faPowerOff}
+                                title="Rejeter"
+                                color="red"
+                                role="button"
+                                onClick={() => reject(item.id)}
+                              />
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faEye}

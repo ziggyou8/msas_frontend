@@ -113,7 +113,7 @@ function DetailInvestissement({
                   Investissement année {investissementById?.annee}
                 </h5>
                  <div class="actions d-flex align-items-center">
-                  {investissementById?.statut==="Enregistrer" &&
+                  {investissementById?.statut!=="Enregistrer" &&
                       <a
                         href="#"
                         type="button"

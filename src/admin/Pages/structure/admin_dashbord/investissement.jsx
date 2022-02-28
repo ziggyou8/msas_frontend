@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faCheck, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faCheck, faEye,faPowerOff, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
@@ -245,6 +245,15 @@ function Investissements(props) {
                                     // data-toggle="modal"
                                     // data-target="#editModal"
                                     onClick={() => validate(item.id)}
+                                  />
+
+                                   <FontAwesomeIcon
+                                    className="mr-2"
+                                    icon={faPowerOff}
+                                    alt="Rejeter"
+                                    color="red"
+                                    role="button"
+                                    onClick={() => reject(item.id)}
                                   />
                                   {/* <FontAwesomeIcon
                                     className="mr-2"
