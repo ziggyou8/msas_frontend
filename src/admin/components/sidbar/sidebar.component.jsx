@@ -36,7 +36,7 @@ function AdminSideBar({ currentUser }) {
           </p>
           <p class="text-center mb-4 text-small"><span>{currentUser?.roles.length > 0
                       ? currentUser?.roles[0]
-                      : "Piont focal"}</span></p>
+                      : ""}</span></p>
           
         </div>
       <ul class="list-unstyled components">

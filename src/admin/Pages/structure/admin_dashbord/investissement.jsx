@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import swal from "sweetalert";
 import { useEffect } from "react";
 import "./structure.style.scss";
 import { connect } from "react-redux";
@@ -28,8 +29,11 @@ import { fetchCollectiviteAsync } from "../../../../redux/collectivite/collectiv
 import Pagination from "../../../components/pagination/Pagination";
 import StructureForm from "./form";
 import {
+  fetchInvestissementsByStructureAsync,
   fetchInvestissementByIdAsync,
   fetchInvestissementsAsync,
+  validationInvestissementAsync,
+  rejectInvestissementAsync,
 } from "../../../../redux/investissement/investissement.thunk";
 import {
   selectListInvestissementByStructure,
@@ -50,7 +54,10 @@ function Investissements(props) {
     investissementData,
     investissements,
     investissementsById,
+    fetchInvestissement,
     fetchInvestissementById,
+    validationInvestissement,
+    rejectInvestissement,
     isLoading,
     ...otherProps
   } = props;
@@ -82,19 +89,49 @@ function Investissements(props) {
   const editInvestisement = (id) => {
     fetchInvestissementById(id);
   };
-  const ValideInvestisement = (id) => {
-   toast.success(`Validé avec succés`, {
-          position: "top-right",
-          autoClose: 5000,
-          className: "success-alert",
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+  const validate = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour passer a la validation?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Valider avec succées", {
+          icon: "success",
         });
-};
+        validationInvestissement(id);
+        investissementData();
+        return true;
+      } else {
+        swal("Validation Annulée!");
+        return false;
+      }
+    });
+  };
 
+  const reject = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour rejeter l'investissement?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Rejeter avec succées", {
+          icon: "success",
+        });
+        rejectInvestissement(id);
+        investissementData();
+         return true;
+      } else {
+        swal("Rejet Annulé!");
+        return false;
+      }
+    });
+  };
   return (
     <div>
       <div class="content Title">
@@ -136,14 +173,16 @@ function Investissements(props) {
                     >
                       <thead>
                         <tr>
-                          <th>LOGO</th>
-                          <th>ANNEE</th>
-                          <th>SOURCE FINANCEMENT</th>
+                          <th>Anné</th>
+                          <th>MONNAIE</th>
+                          <th>MODE FINANCEMENT</th>
+                          {/* <th>PILIER</th> */}
+                          <th>STATUT</th>
                           <th>ACTIONS</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {currentTableData?.map((item) => {
+                        {currentTableData?.filter(investissement=> (investissement.statut === "Prévalider")).map((item) => {
                           return (
                             <tr>
                               <td>
@@ -160,8 +199,31 @@ function Investissements(props) {
                                   </span>
                                 </div>
                               </td>
-                              <td>{item?.annee}</td>
-                              <td>{item.structure?.source_financement}</td>
+                              <td>{item.monnaie}</td>
+                              <td>
+                                <div className="d-flex">
+                                  {item.mode_financement.map(
+                                    (mode) =>
+                                      mode.montant && (
+                                        <span className="actif mr-1">
+                                          {mode.libelle}
+                                        </span>
+                                      )
+                                  )}
+                                </div>
+                              </td>
+                              {/* <td>
+                                <div className="d-flex">
+                                  {item.piliers?.map((pl) => (
+                                    <span className="actif mr-1">
+                                      {pl.libelle}
+                                    </span>
+                                  ))}
+                                </div>
+                              </td> */}
+                              <td>
+                                <p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p>
+                              </td>
                               <td>
                                 <span>
                                   <FontAwesomeIcon
@@ -182,7 +244,7 @@ function Investissements(props) {
                                     role="button"
                                     // data-toggle="modal"
                                     // data-target="#editModal"
-                                    onClick={() => ValideInvestisement(item.id)}
+                                    onClick={() => validate(item.id)}
                                   />
                                   {/* <FontAwesomeIcon
                                     className="mr-2"
@@ -221,7 +283,10 @@ function Investissements(props) {
 const mapDispatchToProps = (dispatch) => ({
   investissementData: () => dispatch(fetchInvestissementsAsync()),
   initCollectiviteList: () => dispatch(fetchCollectiviteAsync()),
+  fetchInvestissement: () => dispatch(fetchInvestissementsByStructureAsync()),
   fetchInvestissementById: (id) => dispatch(fetchInvestissementByIdAsync(id)),
+  validationInvestissement: (id) => dispatch(validationInvestissementAsync(id)),
+  rejectInvestissement: (id) => dispatch(rejectInvestissementAsync(id)),
 
   /*  initStructureData: () => dispatch(fetchStructureAsync()),
   getCurrentStructure: (id) => dispatch(fetchStructureByIdAsync(id)),

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import swal from "sweetalert";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -18,6 +19,8 @@ import { useDeepCompareEffect } from "react-use";
 import {
   fetchInvestissementsByStructureAsync,
   fetchInvestissementByIdAsync,
+  validationInvestissementAsync,
+  rejectInvestissementAsync,
 } from "../../../../redux/investissement/investissement.thunk";
 import {
   selectIsLoading,
@@ -41,6 +44,8 @@ function PriveSanteDashbord(props) {
     currentUser,
     fetchInvestissement,
     fetchInvestissementById,
+    validationInvestissement,
+    rejectInvestissement,
     investissementsById,
     investissements,
     getCurrentUser,
@@ -54,6 +59,51 @@ function PriveSanteDashbord(props) {
 
   const editInvestisement = (id) => {
     fetchInvestissementById(id);
+    fetchInvestissement();
+  };
+
+  const validate = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour passer a la validation?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Valider avec succées", {
+          icon: "success",
+        });
+        validationInvestissement(id);
+        fetchInvestissement();
+        return true;
+      } else {
+        swal("Validation Annulée!");
+        return false;
+      }
+    });
+  };
+
+  const reject = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour rejeter l'investissement?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Rejeter avec succées", {
+          icon: "success",
+        });
+        rejectInvestissement(id);
+        fetchInvestissement();
+         return true;
+      } else {
+        swal("Rejet Annulé!");
+        return false;
+      }
+    });
   };
 
   return (
@@ -97,6 +147,8 @@ function PriveSanteDashbord(props) {
               investissements={investissements}
               getCurrentUser={getCurrentUser}
               editInvestisement={editInvestisement}
+              validate={validate}
+              reject={reject}
               isLoading={isLoading}
             />
           </div>
@@ -110,6 +162,8 @@ function PriveSanteDashbord(props) {
 const mapDispatchToProps = (dispatch) => ({
   fetchInvestissement: () => dispatch(fetchInvestissementsByStructureAsync()),
   fetchInvestissementById: (id) => dispatch(fetchInvestissementByIdAsync(id)),
+  validationInvestissement: (id) => dispatch(validationInvestissementAsync(id)),
+  rejectInvestissement: (id) => dispatch(rejectInvestissementAsync(id)),
   getCurrentUser: () => dispatch(fetchCurrentUserAsync()),
   storeStructure: (subUrl, data) => dispatch(storeStructureAsync(subUrl, data)),
 });

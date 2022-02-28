@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import {
+  getItemValidate,
   getItem,
   getItems,
   removeItem,
@@ -15,6 +16,8 @@ import {
   removeInvestissementSuccess,
   fetchInvestissementStart,
   fetchInvestissementSuccess,
+  validationInvestissementSuccess,
+  rejectInvestissementSuccess,
 } from "./investissement.actions";
 
 export const fetchInvestissementsByStructureAsync = () => {
@@ -52,6 +55,52 @@ export const fetchInvestissementByIdAsync = (id) => {
     getItem("investissements", id)
       .then((res) => {
         dispatch(fetchInvestissementByIdSuccess(res.data.data));
+      })
+      .catch((err) => {
+        dispatch(fetchInvestissementFail(err.message));
+      });
+  };
+};
+
+export const validationInvestissementAsync = (id) => {
+  return (dispatch) => {
+    dispatch(fetchInvestissementStart());
+    getItem("investissements_validation", id)
+      .then((res) => {
+        dispatch(validationInvestissementSuccess(res.data.data));
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "success-alert",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      })
+      .catch((err) => {
+        dispatch(fetchInvestissementFail(err.message));
+      });
+  };
+};
+
+export const rejectInvestissementAsync = (id) => {
+  return (dispatch) => {
+    dispatch(fetchInvestissementStart());
+    getItem("investissements_rejection", id)
+      .then((res) => {
+        dispatch(rejectInvestissementSuccess(res.data.data));
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          className: "success-alert",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       })
       .catch((err) => {
         dispatch(fetchInvestissementFail(err.message));

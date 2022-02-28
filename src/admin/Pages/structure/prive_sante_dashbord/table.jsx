@@ -8,7 +8,7 @@ import {
   faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useGeolocation } from "react-use";
 import Pagination from "../../../components/pagination/Pagination";
@@ -24,6 +24,8 @@ const PriveSanteTable = ({
   storeStructure,
   getCurrentUser,
   investissements,
+  validate,
+  reject,
   editInvestisement,
   isLoading,
   history,
@@ -41,6 +43,8 @@ const PriveSanteTable = ({
   const [isCurrentGeolocalisation, setIsCurrentGeolocalisation] =
     useState(false);
   const [isStructureUpdated, setIsStructureUpdated] = useState(false);
+  const [AdminstructureListe, setAdminstructureListe] = useState(false);
+  const [PointfocalListe, setPointfocalListe] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -68,6 +72,25 @@ const PriveSanteTable = ({
     setIsStructureUpdated(true);
   }, [isStructureUpdated]);
 
+  useEffect(() => {
+    HandleListeInvestissement();
+    }, [])
+    console.log(currentUser?.roles[0])
+  const HandleListeInvestissement = () => {
+    if (currentUser?.roles[0]=== "Admin structure"){
+      setAdminstructureListe(true)
+        
+      
+    }else 
+      if(currentUser?.roles[0]=== "Point Focal") {
+      setPointfocalListe(true)
+     
+          
+      
+      
+    }
+  } 
+
   const submitForm = async (data, e) => {
     if (isCurrentGeolocalisation) {
       data.latitude = "14.7510199";
@@ -91,6 +114,7 @@ const PriveSanteTable = ({
     setIsCurrentGeolocalisation(false);
     getCurrentUser();
   };
+
 
   return (
     <div>
@@ -400,13 +424,13 @@ const PriveSanteTable = ({
                         <th>Anné</th>
                         <th>MONNAIE</th>
                         <th>MODE FINANCEMENT</th>
-                        <th>PILIER</th>
+                        {/* <th>PILIER</th> */}
                         <th>STATUT</th>
                         <th>ACTIONS</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentTableData?.map((item) => {
+                      {AdminstructureListe && ((currentTableData?.filter(investissement=> investissement.statut === "En attente de validation"))).map((item) => {
                         return (
                           <tr key={item.id}>
                             <td>{item.annee}</td>
@@ -423,7 +447,7 @@ const PriveSanteTable = ({
                                 )}
                               </div>
                             </td>
-                            <td>
+                            {/* <td>
                               <div className="d-flex">
                                 {item.piliers?.map((pl) => (
                                   <span className="actif mr-1">
@@ -431,7 +455,7 @@ const PriveSanteTable = ({
                                   </span>
                                 ))}
                               </div>
-                            </td>
+                            </td> */}
                             <td><p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p></td>
                             <td>
                               <span style={{display:"inline-block", justifyContent:"space-between", width:"100%"}}>
@@ -440,10 +464,75 @@ const PriveSanteTable = ({
                                   icon={faCheck}
                                   color="grey"
                                   role="button"
+                                  // data-toggle="modal"
+                                  // data-target="#editModal"
+                                  //TODO : Validation action
+                                  onClick={() => validate(item.id)}
+                                />
+                                <FontAwesomeIcon
+                                  className="mr-2"
+                                  icon={faEye}
+                                  color="grey"
+                                  role="button"
+                                  onClick={() =>
+                                    history.push(
+                                      `/acteur/investissements/${item.id}`
+                                    )
+                                  }
+                                />
+                                <FontAwesomeIcon
+                                  className="mr-2"
+                                  icon={faPen}
+                                  color="grey"
+                                  role="button"
                                   data-toggle="modal"
                                   data-target="#editModal"
+                                  onClick={() => editInvestisement(item.id)}
+                                />
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+
+                      {PointfocalListe && currentTableData?.filter(investissement=> investissement.statut === "Enregistrer").map((item) => {
+                        return (
+                          <tr key={item.id}>
+                            <td>{item.annee}</td>
+                            <td>{item.monnaie}</td>
+                            <td>
+                              <div className="d-flex">
+                                {item.mode_financement.map(
+                                  (mode) =>
+                                    mode.montant && (
+                                      <span className="actif mr-1">
+                                        {mode.libelle}
+                                      </span>
+                                    )
+                                )}
+                              </div>
+                            </td>
+                            {/* <td>
+                              <div className="d-flex">
+                                {item.piliers?.map((pl) => (
+                                  <span className="actif mr-1">
+                                    {pl.libelle}
+                                  </span>
+                                ))}
+                              </div>
+                            </td> */}
+                            <td><p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p></td>
+                            <td>
+                              <span style={{display:"inline-block", justifyContent:"space-between", width:"100%"}}>
+                              <FontAwesomeIcon
+                                  className="mr-2"
+                                  icon={faCheck}
+                                  color="grey"
+                                  role="button"
+                                  // data-toggle="modal"
+                                  // data-target="#editModal"
                                   //TODO : Validation action
-                                  onClick={() => ""}
+                                  onClick={() => validate(item.id)}
                                 />
                                 <FontAwesomeIcon
                                   className="mr-2"

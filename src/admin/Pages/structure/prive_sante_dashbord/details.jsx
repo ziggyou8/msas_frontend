@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import swal from "sweetalert";
+
 //import "./structure.style.scss";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -8,7 +10,11 @@ import { fetchCollectiviteByIdAsync } from "../../../../redux/collectivite/colle
 import { selectInvestissementById } from "../../../../redux/investissement/investissement.selector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
-import { fetchInvestissementByIdAsync } from "../../../../redux/investissement/investissement.thunk";
+import { fetchInvestissementsByStructureAsync,
+         fetchInvestissementByIdAsync,
+         validationInvestissementAsync,
+         rejectInvestissementAsync } from "../../../../redux/investissement/investissement.thunk";
+import { fetchCurrentUserAsync } from "../../../../redux/user/user.thunk";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import { faDonate } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,11 +23,61 @@ function DetailInvestissement({
   investissementById,
   getInvestissementById,
   history,
-}) {
+},props) {
+  const {
+    fetchInvestissement,
+    validationInvestissement,
+    rejectInvestissement
+  } = props;
   console.log("🔥", investissementById);
   useEffect(() => {
     getInvestissementById(params.id);
   }, []);
+
+  const validate = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour passer a la validation?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Valider avec succées", {
+          icon: "success",
+        });
+        validationInvestissement(id);
+        getInvestissementById(id);
+        history.push("/admin/structures/prive");
+        return true;
+      } else {
+        swal("Validation Annulée!");
+        return false;
+      }
+    });
+  };
+
+  const reject = (id) => {
+    return swal({
+      title: `Etes vous sûr de voulour rejeter l'investissement?`,
+      text: "Assurez-vous que les informations saisis sont exactes.",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Rejeter avec succées", {
+          icon: "success",
+        });
+        rejectInvestissement(id);
+        getInvestissementById(id);
+         return true;
+      } else {
+        swal("Rejet Annulé!");
+        return false;
+      }
+    });
+  };
 
   return (
     <div class="content ">
@@ -56,12 +112,53 @@ function DetailInvestissement({
                 <h5 class="mb-0">
                   Investissement année {investissementById?.annee}
                 </h5>
+                 <div class="actions d-flex align-items-center">
+                  {investissementById?.statut==="Enregistrer" &&
+                      <a
+                        href="#"
+                        type="button"
+                        onClick={() => reject(investissementById?.id)}
+                        class="btn btn-rejeter align-items-center mr-3"
+                      >
+                        <img src="/assets/images/rejeter.svg" alt="" class="mr-2" />
+                        <span>rejeter</span>
+                      </a>
+                  }
+                  <a
+                    href="#"
+                    type="button"
+                    onClick={() => validate(investissementById?.id)}
+                    class="btn btn-prevalider align-items-center mr-3"
+                  >
+                    <img src="/assets/images/previsualiser.svg" alt="" class="mr-2" />
+                    <span>Prevalider</span>
+                  </a>
+                </div>
               </div>
               <div class="card-body ">
                 <p class="card-title"></p>
 
                 <div className=" justify-content-between">
-                <fieldset className="scheduler-border border">
+                  <fieldset className="scheduler-border border">
+                    <legend className="scheduler-border text-muted">
+                      Statut investissement
+                    </legend>
+                    <div className="row pt-2">
+                      <div className="col-md-6 d-flex mb-1">
+                        <span className="text-muted font-weight-bold mr-3">
+                          Etat :
+                        </span>{" "}
+                        {investissementById?.statut
+                           && (
+                          <p className="badge badge-primary mx-1">
+                            {investissementById?.statut}
+                          </p>
+                        )}
+                        
+                      </div>
+                    </div>
+                  </fieldset>
+                  <fieldset className="scheduler-border border">
                     <legend className="scheduler-border text-muted">
                       Infos primaires
                     </legend>
@@ -197,6 +294,9 @@ function DetailInvestissement({
 
 const mapDispatchToProps = (dispatch) => ({
   getInvestissementById: (id) => dispatch(fetchInvestissementByIdAsync(id)),
+  validationInvestissement: (id) => dispatch(validationInvestissementAsync(id)),
+  rejectInvestissement: (id) => dispatch(rejectInvestissementAsync(id)),
+  getCurrentUser: () => dispatch(fetchCurrentUserAsync())
 });
 
 const mapStateToProps = createStructuredSelector({

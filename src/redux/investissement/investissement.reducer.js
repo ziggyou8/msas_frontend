@@ -68,6 +68,16 @@ const investissementReducer = (state = INITIAL_STATE, action) => {
         isFetching: false,
         investissementById: action.payload,
       };
+    case investissementTypeActuions.VALIDATION_INVESTISSEMENT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case investissementTypeActuions.REJECT_INVESTISSEMENT_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+      };
     default:
       return state;
   }

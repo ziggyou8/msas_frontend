@@ -77,6 +77,26 @@ a:hover {
     font-weight: 600;
     font-family: Montserrat;
 }
+.btn-rejeter,
+.btn-prevalider,.btn-suivant {
+    display: flex;
+    padding: 5px 10px 5px;
+    border-radius: 25px;
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 13px;
+}
+.btn-rejeter:hover,
+.btn-rejeter {
+    border-color: #C74645;
+    color: #C74645;
+}
+.btn-prevalider:hover,
+.btn-prevalider {
+    border-color: #2E7D32;
+    background: #2E7D32;
+    color: #ffffff;
+}
 .top-form{
   background-color: #2F61B7;
   border: #707070;

@@ -22,6 +22,28 @@ export const removeItem = (url, id, libelle) => {
   });
 };
 
+export const getItemValidate = (url, id) => {
+  return swal({
+    title: `Etes vous sûr de voulour passer a la validation?`,
+    text: "Assurez-vous que les informations saisis sont exactes.",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      swal("Valider avec succées", {
+        icon: "success",
+      });
+      http.get(`${url}/${id}`);
+      return true;
+    } else {
+      swal("Validation Annulée!");
+      return false;
+    }
+  });
+  // return http.get(`${url}/${id}`);
+};
+
 export const getItems = (url) => {
   return http.get(url);
 };

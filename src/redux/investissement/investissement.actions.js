@@ -4,6 +4,15 @@ export const fetchInvestissementByIdSuccess = (id) => ({
   type: investissementTypeActuions.FETCH_INVESTISSEMENT_BY_ID_SUCCESS,
   payload: id,
 });
+export const validationInvestissementSuccess = (id) => ({
+  type: investissementTypeActuions.VALIDATION_INVESTISSEMENT_SUCCESS,
+  payload: id,
+});
+
+export const rejectInvestissementSuccess = (id) => ({
+  type: investissementTypeActuions.REJECT_INVESTISSEMENT_SUCCESS,
+  payload: id,
+});
 
 export const fetchInvestissementStart = () => ({
   type: investissementTypeActuions.FETCH_INVESTISSEMENT_START,
