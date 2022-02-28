@@ -156,7 +156,6 @@ function UserForm(props) {
                     id="photo"
                     className="form-control"
                     {...register("photo")}
-                    id="photo"
                     placeholder="Prénom"
                   />
                   {errors.photo && errors.photo.type === "required" && (

@@ -22,14 +22,11 @@ function DetailInvestissement({
   match: { params },
   investissementById,
   getInvestissementById,
+  fetchInvestissement,
+  validationInvestissement,
+  rejectInvestissement,
   history,
-},props) {
-  const {
-    fetchInvestissement,
-    validationInvestissement,
-    rejectInvestissement
-  } = props;
-  console.log("🔥", investissementById);
+}) {
   useEffect(() => {
     getInvestissementById(params.id);
   }, []);
@@ -47,14 +44,14 @@ function DetailInvestissement({
           icon: "success",
         });
         validationInvestissement(id);
-        getInvestissementById(id);
+        getInvestissementById(id)
         history.push("/admin/structures/prive");
         return true;
       } else {
         swal("Validation Annulée!");
         return false;
       }
-    });
+    })
   };
 
   const reject = (id) => {

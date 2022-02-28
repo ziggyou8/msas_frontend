@@ -73,24 +73,22 @@ const PriveSanteTable = ({
     setIsStructureUpdated(true);
   }, [isStructureUpdated]);
 
-  useEffect(() => {
-    HandleListeInvestissement();
-    }, [])
-    console.log(currentUser?.roles[0])
+  
   const HandleListeInvestissement = () => {
     if (currentUser?.roles[0]=== "Admin structure"){
-      setAdminstructureListe(true)
-        
-      
+      setAdminstructureListe(true); 
+      return currentTableData.filter(inv => inv.statut === "En attente de validation"  ||  inv.statut === "Prévalider" );
     }else 
       if(currentUser?.roles[0]=== "Point Focal") {
       setPointfocalListe(true)
-     
-          
-      
-      
+      return currentTableData;
+       
     }
   } 
+
+  useEffect(() => {
+    HandleListeInvestissement();
+    }, [HandleListeInvestissement])
 
   const submitForm = async (data, e) => {
     if (isCurrentGeolocalisation) {
@@ -431,7 +429,7 @@ const PriveSanteTable = ({
                       </tr>
                     </thead>
                     <tbody>
-                      {AdminstructureListe && ((currentTableData?.filter(investissement=> investissement.statut === "En attente de validation"))).map((item) => {
+                      {AdminstructureListe && ((currentTableData?.filter(investissement=> investissement.statut === "En attente de validation" || investissement.statut === "Prévalider"))).map((item) => {
                         return (
                           <tr key={item.id}>
                             <td>{item.annee}</td>
