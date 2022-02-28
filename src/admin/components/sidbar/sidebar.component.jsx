@@ -98,7 +98,34 @@ function AdminSideBar({ currentUser }) {
           </>
         )}
 
-        {!currentUser?.roles.includes("Admin DPRS") && (
+        {currentUser?.roles.includes("Admin structure") && (
+          <>
+            <li>
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/admin/structures/users" ? "active" : ""
+                }`}
+                to="/admin/structures/users"
+              >
+                <FontAwesomeIcon icon={faUsers} />
+                <span className="menu-title">Utilisateurs</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/admin/structures/prive" ? "active" : ""
+                }`}
+                to="/admin/structures/prive"
+              >
+                <FontAwesomeIcon icon={faDonate} />
+                <span className="menu-title">Investissement</span>
+              </Link>
+            </li>
+          </>
+         )}
+
+        {!currentUser?.roles.includes("Admin DPRS") && !currentUser?.roles.includes("Admin structure") &&(
           <li>
             <Link
               className={`nav-link ${

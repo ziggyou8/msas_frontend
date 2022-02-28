@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Dashboard from "./admin/Pages/dashbords/Dashboard";
 import Structure from "./admin/Pages/structure/admin_dashbord/structure.component";
+import UserAdminStructure from "./admin/Pages/structure/utilisateur/UserAdminStructure.component";
 import PriveSanteDashbord from "./admin/Pages/structure/prive_sante_dashbord/PriveSanteDashbord";
 import AuthPage from "./admin/Pages/auth/auth.page";
 import PublicLayout from "./public-layout";
@@ -77,6 +78,11 @@ function App() {
         exact
         path="/admin/structures/prive"
         component={PriveSanteDashbord}
+      />
+      <AdminRouteDispatcher
+        exact
+        path="/admin/structures/users"
+        component={UserAdminStructure}
       />
       <AdminRouteDispatcher
         exact
