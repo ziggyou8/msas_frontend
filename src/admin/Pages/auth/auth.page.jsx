@@ -24,9 +24,9 @@ class AuthPage extends React.Component {
         localStorage.setItem("token", res.data.data.token);
 
         switch (res.data.data.roles[0]) {
-          case "SPS Admin":
-          case "EPS Admin":
-            this.props.history.push("/admin/dashboard");
+          case "Point_focal":
+          case "Admin structure":
+            this.props.history.push("/admin/structures/prive");
             break;
           case "ONG Admin":
             this.props.history.push("/admin/structures/ong");

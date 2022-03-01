@@ -5,12 +5,14 @@ import { connect } from "react-redux";
 import { useEffect } from "react";
 import { createStructuredSelector } from "reselect";
 import {
-  selectListUser,
+  selectUserByStructure,
   selectUserById,
+  selectCurrentUser
 } from "../../../../redux/user/user.selector";
 import {
   fetchUsersAsync,
   fetchUserByIdAsync,
+  fetchUserByStructureAsync,
   storeUserAsync,
   updateUserAsync,
   removeUserAsync,
@@ -39,8 +41,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 let PageSize = 8;
 const UserAdminStructure = (props) => {
   const {
+    currentUser,
     usersList,
     getUserById,
+    getUserByStructure,
     removeUser,
     activateUserStatus,
     ...otherProps
@@ -55,7 +59,8 @@ const UserAdminStructure = (props) => {
   }, [currentPage, usersList]);
 
   useEffect(() => {
-    props.initUsersList();
+    console.log('======',currentUser.structure.id)
+    getUserByStructure(1);
   }, []);
 
   const deleteUser = (id, libelle) => {
@@ -185,13 +190,13 @@ const UserAdminStructure = (props) => {
                 </table>
               </div>
             </div>
-            <Pagination
+            {/* <Pagination
               className="pagination-bar mt-2 float-right mr-4"
               currentPage={currentPage}
-              totalCount={usersList.length}
+              // totalCount={usersList.length}
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -202,6 +207,7 @@ const UserAdminStructure = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   resetUser: () => dispatch(resetEditedUser()),
   getUserById: (id) => dispatch(fetchUserByIdAsync(id)),
+  getUserByStructure: (id) => dispatch(fetchUserByStructureAsync(id)),
   activateUserStatus: (id) => dispatch(activateUserStatusdAsync(id)),
   initUsersList: () => dispatch(fetchUsersAsync()),
   storeUser: (data) => dispatch(storeUserAsync(data)),
@@ -213,7 +219,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = createStructuredSelector({
-  usersList: selectListUser,
+  currentUser: selectCurrentUser,
+  usersList: selectUserByStructure,
   editedUser: selectUserById,
   //roles
   rolesList: selectListRole,

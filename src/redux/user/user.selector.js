@@ -14,6 +14,10 @@ export const selectUserById = createSelector(
   [selectUers],
   (user) => user.userById
 );
+export const selectUserByStructure = createSelector(
+  [selectUers],
+  (user) => user.userByStructure
+);
 export const isLoading = createSelector([selectUers], (user) => user.isLoading);
 
 /* export const selectListUserWithoutAdmin = createSelector(

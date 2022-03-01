@@ -9,6 +9,7 @@ import {
 import {
   fetchCurrentUserSuccess,
   fetchUserByIdSuccess,
+  fetchUserByStructureSuccess,
   fetchUserFail,
   fetchUserStart,
   fetchUserSuccess,
@@ -51,6 +52,19 @@ export const fetchUserByIdAsync = (id) => {
     getItem("users", id)
       .then((res) => {
         dispatch(fetchUserByIdSuccess(res.data.data));
+      })
+      .catch((err) => {
+        dispatch(fetchUserFail(err.message));
+      });
+  };
+};
+
+export const fetchUserByStructureAsync = (id) => {
+  return (dispatch) => {
+    dispatch(fetchUserStart());
+    getItem("users_by_structure", id)
+      .then((res) => {
+        dispatch(fetchUserByStructureSuccess(res.data.data));
       })
       .catch((err) => {
         dispatch(fetchUserFail(err.message));

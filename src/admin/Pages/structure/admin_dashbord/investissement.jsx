@@ -182,7 +182,7 @@ function Investissements(props) {
                         </tr>
                       </thead>
                       <tbody>
-                        {currentTableData?.filter(investissement=> (investissement.statut === "Prévalider")).map((item) => {
+                        {((currentTableData?.filter(investissement=> investissement.statut === "Prévalider" || investissement.statut === "Valider"))).map((item) => {
                           return (
                             <tr>
                               <td>
@@ -229,6 +229,7 @@ function Investissements(props) {
                                   <FontAwesomeIcon
                                     className="mr-2"
                                     icon={faEye}
+                                    title="Details"
                                     color="grey"
                                     role="button"
                                     onClick={() =>
@@ -236,20 +237,24 @@ function Investissements(props) {
                                         `/admin/investissements/${item.id}`
                                       )
                                     }
-                                  />
-                                  <FontAwesomeIcon
-                                    className="mr-2"
-                                    icon={faCheck}
-                                    color="grey"
-                                    role="button"
-                                    // data-toggle="modal"
-                                    // data-target="#editModal"
-                                    onClick={() => validate(item.id)}
-                                  />
+                                  /> 
+                                  { (item?.statut !== "Valider") &&
+                                    <FontAwesomeIcon
+                                      className="mr-2"
+                                      icon={faCheck}
+                                      title="Valider"
+                                      color="grey"
+                                      role="button"
+                                      // data-toggle="modal"
+                                      // data-target="#editModal"
+                                      onClick={() => validate(item.id)}
+                                    />
+                                  }
 
                                    <FontAwesomeIcon
                                     className="mr-2"
                                     icon={faPowerOff}
+                                    title="Rejeter"
                                     alt="Rejeter"
                                     color="red"
                                     role="button"

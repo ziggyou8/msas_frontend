@@ -5,6 +5,11 @@ export const fetchUserByIdSuccess = id => ({
   payload:  id
 });
 
+export const fetchUserByStructureSuccess = id => ({
+  type: userTypeActuions.FETCH_USER_BY_STRUCTURE,
+  payload:  id
+});
+
 export const activateUserStatusSuccess = id => ({
   type: userTypeActuions.ACTIVE_STATUS_USER,
   payload:  id

@@ -17,7 +17,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isLoading } from "../../../../redux/user/user.selector";
 import { withRouter } from "react-router-dom";
-import Structure from "../../../../assets/images/structure.svg";
+import Structure from "../../../../assets/images/structure1.png";
 
 let PageSize = 8;
 const PriveSanteTable = ({
@@ -77,7 +77,7 @@ const PriveSanteTable = ({
   const HandleListeInvestissement = () => {
     if (currentUser?.roles[0]=== "Admin structure"){
       setAdminstructureListe(true); 
-      return currentTableData.filter(inv => inv.statut === "En attente de validation"  ||  inv.statut === "Prévalider" );
+      return currentTableData;
     }else 
       if(currentUser?.roles[0]=== "Point Focal") {
       setPointfocalListe(true)
@@ -129,7 +129,7 @@ const PriveSanteTable = ({
                             <div class="col-md-6 col-lg-2 no-border">
                                 <div class="un-stat">
                                     <div class="shadow-2 struture-logo un-stat-img">
-                                    <img src={Structure} alt="" class="app-logo struture-logo ml-1"/>
+                                    <img width={150} src={Structure} alt="" class="app-logo struture-logo ml-1"/>
                                     </div>
                                 </div>
                             </div>
@@ -458,27 +458,33 @@ const PriveSanteTable = ({
                             <td><p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p></td>
                             <td>
                               <span style={{display:"inline-block", justifyContent:"space-between", width:"100%"}}>
-                              <FontAwesomeIcon
-                                  className="mr-2"
-                                  icon={faCheck}
-                                  color="grey"
-                                  role="button"
-                                  // data-toggle="modal"
-                                  // data-target="#editModal"
-                                  //TODO : Validation action
-                                  onClick={() => validate(item.id)}
-                                />
+                              { ((currentUser?.roles[0]=== "Point Focal" && item?.statut === "Enregistrer") || (currentUser?.roles[0]=== "Admin structure" && item?.statut !== "Prévalider")) &&
                                 <FontAwesomeIcon
-                                className="mr-2"
-                                icon={faPowerOff}
-                                title="Rejeter"
-                                color="red"
-                                role="button"
-                                onClick={() => reject(item.id)}
-                              />
+                                    className="mr-2"
+                                    icon={faCheck}
+                                    title="Prevalider"
+                                    color="grey"
+                                    role="button"
+                                    // data-toggle="modal"
+                                    // data-target="#editModal"
+                                    //TODO : Validation action
+                                    onClick={() => validate(item.id)}
+                                  />
+                              }
+                              { ((currentUser?.roles[0]!== "Point Focal" && item?.statut === "Enregistrer") || (currentUser?.roles[0]=== "Admin structure" && item?.statut !== "Prévalider")) &&
+                                  <FontAwesomeIcon
+                                  className="mr-2"
+                                  icon={faPowerOff}
+                                  title="Rejeter"
+                                  color="red"
+                                  role="button"
+                                  onClick={() => reject(item.id)}
+                                />
+                              }
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faEye}
+                                  title="Details"
                                   color="grey"
                                   role="button"
                                   onClick={() =>
@@ -490,6 +496,7 @@ const PriveSanteTable = ({
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faPen}
+                                  title="Modifier"
                                   color="grey"
                                   role="button"
                                   data-toggle="modal"
@@ -502,7 +509,7 @@ const PriveSanteTable = ({
                         );
                       })}
 
-                      {PointfocalListe && currentTableData?.filter(investissement=> investissement.statut === "Enregistrer").map((item) => {
+                      {PointfocalListe && (currentTableData?.filter(investissement=> investissement.statut === "Enregistrer" || investissement.statut === "En attente de validation")).map((item) => {
                         return (
                           <tr key={item.id}>
                             <td>{item.annee}</td>
@@ -531,19 +538,23 @@ const PriveSanteTable = ({
                             <td><p style={{background:"yellow", padding:"3px 2px", marginBottom:-2, textAlign:"center"}}>{item.statut}</p></td>
                             <td>
                               <span style={{display:"inline-block", justifyContent:"space-between", width:"100%"}}>
-                              <FontAwesomeIcon
-                                  className="mr-2"
-                                  icon={faCheck}
-                                  color="grey"
-                                  role="button"
-                                  // data-toggle="modal"
-                                  // data-target="#editModal"
-                                  //TODO : Validation action
-                                  onClick={() => validate(item.id)}
-                                />
+                              { ((currentUser?.roles[0]=== "Point Focal" && item?.statut === "Enregistrer") || (currentUser?.roles[0]=== "Admin structure" && item?.statut !== "Prévalider")) &&
+                                <FontAwesomeIcon
+                                    className="mr-2"
+                                    icon={faCheck}
+                                    title="Prevalider"
+                                    color="grey"
+                                    role="button"
+                                    // data-toggle="modal"
+                                    // data-target="#editModal"
+                                    //TODO : Validation action
+                                    onClick={() => validate(item.id)}
+                                  />
+                              }
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faEye}
+                                  title="Details"
                                   color="grey"
                                   role="button"
                                   onClick={() =>
@@ -555,6 +566,7 @@ const PriveSanteTable = ({
                                 <FontAwesomeIcon
                                   className="mr-2"
                                   icon={faPen}
+                                  title="Modifier"
                                   color="grey"
                                   role="button"
                                   data-toggle="modal"

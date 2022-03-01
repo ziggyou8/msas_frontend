@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import "./structure.style.scss";
 import { connect } from "react-redux";
 import { selectStructureById } from "../../../../redux/structure/structure.selector";
+import {
+  selectCurrentUser
+} from "../../../../redux/user/user.selector";
 import { createStructuredSelector } from "reselect";
 import { fetchStructureByIdAsync } from "../../../../redux/structure/structurethunk";
 import Pagination from "../../../components/pagination/Pagination";
@@ -296,6 +299,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
   structureById: selectStructureById,
 });
 export default connect(mapStateToProps, mapDispatchToProps)(DetailStructure);

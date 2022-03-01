@@ -7,7 +7,9 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import Pagination from "../../../components/pagination/Pagination";
 import { fetchCollectiviteByIdAsync } from "../../../../redux/collectivite/collectivite.thunk";
-import { selectInvestissementById } from "../../../../redux/investissement/investissement.selector";
+import { selectInvestissementById } from "../../../../redux/investissement/investissement.selector";import {
+  selectCurrentUser
+} from "../../../../redux/user/user.selector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { fetchInvestissementsByStructureAsync,
@@ -20,6 +22,7 @@ import { faDonate } from "@fortawesome/free-solid-svg-icons";
 
 function DetailInvestissement({
   match: { params },
+  currentUser,
   investissementById,
   getInvestissementById,
   fetchInvestissement,
@@ -29,6 +32,7 @@ function DetailInvestissement({
 }) {
   useEffect(() => {
     getInvestissementById(params.id);
+    console.log('======',currentUser)
   }, []);
 
   const validate = (id) => {
@@ -68,6 +72,7 @@ function DetailInvestissement({
         });
         rejectInvestissement(id);
         getInvestissementById(id);
+        history.push("/admin/structures/prive");
          return true;
       } else {
         swal("Rejet Annulé!");
@@ -110,7 +115,7 @@ function DetailInvestissement({
                   Investissement année {investissementById?.annee}
                 </h5>
                  <div class="actions d-flex align-items-center">
-                  {investissementById?.statut!=="Enregistrer" &&
+                  { ((currentUser?.roles[0]!== "Point Focal" && investissementById?.statut === "Enregistrer") || (currentUser?.roles[0]=== "Admin structure" && investissementById?.statut !== "Prévalider")) &&
                       <a
                         href="#"
                         type="button"
@@ -121,15 +126,29 @@ function DetailInvestissement({
                         <span>rejeter</span>
                       </a>
                   }
-                  <a
-                    href="#"
-                    type="button"
-                    onClick={() => validate(investissementById?.id)}
-                    class="btn btn-prevalider align-items-center mr-3"
-                  >
-                    <img src="/assets/images/previsualiser.svg" alt="" class="mr-2" />
-                    <span>Prevalider</span>
-                  </a>
+                  { ((currentUser?.roles[0]=== "Point Focal" && investissementById?.statut === "Enregistrer") || (currentUser?.roles[0]=== "Admin structure" && investissementById?.statut !== "Prévalider")) &&
+                      <a
+                        href="#"
+                        type="button"
+                        onClick={() => validate(investissementById?.id)}
+                        class="btn btn-prevalider align-items-center mr-3"
+                      >
+                        <img src="/assets/images/previsualiser.svg" alt="" class="mr-2" />
+                        <span>Prevalider</span>
+                      </a>
+                  }
+
+                  { currentUser?.roles[0]=== "Admin DPRS" &&
+                      <a
+                        href="#"
+                        type="button"
+                        onClick={() => validate(investissementById?.id)}
+                        class="btn btn-prevalider align-items-center mr-3"
+                      >
+                        <img src="/assets/images/previsualiser.svg" alt="" class="mr-2" />
+                        <span>Valider</span>
+                      </a>
+                  }
                 </div>
               </div>
               <div class="card-body ">
@@ -298,6 +317,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = createStructuredSelector({
   investissementById: selectInvestissementById,
+  currentUser: selectCurrentUser,
 });
 export default connect(
   mapStateToProps,
