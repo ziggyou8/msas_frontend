@@ -17,128 +17,128 @@ import "react-circular-progressbar/dist/styles.css";
 import ChangingProgressProvider from "../../../components/ChangingProgressProvider";
 
 function AccueilPage() {
-  const percentage = 66;
+  // const percentage = 66;
 
-  const BarData = {
-    labels: [
-      "Etat",
-      "Collectivités  territoriales",
-      "Secteurs privés Sanitaires",
-      "Secteurs privés non Sanitaires",
-      "ONG et association",
-      "PTF",
-      "Société civile",
-    ],
-    datasets: [
-      {
-        label:
-          "Evolution Mobilisation Engagement pour le financement de la santé au senegal",
-        backgroundColor: "rgb(23, 125, 255)",
-        borderColor: "rgb(23, 125, 255)",
-        data: [140, 175, 50, 100, 75, 150, 175],
-      },
-    ],
-  };
+  // const BarData = {
+  //   labels: [
+  //     "Etat",
+  //     "Collectivités  territoriales",
+  //     "Secteurs privés Sanitaires",
+  //     "Secteurs privés non Sanitaires",
+  //     "ONG et association",
+  //     "PTF",
+  //     "Société civile",
+  //   ],
+  //   datasets: [
+  //     {
+  //       label:
+  //         "Evolution Mobilisation Engagement pour le financement de la santé au senegal",
+  //       backgroundColor: "rgb(23, 125, 255)",
+  //       borderColor: "rgb(23, 125, 255)",
+  //       data: [140, 175, 50, 100, 75, 150, 175],
+  //     },
+  //   ],
+  // };
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [
-        {
-          // maxBarThickness:80,
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  };
+  // const chartOptions = {
+  //   responsive: true,
+  //   maintainAspectRatio: false,
+  //   scales: {
+  //     xAxes: [
+  //       {
+  //         // maxBarThickness:80,
+  //         ticks: {
+  //           beginAtZero: true,
+  //         },
+  //       },
+  //     ],
+  //   },
+  // };
 
-  const doughnutData = {
-    labels: ["50%", "45%"],
-    datasets: [
-      {
-        label: "My First Dataset",
-        data: [50, 45, 40],
-        backgroundColor: [
-          "rgb(255, 132, 75)",
-          "rgb(111, 150, 170)",
-          "rgb(225, 232, 238)",
-        ],
-        hoverOffset: 4,
-      },
-    ],
-  };
+  // const doughnutData = {
+  //   labels: ["50%", "45%"],
+  //   datasets: [
+  //     {
+  //       label: "My First Dataset",
+  //       data: [50, 45, 40],
+  //       backgroundColor: [
+  //         "rgb(255, 132, 75)",
+  //         "rgb(111, 150, 170)",
+  //         "rgb(225, 232, 238)",
+  //       ],
+  //       hoverOffset: 4,
+  //     },
+  //   ],
+  // };
 
-  const chartData2 = {
-    labels: ["", "", "", "", ""],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [19, 5, 12, 23, 9],
-        backgroundColor: [
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-        ],
-        borderColor: [
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-          "rgb(255, 132, 75)",
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
-  const chart2options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-  };
+  // const chartData2 = {
+  //   labels: ["", "", "", "", ""],
+  //   datasets: [
+  //     {
+  //       label: "# of Votes",
+  //       data: [19, 5, 12, 23, 9],
+  //       backgroundColor: [
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //       ],
+  //       borderColor: [
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //         "rgb(255, 132, 75)",
+  //       ],
+  //       borderWidth: 1,
+  //     },
+  //   ],
+  // };
+  // const chart2options = {
+  //   scales: {
+  //     y: {
+  //       beginAtZero: true,
+  //     },
+  //   },
+  // };
 
-  const labels2 = [10, 30, 39, 20, 25, 34, 0];
-  const lineData = {
-    labels: labels2,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [10, 30, 39, 20, 25, 34, 0],
-        borderColor: "rgb(255, 132, 75)",
-        backgroundColor: "rgb(255, 132, 75)",
-      },
-      {
-        label: "Dataset 2",
-        data: [18, 33, 22, 19, 11, 39, 30],
-        borderColor: "rgb(111, 150, 170)",
-        backgroundColor: "rgb(111, 150, 170)",
-      },
-    ],
-  };
-  const lineOptions = {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: "",
-      },
-    },
-    scales: {
-      y: {
-        // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
-        suggestedMin: 30,
+  // // const labels2 = [10, 30, 39, 20, 25, 34, 0];
+  // const lineData = {
+  //   labels: labels2,
+  //   datasets: [
+  //     {
+  //       label: "Dataset 1",
+  //       data: [10, 30, 39, 20, 25, 34, 0],
+  //       borderColor: "rgb(255, 132, 75)",
+  //       backgroundColor: "rgb(255, 132, 75)",
+  //     },
+  //     {
+  //       label: "Dataset 2",
+  //       data: [18, 33, 22, 19, 11, 39, 30],
+  //       borderColor: "rgb(111, 150, 170)",
+  //       backgroundColor: "rgb(111, 150, 170)",
+  //     },
+  //   ],
+  // };
+  // const lineOptions = {
+  //   responsive: true,
+  //   plugins: {
+  //     title: {
+  //       display: true,
+  //       text: "",
+  //     },
+  //   },
+  //   scales: {
+  //     y: {
+  //       // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
+  //       suggestedMin: 30,
 
-        // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
-        suggestedMax: 50,
-      },
-    },
-  };
+  //       // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
+  //       suggestedMax: 50,
+  //     },
+  //   },
+  // };
 
   return (
     <div>
@@ -976,7 +976,7 @@ function AccueilPage() {
             </div>
 
             <h4 id="scrollspyIndicateurs"></h4>
-            <div className="d-flex flex-column max pb-4">
+            {/* <div className="d-flex flex-column max pb-4">
               <p className="card-title text-blue fs-3  pt-5 col-md-9">
                 Les indicateurs du financement de la Santé
               </p>
@@ -986,7 +986,7 @@ function AccueilPage() {
               <div className="card-body">
                 <div
                   style={{ height: "300px" }}
-                  /* className="max" */ id="chart-container"
+                     id="chart-container"
                 >
                   <div id="barChart" style={{ height: "100%" }}>
                     <Bar data={BarData} options={chartOptions} />
@@ -1268,7 +1268,7 @@ function AccueilPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
