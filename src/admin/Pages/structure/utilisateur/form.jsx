@@ -98,6 +98,7 @@ function UserForm(props) {
       photo: encodedImage,
       role,
     };
+    console.log('======',userData)
     if (editedUser) {
       updateUser(editedUser.id, userData);
     } else {

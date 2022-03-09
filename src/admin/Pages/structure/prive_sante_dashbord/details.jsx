@@ -61,8 +61,10 @@ function DetailInvestissement({
   const reject = (id) => {
     return swal({
       title: `Etes vous sûr de voulour rejeter l'investissement?`,
-      text: "Assurez-vous que les informations saisis sont exactes.",
+      text: "Veuillez donner le motif du rejet svp.",
       icon: "warning",
+      content: "input",
+      showLoaderOnConfirm: true,
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
